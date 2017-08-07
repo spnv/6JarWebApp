@@ -13,16 +13,16 @@ import {
   Button
 } from 'react-bootstrap';
 
-import {createMember, getMemberSession, signIn, destroyMemberSession} from '../../actions/memberAction';
+import {createMember} from '../../actions/memberAction';
 
 class AccessApp extends React.Component {
   componentDidMount() {
-    this.props.getMemberSession();
+    // this.props.getMemberSession();
   }
 
   componentDidUpdate() {
-    let signUpMessage = this.props.member.mymember.message;
-    if (signUpMessage == 'create success') {
+    let myMemberMessage = this.props.member.mymember.message;
+    if (myMemberMessage == 'signin success') {
       this.handlerRedirect('signin')
     }
   }
@@ -91,10 +91,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createMember: createMember,
-    getMemberSession: getMemberSession,
-    signIn: signIn,
-    destroyMemberSession: destroyMemberSession
+    createMember: createMember
   }, dispatch)
 }
 

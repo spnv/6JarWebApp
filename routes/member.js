@@ -87,7 +87,7 @@ router.route('/signIn')
             }
             res.json({
               success: true,
-              message: 'sign in success',
+              message: 'signin success',
               data: req.session.member
             });
           })

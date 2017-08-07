@@ -50373,6 +50373,8 @@ var _reactDom = __webpack_require__(17);
 
 var _reactBootstrap = __webpack_require__(55);
 
+var _memberAction = __webpack_require__(571);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50393,7 +50395,15 @@ var AccessApp = function (_React$Component) {
   _createClass(AccessApp, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // TODO : get session
+      this.props.getMemberSession();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var myMemberMessage = this.props.member.mymember.message;
+      if (myMemberMessage == 'session success') {
+        this.handlerRedirect('today');
+      }
     }
   }, {
     key: 'handleSubmit',
@@ -50402,13 +50412,20 @@ var AccessApp = function (_React$Component) {
         email: (0, _reactDom.findDOMNode)(this.refs.email).value,
         password: (0, _reactDom.findDOMNode)(this.refs.password).value
       };
-
-      // TODO : add action
+      this.props.signIn(member.email, member.password);
     }
   }, {
-    key: 'handleCreateAccount',
-    value: function handleCreateAccount() {
-      this.props.router.push('/signup');
+    key: 'handlerRedirect',
+    value: function handlerRedirect(path) {
+      switch (path) {
+        case 'signup':
+          this.props.router.push('/signup');
+          break;
+        case 'today':
+          this.props.router.push('/today');
+          break;
+        default:
+      }
     }
   }, {
     key: 'render',
@@ -50456,7 +50473,7 @@ var AccessApp = function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactBootstrap.Button,
-          { onClick: this.handleCreateAccount.bind(this), className: 'pull-right', bsStyle: 'primary' },
+          { onClick: this.handlerRedirect.bind(this, 'signup'), className: 'pull-right', bsStyle: 'primary' },
           '\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
         ),
         _react2.default.createElement('br', null)
@@ -50468,14 +50485,18 @@ var AccessApp = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-  return {};
+  return { member: state.member };
 }
 
 function mapDispatchToProps(dispatch) {
-  return (0, _redux.bindActionCreators)({}, dispatch);
+  return (0, _redux.bindActionCreators)({
+    getMemberSession: _memberAction.getMemberSession,
+    signIn: _memberAction.signIn,
+    destroyMemberSession: _memberAction.destroyMemberSession
+  }, dispatch);
 }
 
-exports.default = (0, _reactRedux.connect)(null, null)(AccessApp);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AccessApp);
 
 /***/ }),
 /* 548 */
@@ -50524,13 +50545,13 @@ var AccessApp = function (_React$Component) {
   _createClass(AccessApp, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.getMemberSession();
+      // this.props.getMemberSession();
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      var signUpMessage = this.props.member.mymember.message;
-      if (signUpMessage == 'create success') {
+      var myMemberMessage = this.props.member.mymember.message;
+      if (myMemberMessage == 'signin success') {
         this.handlerRedirect('signin');
       }
     }
@@ -50649,10 +50670,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return (0, _redux.bindActionCreators)({
-    createMember: _memberAction.createMember,
-    getMemberSession: _memberAction.getMemberSession,
-    signIn: _memberAction.signIn,
-    destroyMemberSession: _memberAction.destroyMemberSession
+    createMember: _memberAction.createMember
   }, dispatch);
 }
 
@@ -52176,10 +52194,10 @@ function getMemberSession() {
   };
 }
 // SIGN IN
-function signIn(_username, _password) {
+function signIn(_email, _password) {
   return function (dispatch) {
     _axios2.default.post('/api/member/signIn', {
-      username: _username,
+      email: _email,
       password: _password
     }).then(function (response) {
       dispatch({

@@ -39,10 +39,10 @@ export function getMemberSession() {
   }
 }
 // SIGN IN
-export function signIn(_username, _password) {
+export function signIn(_email, _password) {
   return function(dispatch) {
     axios.post('/api/member/signIn', {
-        username: _username,
+        email: _email,
         password: _password
       })
       .then(function(response) {
