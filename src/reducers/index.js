@@ -2,7 +2,9 @@
 import {
   combineReducers
 } from 'redux';
-
+import {
+  memberReducers
+} from './memberReducer';
 /* TODO : Template Active - import reducer */
 // HERE IMPORT REDUCERS TO BE COMBINED
 // import {
@@ -17,4 +19,5 @@ import {
 export default combineReducers({
   // books: booksReducers,
   // cart: cartReducers
+  member: memberReducers
 })

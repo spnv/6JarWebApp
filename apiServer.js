@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 // APIs
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://liveesoftewaredevelopment:1234@mycluster-shard-00-00-ijs3v.mongodb.net:27017,mycluster-shard-00-01-ijs3v.mongodb.net:27017,mycluster-shard-00-02-ijs3v.mongodb.net:27017/database?ssl=true&replicaSet=myCluster-shard-0&authSource=admin");
+mongoose.connect("mongodb://admin:Nat45693822*@bunche-shard-00-00-e3yhh.mongodb.net:27017,bunche-shard-00-01-e3yhh.mongodb.net:27017,bunche-shard-00-02-e3yhh.mongodb.net:27017/webapp?ssl=true&replicaSet=Bunche-shard-0&authSource=admin");
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, '# MongoDB - connection error: '));
@@ -37,8 +37,9 @@ app.use(session({
 }))
 
 /* TODO : Template Passive - duplicate for api */
-// var member = require('./routes/member');
-// app.use('/member', member);
+var member = require('./routes/member');
+app.use('/member', member);
+
 app.get('/images', function(req, res) {
   const imgFolder = __dirname + '/public/images/';
   // REQUIRE FILE SYSTEM

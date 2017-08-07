@@ -13,23 +13,36 @@ import {
   Button
 } from 'react-bootstrap';
 
+import {createMember, getMemberSession, signIn, destroyMemberSession} from '../../actions/memberAction';
+
 class AccessApp extends React.Component {
   componentDidMount() {
-    // TODO : get session
+    this.props.getMemberSession();
+  }
+
+  componentDidUpdate() {
+    let signUpMessage = this.props.member.mymember.message;
+    if (signUpMessage == 'create success') {
+      this.handlerRedirect('signin')
+    }
   }
 
   handleSubmit() {
     const newMember = {
       email: findDOMNode(this.refs.email).value,
       password: findDOMNode(this.refs.password).value,
-      nickname: findDOMNode(this.refs.nickname).value
+      name: findDOMNode(this.refs.name).value
     };
-
-    // TODO : add action
+    this.props.createMember(newMember.email, newMember.password, newMember.name);
   }
 
-  handleBack(){
-    this.props.router.push('/signin');
+  handlerRedirect(path) {
+    switch (path) {
+      case 'signin':
+        this.props.router.push('/signin');
+        break;
+      default:
+    }
   }
 
   render() {
@@ -59,25 +72,30 @@ class AccessApp extends React.Component {
           <b>ข้อมูลผู้ใช้</b>
         </h4>
         <br></br>
-        <FormGroup controlId="nickname">
+        <FormGroup controlId="name">
           <ControlLabel>ชื่อเล่น</ControlLabel>
-          <FormControl type="text" placeholder="กรอกชื่อเล่น" ref="nickname"/>
+          <FormControl type="text" placeholder="กรอกชื่อเล่น" ref="name"/>
           <FormControl.Feedback/>
         </FormGroup>
         <br></br>
         <Button onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="primary">สร้างบัญชี</Button>
-        <Button onClick={this.handleBack.bind(this)} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
+        <Button onClick={this.handlerRedirect.bind(this,'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
       </Col>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {member: state.member}
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({
+    createMember: createMember,
+    getMemberSession: getMemberSession,
+    signIn: signIn,
+    destroyMemberSession: destroyMemberSession
+  }, dispatch)
 }
 
-export default connect(null, null)(AccessApp);
+export default connect(mapStateToProps, mapDispatchToProps)(AccessApp);
