@@ -52210,7 +52210,7 @@ var Today = function (_React$Component) {
     value: function componentDidMount() {
       this.props.getSelectedJar(); //
       this.props.getTodayTransaction(); //
-      // this.props.getMemberSession();
+      this.props.getMemberSession();
     }
   }, {
     key: 'componentDidUpdate',
@@ -52590,7 +52590,7 @@ var JarSetup = function (_React$Component) {
       // this.props.getSelectedJar();
       // this.props.getNonSelectedJar();
       this.props.getMyJar(); //
-      // this.props.getMemberSession();
+      this.props.getMemberSession();
     }
   }, {
     key: 'componentDidUpdate',

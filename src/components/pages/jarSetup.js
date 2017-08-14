@@ -47,7 +47,7 @@ class JarSetup extends React.Component {
     // this.props.getSelectedJar();
     // this.props.getNonSelectedJar();
     this.props.getMyJar(); //
-    // this.props.getMemberSession();
+    this.props.getMemberSession();
   }
 
   componentDidUpdate() {
