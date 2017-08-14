@@ -18,16 +18,6 @@ class AccessApp extends React.Component {
     // TODO : get session
   }
 
-  handleSubmit() {
-    const newMember = {
-      email: findDOMNode(this.refs.email).value,
-      password: findDOMNode(this.refs.password).value,
-      nickname: findDOMNode(this.refs.nickname).value
-    };
-
-    // TODO : add action
-  }
-
   render() {
     return (
       <Grid>

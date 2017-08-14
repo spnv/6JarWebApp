@@ -50881,17 +50881,6 @@ var AccessApp = function (_React$Component) {
       // TODO : get session
     }
   }, {
-    key: 'handleSubmit',
-    value: function handleSubmit() {
-      var newMember = {
-        email: (0, _reactDom.findDOMNode)(this.refs.email).value,
-        password: (0, _reactDom.findDOMNode)(this.refs.password).value,
-        nickname: (0, _reactDom.findDOMNode)(this.refs.nickname).value
-      };
-
-      // TODO : add action
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
