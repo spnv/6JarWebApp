@@ -52274,6 +52274,18 @@ var Today = function (_React$Component) {
       var newJar = currentJarsToUpdate[jarIndex];
       newJar.remain = currentJarsToUpdate[jarIndex].remain + newRecord.amount;
       this.props.updateAJar(newJar);
+
+      this.setState({
+        today: {
+          newRecord: {
+            name: null,
+            code: null,
+            display: 'เลือกเหยือก',
+            amount: 0,
+            description: null
+          }
+        }
+      });
     }
   }, {
     key: 'handlerRemoveTodayTransaction',
