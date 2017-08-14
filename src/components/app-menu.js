@@ -34,7 +34,6 @@ class AppMenu extends React.Component {
             ? (
               <Nav>
                 <NavItem eventKey={1} href="/today">รายการวันนี้</NavItem>
-                <NavItem eventKey={2} href="/summary">สรุปการใช้จ่าย</NavItem>
                 <NavItem eventKey={3} href="/jar-setup">ตั้งค่า</NavItem>
               </Nav>
             )
