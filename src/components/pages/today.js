@@ -203,7 +203,7 @@ class Today extends React.Component {
 
     return (
       <Grid>
-        <h2>ยอดคงเหลือ</h2>
+        <h2>ยอดคงเหลือ (ต่อเดือน)</h2>
         <Row>
           {jars}
         </Row>

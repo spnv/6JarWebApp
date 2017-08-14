@@ -52381,7 +52381,7 @@ var Today = function (_React$Component) {
         _react2.default.createElement(
           'h2',
           null,
-          '\u0E22\u0E2D\u0E14\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D'
+          '\u0E22\u0E2D\u0E14\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D (\u0E15\u0E48\u0E2D\u0E40\u0E14\u0E37\u0E2D\u0E19)'
         ),
         _react2.default.createElement(
           _reactBootstrap.Row,
