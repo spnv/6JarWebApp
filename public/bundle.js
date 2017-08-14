@@ -21492,17 +21492,17 @@ var JarItem = function (_React$Component) {
       var imgPath = '/images/' + code;
       var percent = remain / full * 100;
       if (percent <= 0) {
-        imgPath = imgPath + '_0.png';
+        imgPath = imgPath + '_0.jpg';
       } else if (percent < 31) {
-        imgPath = imgPath + '_30.png';
+        imgPath = imgPath + '_30.jpg';
       } else if (percent < 61) {
-        imgPath = imgPath + '_60.png';
+        imgPath = imgPath + '_60.jpg';
       } else if (percent < 101) {
-        imgPath = imgPath + '_100.png';
+        imgPath = imgPath + '_100.jpg';
       } else if (percent < 120) {
-        imgPath = imgPath + '_120.png';
+        imgPath = imgPath + '_120.jpg';
       } else {
-        imgPath = imgPath + '_200.png';
+        imgPath = imgPath + '_200.jpg';
       }
       return imgPath;
     }
