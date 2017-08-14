@@ -13,17 +13,17 @@ import {
   Button
 } from 'react-bootstrap';
 
-import {createMember} from '../../actions/memberAction';
+import {createMember, getMemberSession} from '../../actions/memberAction';
 
 class AccessApp extends React.Component {
   componentDidMount() {
-    // this.props.getMemberSession();
+    this.props.getMemberSession();
   }
 
   componentDidUpdate() {
     let myMemberMessage = this.props.member.mymember.message;
-    if (myMemberMessage == 'signin success') {
-      this.handlerRedirect('signin')
+    if (myMemberMessage == 'create success') {
+      this.handlerRedirect('jar-setup')
     }
   }
 
@@ -41,6 +41,9 @@ class AccessApp extends React.Component {
       case 'signin':
         this.props.router.push('/signin');
         break;
+        case 'jar-setup':
+          this.props.router.push('/jar-setup');
+          break;
       default:
     }
   }
@@ -79,7 +82,7 @@ class AccessApp extends React.Component {
         </FormGroup>
         <br></br>
         <Button onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="primary">สร้างบัญชี</Button>
-        <Button onClick={this.handlerRedirect.bind(this,'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
+        <Button onClick={this.handlerRedirect.bind(this, 'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
       </Col>
     );
   }
@@ -91,7 +94,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createMember: createMember
+    createMember: createMember,
+    getMemberSession: getMemberSession
   }, dispatch)
 }
 

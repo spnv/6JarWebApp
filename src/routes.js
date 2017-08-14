@@ -12,6 +12,7 @@ import AccessApp from './components/pages/accessApp';
 import SignIn from './components/pages/signIn';
 import SignUp from './components/pages/signUp';
 import Today from './components/pages/today';
+import JarSetup from './components/pages/jarSetup';
 
 const routes = (
   <Router history={browserHistory}>
@@ -21,6 +22,7 @@ const routes = (
         <Route path="/signup" component={SignUp}/>
       </Route>
       <Route path="today" component={Today}/>
+      <Route path="jar-setup" component={JarSetup}/>
     </Route>
   </Router>
 );

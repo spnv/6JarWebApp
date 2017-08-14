@@ -39,6 +39,10 @@ app.use(session({
 /* TODO : Template Passive - duplicate for api */
 var member = require('./routes/member');
 app.use('/member', member);
+var jar = require('./routes/jar');
+app.use('/jar', jar);
+var transaction = require('./routes/transaction');
+app.use('/transaction', transaction);
 
 app.get('/images', function(req, res) {
   const imgFolder = __dirname + '/public/images/';

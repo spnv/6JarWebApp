@@ -22,7 +22,7 @@ class AccessApp extends React.Component {
 
   componentDidUpdate() {
     let myMemberMessage = this.props.member.mymember.message;
-    if (myMemberMessage == 'session success') {
+    if (myMemberMessage == 'session success' || myMemberMessage == 'signin success') {
       this.handlerRedirect('today')
     }
   }
@@ -42,6 +42,9 @@ class AccessApp extends React.Component {
         break;
       case 'today':
         this.props.router.push('/today');
+        break;
+      case 'jar-setup':
+        this.props.router.push('/jar-setup');
         break;
       default:
     }

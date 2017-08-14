@@ -9,8 +9,8 @@ var NumberFormat = require('react-number-format');
 
 class JarItem extends React.Component {
   // calculate
-  selectImage(remain, full, name) {
-    var imgPath = '/images/' + name;
+  selectImage(remain, full, code) {
+    var imgPath = '/images/' + code;
     let percent = remain / full * 100;
     if (percent <= 0) {
       imgPath = imgPath + '_0.png';
@@ -68,7 +68,7 @@ class JarItem extends React.Component {
   render() {
     return (
       <div className='text-center'>
-        <Image src={this.selectImage(this.props.remain, this.props.full, this.props.name)} responsive/>
+        <Image src={this.selectImage(this.props.remain, this.props.full, this.props.code)} responsive/>
         <b style={this.moneyStyle(this.props.remain, this.props.full)}>
           <NumberFormat thousandSeparator={true} prefix={'฿ '} value={this.props.remain} displayType={'text'}/>
         </b>
@@ -77,10 +77,10 @@ class JarItem extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function StateToProps(state) {
   return {}
 }
-function mapDispatchToProps(dispatch) {
+function DispatchToProps(dispatch) {
   return bindActionCreators({}, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(JarItem);
+export default connect(StateToProps, DispatchToProps)(JarItem);

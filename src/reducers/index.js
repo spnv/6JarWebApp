@@ -5,6 +5,12 @@ import {
 import {
   memberReducers
 } from './memberReducer';
+import {
+  jarReducers
+} from './jarReducer';
+import {
+  transactionReducers
+} from './transactionReducer';
 /* TODO : Template Active - import reducer */
 // HERE IMPORT REDUCERS TO BE COMBINED
 // import {
@@ -19,5 +25,7 @@ import {
 export default combineReducers({
   // books: booksReducers,
   // cart: cartReducers
-  member: memberReducers
+  member: memberReducers,
+  myJar: jarReducers,
+  transaction: transactionReducers
 })
