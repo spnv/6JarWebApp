@@ -44,14 +44,14 @@ class Today extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSelectedJar();
-    this.props.getTodayTransaction();
-    this.props.getMemberSession();
+    this.props.getSelectedJar();//
+    this.props.getTodayTransaction(); //
+    // this.props.getMemberSession();
   }
 
   componentDidUpdate() {
     let myMemberMessage = this.props.member.mymember.message;
-    if (myMemberMessage == 'no session') {
+    if (myMemberMessage == 'no session' || myMemberMessage == null) {
       this.handlerRedirect('signin')
     }
   }

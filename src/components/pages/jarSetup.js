@@ -46,13 +46,13 @@ class JarSetup extends React.Component {
   componentDidMount() {
     // this.props.getSelectedJar();
     // this.props.getNonSelectedJar();
-    this.props.getMyJar();
-    this.props.getMemberSession();
+    this.props.getMyJar(); //
+    // this.props.getMemberSession();
   }
 
   componentDidUpdate() {
     let myMemberMessage = this.props.member.mymember.message;
-    if (myMemberMessage == 'no session') {
+    if (myMemberMessage == 'no session' || myMemberMessage == null) {
       this.handlerRedirect('signin')
     }
   }

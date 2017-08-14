@@ -50946,6 +50946,10 @@ var _reactBootstrap = __webpack_require__(46);
 
 var _memberAction = __webpack_require__(248);
 
+var _transactionAction = __webpack_require__(576);
+
+var _jarAction = __webpack_require__(257);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50974,6 +50978,9 @@ var AccessApp = function (_React$Component) {
       var myMemberMessage = this.props.member.mymember.message;
       if (myMemberMessage == 'session success' || myMemberMessage == 'signin success') {
         this.handlerRedirect('today');
+        // this.props.getSelectedJar();
+        // this.props.getTodayTransaction();
+        // this.props.getMyJar();
       }
     }
   }, {
@@ -52194,15 +52201,15 @@ var Today = function (_React$Component) {
   _createClass(Today, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.props.getSelectedJar();
-      this.props.getTodayTransaction();
-      this.props.getMemberSession();
+      this.props.getSelectedJar(); //
+      this.props.getTodayTransaction(); //
+      // this.props.getMemberSession();
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       var myMemberMessage = this.props.member.mymember.message;
-      if (myMemberMessage == 'no session') {
+      if (myMemberMessage == 'no session' || myMemberMessage == null) {
         this.handlerRedirect('signin');
       }
     }
@@ -52575,14 +52582,14 @@ var JarSetup = function (_React$Component) {
     value: function componentDidMount() {
       // this.props.getSelectedJar();
       // this.props.getNonSelectedJar();
-      this.props.getMyJar();
-      this.props.getMemberSession();
+      this.props.getMyJar(); //
+      // this.props.getMemberSession();
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       var myMemberMessage = this.props.member.mymember.message;
-      if (myMemberMessage == 'no session') {
+      if (myMemberMessage == 'no session' || myMemberMessage == null) {
         this.handlerRedirect('signin');
       }
     }

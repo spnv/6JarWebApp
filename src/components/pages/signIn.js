@@ -14,6 +14,9 @@ import {
 } from 'react-bootstrap';
 
 import {getMemberSession, signIn, destroyMemberSession} from '../../actions/memberAction';
+import {getTodayTransaction} from '../../actions/transactionAction';
+import {myJar} from '../../actions/jarAction';
+import {selectedJar} from '../../actions/jarAction';
 
 class AccessApp extends React.Component {
   componentDidMount() {
@@ -24,6 +27,9 @@ class AccessApp extends React.Component {
     let myMemberMessage = this.props.member.mymember.message;
     if (myMemberMessage == 'session success' || myMemberMessage == 'signin success') {
       this.handlerRedirect('today')
+      // this.props.getSelectedJar();
+      // this.props.getTodayTransaction();
+      // this.props.getMyJar();
     }
   }
 
