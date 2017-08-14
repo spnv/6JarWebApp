@@ -16,6 +16,13 @@ import {
 import {createMember, getMemberSession} from '../../actions/memberAction';
 
 class AccessApp extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isCreating: false
+    }
+  }
+
   componentDidMount() {
     this.props.getMemberSession();
   }
@@ -28,6 +35,11 @@ class AccessApp extends React.Component {
   }
 
   handleSubmit() {
+    // this.setState({isCreating: true});
+    if (findDOMNode(this.refs.password).value != findDOMNode(this.refs.rePassword).value) {
+      // this.setState({isCreating: false});
+      return;
+    }
     const newMember = {
       email: findDOMNode(this.refs.email).value,
       password: findDOMNode(this.refs.password).value,
@@ -41,9 +53,9 @@ class AccessApp extends React.Component {
       case 'signin':
         this.props.router.push('/signin');
         break;
-        case 'jar-setup':
-          this.props.router.push('/jar-setup');
-          break;
+      case 'jar-setup':
+        this.props.router.push('/jar-setup');
+        break;
       default:
     }
   }
@@ -58,7 +70,11 @@ class AccessApp extends React.Component {
         <FormGroup controlId="email" validationState={null}>
           <ControlLabel>อีเมล์</ControlLabel>
           <FormControl type="text" placeholder="กรอกอีเมล์" ref="email"/>
-          <FormControl.Feedback/>
+          <FormControl.Feedback/> {(this.props.member.mymember.message == 'email already exist')
+            ? (
+              <p>*email already exist</p>
+            )
+            : ('')}
         </FormGroup>
         <FormGroup controlId="password" validationState={null}>
           <ControlLabel>รหัสผ่าน</ControlLabel>
@@ -81,7 +97,12 @@ class AccessApp extends React.Component {
           <FormControl.Feedback/>
         </FormGroup>
         <br></br>
-        <Button onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="primary">สร้างบัญชี</Button>
+        <Button disabled={this.state.isCreating} onClick={!this.state.isCreating
+          ? this.handleSubmit.bind(this)
+          : null} className="pull-right" bsStyle="primary">{this.state.isCreating
+            ? 'กำลังสร้างบัญชี...'
+            : 'สร้างบัญชี'}
+        </Button>
         <Button onClick={this.handlerRedirect.bind(this, 'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
       </Col>
     );

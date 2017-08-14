@@ -38,7 +38,7 @@ class JarItem extends React.Component {
       };
     } else if (percent < 31) {
       color = {
-        color: 'yellow',
+        color: 'orange',
         fontSize: 'large'
       };
     } else if (percent < 61) {

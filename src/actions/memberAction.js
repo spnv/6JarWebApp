@@ -9,11 +9,13 @@ export function createMember(_email, _password, _name) {
       password: _password,
       name: _name
     }).then(function(response) {
+      // cb()
       dispatch({
         type: "CREATE_MEMBER",
         payload: response.data
       })
     }).catch(function(err) {
+      // cb()
       dispatch({
         type: "CREATE_MEMBER_REJECTED",
         payload: err

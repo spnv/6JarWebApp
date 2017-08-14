@@ -21103,11 +21103,13 @@ function createMember(_email, _password, _name) {
       password: _password,
       name: _name
     }).then(function (response) {
+      // cb()
       dispatch({
         type: "CREATE_MEMBER",
         payload: response.data
       });
     }).catch(function (err) {
+      // cb()
       dispatch({
         type: "CREATE_MEMBER_REJECTED",
         payload: err
@@ -21518,7 +21520,7 @@ var JarItem = function (_React$Component) {
         };
       } else if (percent < 31) {
         color = {
-          color: 'yellow',
+          color: 'orange',
           fontSize: 'large'
         };
       } else if (percent < 61) {
@@ -51974,10 +51976,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var AccessApp = function (_React$Component) {
   _inherits(AccessApp, _React$Component);
 
-  function AccessApp() {
+  function AccessApp(props) {
     _classCallCheck(this, AccessApp);
 
-    return _possibleConstructorReturn(this, (AccessApp.__proto__ || Object.getPrototypeOf(AccessApp)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (AccessApp.__proto__ || Object.getPrototypeOf(AccessApp)).call(this, props));
+
+    _this.state = {
+      isCreating: false
+    };
+    return _this;
   }
 
   _createClass(AccessApp, [{
@@ -51996,6 +52003,11 @@ var AccessApp = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit() {
+      // this.setState({isCreating: true});
+      if ((0, _reactDom.findDOMNode)(this.refs.password).value != (0, _reactDom.findDOMNode)(this.refs.rePassword).value) {
+        // this.setState({isCreating: false});
+        return;
+      }
       var newMember = {
         email: (0, _reactDom.findDOMNode)(this.refs.email).value,
         password: (0, _reactDom.findDOMNode)(this.refs.password).value,
@@ -52041,7 +52053,13 @@ var AccessApp = function (_React$Component) {
             '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
           ),
           _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
+          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null),
+          ' ',
+          this.props.member.mymember.message == 'email already exist' ? _react2.default.createElement(
+            'p',
+            null,
+            '*email already exist'
+          ) : ''
         ),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,
@@ -52090,8 +52108,8 @@ var AccessApp = function (_React$Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           _reactBootstrap.Button,
-          { onClick: this.handleSubmit.bind(this), className: 'pull-right', bsStyle: 'primary' },
-          '\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
+          { disabled: this.state.isCreating, onClick: !this.state.isCreating ? this.handleSubmit.bind(this) : null, className: 'pull-right', bsStyle: 'primary' },
+          this.state.isCreating ? 'กำลังสร้างบัญชี...' : 'สร้างบัญชี'
         ),
         _react2.default.createElement(
           _reactBootstrap.Button,
