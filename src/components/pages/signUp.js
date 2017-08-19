@@ -16,6 +16,7 @@ import {
 import {createMember, getMemberSession} from '../../actions/memberAction';
 
 class AccessApp extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -35,9 +36,10 @@ class AccessApp extends React.Component {
   }
 
   handleSubmit() {
-    // this.setState({isCreating: true});
+    let contex = this;
+    contex.setState({isCreating: true})
     if (findDOMNode(this.refs.password).value != findDOMNode(this.refs.rePassword).value) {
-      // this.setState({isCreating: false});
+      contex.setState({isCreating: false})
       return;
     }
     const newMember = {
@@ -45,7 +47,9 @@ class AccessApp extends React.Component {
       password: findDOMNode(this.refs.password).value,
       name: findDOMNode(this.refs.name).value
     };
-    this.props.createMember(newMember.email, newMember.password, newMember.name);
+    this.props.createMember(newMember.email, newMember.password, newMember.name, function() {
+      contex.setState({isCreating: false})
+    })
   }
 
   handlerRedirect(path) {
@@ -97,11 +101,10 @@ class AccessApp extends React.Component {
           <FormControl.Feedback/>
         </FormGroup>
         <br></br>
-        <Button disabled={this.state.isCreating} onClick={!this.state.isCreating
-          ? this.handleSubmit.bind(this)
-          : null} className="pull-right" bsStyle="primary">{this.state.isCreating
-            ? 'กำลังสร้างบัญชี...'
-            : 'สร้างบัญชี'}
+        <Button disabled={(this.state.isCreating)} onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="primary">
+          {(this.state.isCreating)
+            ? ('กำลังสร้างบัญชี...')
+            : ('สร้างบัญชี')}
         </Button>
         <Button onClick={this.handlerRedirect.bind(this, 'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
       </Col>

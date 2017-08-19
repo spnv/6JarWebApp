@@ -19,6 +19,14 @@ import {myJar} from '../../actions/jarAction';
 import {selectedJar} from '../../actions/jarAction';
 
 class AccessApp extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSigningIn: false
+    }
+  }
+
   componentDidMount() {
     this.props.getMemberSession();
   }
@@ -34,11 +42,15 @@ class AccessApp extends React.Component {
   }
 
   handleSubmit() {
+    let contex = this;
+    contex.setState({isSigningIn: true})
     const member = {
       email: findDOMNode(this.refs.email).value,
       password: findDOMNode(this.refs.password).value
     };
-    this.props.signIn(member.email, member.password);
+    this.props.signIn(member.email, member.password,function(){
+      contex.setState({isSigningIn: false})
+    });
   }
 
   handlerRedirect(path) {
@@ -74,7 +86,11 @@ class AccessApp extends React.Component {
           <FormControl.Feedback/>
         </FormGroup>
         <br></br>
-        <Button onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="success">เข้าสู่ระบบ</Button>
+        <Button disabled={(this.state.isSigningIn)} onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="success">
+          {(this.state.isSigningIn)
+            ? ('กำลังเข้าสู่ระบบ...')
+            : ('เข้าสู่ระบบ')}
+        </Button>
         <Button onClick={this.handlerRedirect.bind(this, 'signup')} className="pull-right" bsStyle="primary">สร้างบัญชี</Button>
         <br></br>
       </Col>

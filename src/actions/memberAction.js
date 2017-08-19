@@ -1,7 +1,7 @@
 "use strict"
 import axios from 'axios';
 // CREATE
-export function createMember(_email, _password, _name) {
+export function createMember(_email, _password, _name, cb) {
   return function(dispatch) {
     // TODO : Add [display, email, username] duplicate detector
     axios.post('/api/member', {
@@ -20,6 +20,8 @@ export function createMember(_email, _password, _name) {
         type: "CREATE_MEMBER_REJECTED",
         payload: err
       })
+    }).then(function() {
+      cb()
     })
   }
 }
@@ -41,7 +43,7 @@ export function getMemberSession() {
   }
 }
 // SIGN IN
-export function signIn(_email, _password) {
+export function signIn(_email, _password, cb) {
   return function(dispatch) {
     axios.post('/api/member/signIn', {
         email: _email,
@@ -57,6 +59,8 @@ export function signIn(_email, _password) {
           type: "STORE_MEMBER_REJECTED",
           payload: err
         })
+      }).then(function() {
+        cb()
       })
   }
 }
