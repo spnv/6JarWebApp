@@ -43,6 +43,8 @@ var jar = require('./routes/jar');
 app.use('/jar', jar);
 var transaction = require('./routes/transaction');
 app.use('/transaction', transaction);
+var moneyFlow = require('./routes/money-flow');
+app.use('/money-flow', moneyFlow);
 
 app.get('/images', function(req, res) {
   const imgFolder = __dirname + '/public/images/';

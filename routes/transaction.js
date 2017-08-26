@@ -6,7 +6,6 @@ var define = require('./define');
 var mongoose = require('mongoose');
 mongoose.connect(define.DATABASE_URL);
 
-var Member = require('../models/member.js');
 var Transaction = require('../models/transaction.js');
 
 router.route('/today')

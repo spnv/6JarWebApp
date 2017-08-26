@@ -43,15 +43,18 @@ class AppMenu extends React.Component {
               <Nav></Nav>
             )}
 
-          <Nav pullRight>
-            {(this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success')
-              ? (
-                <NavItem eventKey={10} onClick={this.handlerSignOut.bind(this)}>ออกจากระบบ</NavItem>
-              )
-              : (
+          {(this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success')
+            ? (
+              <Nav pullRight>
+                <NavItem eventKey={10}>เสนอแนะ (กำลังพัฒนา)</NavItem>
+                <NavItem eventKey={11} onClick={this.handlerSignOut.bind(this)}>ออกจากระบบ</NavItem>
+              </Nav>
+            )
+            : (
+              <Nav pullRight>
                 <NavItem eventKey={11} href="/signin">เข้าใช้ระบบ</NavItem>
-              )}
-          </Nav>
+              </Nav>
+            )}
         </Navbar.Collapse>
       </Navbar>
     );

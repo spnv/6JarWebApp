@@ -25,14 +25,24 @@ import {
 
 import {activeMyJar, updateAJar, myJar} from '../../actions/jarAction';
 import {getMemberSession} from '../../actions/memberAction';
+import {createMoneyFlow, getMoneyFlow} from '../../actions/moneyFlowAction';
+
+var NumberFormat = require('react-number-format');
 
 class JarSetup extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showModal: false,
-      adjustJar: {}
+      adjustJar: {},
+      myflow: {
+        newRecord: {
+          amount: 0,
+          sub_type: 'เลือกชนิด',
+          description: null
+        }
+      }
     }
   }
 
@@ -48,6 +58,7 @@ class JarSetup extends React.Component {
     // this.props.getNonSelectedJar();
     this.props.getMyJar(); //
     this.props.getMemberSession();
+    this.props.getMoneyFlow();
   }
 
   componentDidUpdate() {
@@ -81,6 +92,59 @@ class JarSetup extends React.Component {
     this.close();
   }
 
+  handlerUpdateMoneyFlowSubtype(_subtype) {
+    this.setState({
+      myflow: {
+        newRecord: {
+          amount: 0,
+          sub_type: _subtype,
+          description: null
+        }
+      }
+    })
+  }
+
+  handlerCreateMoneyFlow(position) {
+
+    let newSubType = this.state.myflow.newRecord.sub_type;
+    let newDescription = findDOMNode(this.refs.newDescription).value;
+    let newAmount = parseInt(findDOMNode(this.refs.newAmount).value);
+    if (newSubType == 'เลือกชนิด' | newDescription == '' | isNaN(newAmount)) {
+      return 0;
+    }
+    // build new record
+    const newRecord = {
+      type: null,
+      sub_type: newSubType,
+      description: newDescription,
+      amount: newAmount
+    }
+
+    // reformat number to positive
+    if (newRecord.amount < 0) {
+      newRecord.amount = newRecord.amount * -1;
+    }
+    // set format follow button
+    if (position == 1) {
+      newRecord.type = 'in';
+    } else {
+      newRecord.amount = newRecord.amount * -1;
+      newRecord.type = 'out';
+    }
+
+    this.props.createMoneyFlow(newRecord.type, newRecord.sub_type, newRecord.amount, newRecord.description);
+
+    this.setState({
+      myflow: {
+        newRecord: {
+          amount: 0,
+          sub_type: 'เลือกชนิด',
+          description: null
+        }
+      }
+    })
+  }
+
   render() {
     const selectedJars = this.props.selectedjar.map(function(jar, i) {
       return (
@@ -108,14 +172,67 @@ class JarSetup extends React.Component {
       )
     }, this)
 
+    const moneyFlowItems = this.props.myflow.map(function(item, i) {
+      return (
+        <tr key={i}>
+          <td>{item.sub_type}</td>
+          <td>{item.description}</td>
+          <td>
+            <b>
+              <NumberFormat thousandSeparator={true} prefix={'฿ '} value={item.amount} displayType={'text'}/>
+            </b>
+          </td>
+          <td>
+            <Button block>ลบ</Button>
+          </td>
+        </tr>
+      )
+    })
+
     return (
       <Grid>
-        <h2>ใช้งาน</h2>
+        <h3>รายรับ (เฉลี่ยต่อเดือน)</h3>
+        <Table style={{
+          color: 'black'
+        }}>
+          <thead>
+            <tr>
+              <th>#รูปแบบ</th>
+              <th>ช่องทาง</th>
+              <th>จำนวน</th>
+              <th>จัดการ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {moneyFlowItems}
+            <tr>
+              <td>
+                <InputGroup >
+                  <DropdownButton componentClass={InputGroup.Button} title='เลือกรูปแบบ' bsStyle="default" id="input-dropdown-addon" title={this.state.myflow.newRecord.sub_type}>
+                    <MenuItem style={{
+                      backgroundColor: '#222222'
+                    }} onClick={this.handlerUpdateMoneyFlowSubtype.bind(this, 'Active')}>Active</MenuItem>
+                    <MenuItem style={{
+                      backgroundColor: '#222222'
+                    }} onClick={this.handlerUpdateMoneyFlowSubtype.bind(this, 'Passive')}>Passive</MenuItem>
+                  </DropdownButton>
+                </InputGroup>
+              </td>
+              <td><FormControl type="text" placeholder="กรอกช่องทาง" ref="newDescription"/></td>
+              <td><FormControl type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
+              <td>
+                <Button onClick={this.handlerCreateMoneyFlow.bind(this, 1)} block bsStyle="success">เพิ่ม</Button>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+        <hr/>
+        <h3>ใช้งาน</h3>
         <Row>
           {selectedJars}
         </Row>
         <hr/>
-        <h2>เก็บ</h2>
+        <h3>เก็บ</h3>
         <Row>
           {nonSelectedJars}
         </Row>
@@ -160,7 +277,7 @@ class JarSetup extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {selectedjar: state.myJar.selected, nonselected: state.myJar.nonselected, member: state.member}
+  return {selectedjar: state.myJar.selected, nonselected: state.myJar.nonselected, member: state.member, myflow: state.moneyflow.myflow}
   // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
 }
 function mapDispatchToProps(dispatch) {
@@ -170,7 +287,9 @@ function mapDispatchToProps(dispatch) {
     getMemberSession: getMemberSession,
     activeMyJar: activeMyJar,
     updateAJar: updateAJar,
-    getMyJar: myJar
+    getMyJar: myJar,
+    createMoneyFlow: createMoneyFlow,
+    getMoneyFlow: getMoneyFlow
   }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(JarSetup);
