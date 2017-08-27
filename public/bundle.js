@@ -51901,7 +51901,7 @@ var Today = function (_React$Component) {
               _react2.default.createElement(
                 'td',
                 null,
-                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'number', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E08\u0E33\u0E19\u0E27\u0E19', ref: 'newAmount' })
+                _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E08\u0E33\u0E19\u0E27\u0E19', ref: 'newAmount' })
               ),
               _react2.default.createElement(
                 'td',
@@ -52131,6 +52131,37 @@ var JarSetup = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var flowDirectors = this.props.selectedjar.map(function (jar, i) {
+        return _react2.default.createElement(
+          _reactBootstrap.Row,
+          { key: i },
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 12, sm: 12, md: 3, lg: 1 },
+            jar.display
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 2 },
+            _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '%', ref: 'percent' })
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 2 },
+            _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E40\u0E07\u0E34\u0E19', ref: 'amount' })
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 1 },
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { block: true, bsStyle: 'success' },
+              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01'
+            )
+          )
+        );
+      }, this);
+
       var selectedJars = this.props.selectedjar.map(function (jar, i) {
         return _react2.default.createElement(
           _reactBootstrap.Col,
@@ -52218,7 +52249,7 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A (\u0E40\u0E09\u0E25\u0E35\u0E48\u0E22\u0E15\u0E48\u0E2D\u0E40\u0E14\u0E37\u0E2D\u0E19)'
+          '\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A - \u0E08\u0E48\u0E32\u0E22\u0E04\u0E07\u0E17\u0E35\u0E48'
         ),
         _react2.default.createElement(
           _reactBootstrap.Table,
@@ -52294,7 +52325,7 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement(
                 'td',
                 null,
-                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'number', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E08\u0E33\u0E19\u0E27\u0E19', ref: 'newAmount' })
+                _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E08\u0E33\u0E19\u0E27\u0E19', ref: 'newAmount' })
               ),
               _react2.default.createElement(
                 'td',
@@ -52306,6 +52337,64 @@ var JarSetup = function (_React$Component) {
                 )
               )
             )
+          )
+        ),
+        _react2.default.createElement('hr', null),
+        _react2.default.createElement(
+          'h3',
+          { style: {
+              color: 'red'
+            } },
+          '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          '\u0E22\u0E2D\u0E14\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14 25,500 \u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D 25,500 (100%)'
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 12, sm: 12, md: 3, lg: 1 },
+            '#\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 2 },
+            '% (\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49)'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 2 },
+            '\u0E04\u0E34\u0E14\u0E40\u0E1B\u0E47\u0E19\u0E40\u0E07\u0E34\u0E19'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 1 },
+            '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
+          )
+        ),
+        flowDirectors,
+        _react2.default.createElement(
+          _reactBootstrap.Row,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 12, sm: 12, md: 3, lg: 1 },
+            '\u0E23\u0E27\u0E21'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 2 },
+            '100'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { xs: 4, sm: 4, md: 3, lg: 2 },
+            '25,500'
           )
         ),
         _react2.default.createElement('hr', null),
@@ -52378,7 +52467,7 @@ var JarSetup = function (_React$Component) {
                       null,
                       '\u0E3F'
                     ),
-                    _react2.default.createElement(_reactBootstrap.FormControl, { ref: 'updateRemain', type: 'number', value: this.state.adjustJar.remain, disabled: true })
+                    _react2.default.createElement(_reactBootstrap.FormControl, { ref: 'updateRemain', min: '0', type: 'number', value: this.state.adjustJar.remain, disabled: true })
                   )
                 )
               ),
@@ -52401,7 +52490,7 @@ var JarSetup = function (_React$Component) {
                       null,
                       '\u0E3F'
                     ),
-                    _react2.default.createElement(_reactBootstrap.FormControl, { ref: 'updateFull', type: 'number', placeholder: this.state.adjustJar.full })
+                    _react2.default.createElement(_reactBootstrap.FormControl, { ref: 'updateFull', min: '0', type: 'number', placeholder: this.state.adjustJar.full })
                   )
                 )
               )

@@ -146,6 +146,17 @@ class JarSetup extends React.Component {
   }
 
   render() {
+    const flowDirectors = this.props.selectedjar.map(function(jar, i) {
+      return (
+        <Row key={i}>
+          <Col xs={12} sm={12} md={3} lg={1}>{jar.display}</Col>
+          <Col xs={4} sm={4} md={3} lg={2}><FormControl min="0" type="number" placeholder="%" ref="percent"/></Col>
+          <Col xs={4} sm={4} md={3} lg={2}><FormControl min="0" type="number" placeholder="จำนวนเงิน" ref="amount"/></Col>
+          <Col xs={4} sm={4} md={3} lg={1}><Button block bsStyle="success">บันทึก</Button></Col>
+        </Row>
+      )
+    }, this)
+
     const selectedJars = this.props.selectedjar.map(function(jar, i) {
       return (
         <Col key={i} xs={6} sm={6} md={4} lg={2}>
@@ -191,7 +202,7 @@ class JarSetup extends React.Component {
 
     return (
       <Grid>
-        <h3>รายรับ (เฉลี่ยต่อเดือน)</h3>
+        <h3>รายรับ - จ่ายคงที่</h3>
         <Table style={{
           color: 'black'
         }}>
@@ -219,13 +230,31 @@ class JarSetup extends React.Component {
                 </InputGroup>
               </td>
               <td><FormControl type="text" placeholder="กรอกช่องทาง" ref="newDescription"/></td>
-              <td><FormControl type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
+              <td><FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
               <td>
                 <Button onClick={this.handlerCreateMoneyFlow.bind(this, 1)} block bsStyle="success">เพิ่ม</Button>
               </td>
             </tr>
           </tbody>
         </Table>
+        <hr/>
+        <h3 style={{
+          color: 'red'
+        }}>จัดการ (กำลังพัฒนา)</h3>
+        <p>ยอดรายรับทั้งหมด 25,500 คงเหลือ 25,500 (100%)</p>
+        <br></br>
+        <Row>
+          <Col xs={12} sm={12} md={3} lg={1}>#เหยือก</Col>
+          <Col xs={4} sm={4} md={3} lg={2}>% (ต่อรายได้)</Col>
+          <Col xs={4} sm={4} md={3} lg={2}>คิดเป็นเงิน</Col>
+          <Col xs={4} sm={4} md={3} lg={1}>จัดการ</Col>
+        </Row>
+        {flowDirectors}
+        <Row>
+          <Col xs={12} sm={12} md={3} lg={1}>รวม</Col>
+          <Col xs={4} sm={4} md={3} lg={2}>100</Col>
+          <Col xs={4} sm={4} md={3} lg={2}>25,500</Col>
+        </Row>
         <hr/>
         <h3>ใช้งาน</h3>
         <Row>
@@ -251,7 +280,7 @@ class JarSetup extends React.Component {
                   <ControlLabel>คงเหลือ</ControlLabel>
                   <InputGroup>
                     <InputGroup.Addon>฿</InputGroup.Addon>
-                    <FormControl ref="updateRemain" type="number" value={this.state.adjustJar.remain} disabled/>
+                    <FormControl ref="updateRemain" min="0" type="number" value={this.state.adjustJar.remain} disabled/>
                   </InputGroup>
                 </FormGroup>
               </Col>
@@ -260,7 +289,7 @@ class JarSetup extends React.Component {
                   <ControlLabel>เต็ม</ControlLabel>
                   <InputGroup>
                     <InputGroup.Addon>฿</InputGroup.Addon>
-                    <FormControl ref="updateFull" type="number" placeholder={this.state.adjustJar.full}/>
+                    <FormControl ref="updateFull" min="0" type="number" placeholder={this.state.adjustJar.full}/>
                   </InputGroup>
                 </FormGroup>
               </Col>

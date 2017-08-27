@@ -231,7 +231,7 @@ class Today extends React.Component {
                 </InputGroup>
               </td>
               <td><FormControl type="text" placeholder="กรอกรายละเอียด" ref="newDescription"/></td>
-              <td><FormControl type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
+              <td><FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
               <td>
                 <ButtonGroup vertical block>
                   <Button onClick={this.handlerCreateTransaction.bind(this, 1)} bsStyle="success">เพิ่มเข้า</Button>
