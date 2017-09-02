@@ -12714,7 +12714,7 @@ function activeMyJar(_update) {
   };
 }
 
-function updateAJar(_update) {
+function updateAJar(_update, cb) {
   return function (dispatch) {
     _axios2.default.patch('/api/jar/my-jar/', _update).then(function (response) {
       dispatch({
@@ -12726,6 +12726,8 @@ function updateAJar(_update) {
         type: "UPDATE_A_JAR_REJECTED",
         payload: err
       });
+    }).then(function () {
+      cb();
     });
   };
 }
@@ -52129,9 +52131,48 @@ var JarSetup = function (_React$Component) {
       });
     }
   }, {
+    key: 'handleInputFlowChange',
+    value: function handleInputFlowChange(event) {
+      var target = event.target;
+      var value = target.value;
+      var name = target.name;
+      var amount = value / 100 * 25700;
+
+      this.setState(_defineProperty({}, name, {
+        value: amount,
+        isChange: 'unsave'
+      }));
+    }
+  }, {
+    key: 'handleUpdateFullJar',
+    value: function handleUpdateFullJar(controlName, amountName, jar) {
+
+      var parent = this;
+      var amount = this.refs[amountName].props.value;
+
+      this.setState(_defineProperty({}, controlName, {
+        value: amount,
+        isChange: 'saving'
+      }));
+
+      var updatedJar = jar;
+      updatedJar.full = amount;
+      this.props.updateAJar(updatedJar, function () {
+        parent.setState(_defineProperty({}, controlName, {
+          value: amount,
+          isChange: 'saved'
+        }));
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var flowDirectors = this.props.selectedjar.map(function (jar, i) {
+        var percent = (jar.full / 25700 * 100).toFixed(2);
+        var amount = (percent / 100 * 25700).toFixed(2);
+        var controlName = 'flow-' + i;
+        var amountName = 'amount-' + i;
+
         return _react2.default.createElement(
           _reactBootstrap.Row,
           { key: i },
@@ -52143,20 +52184,32 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Col,
             { xs: 4, sm: 4, md: 3, lg: 2 },
-            _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '%', ref: 'percent' })
+            _react2.default.createElement(_reactBootstrap.FormControl, { step: 0.01, name: controlName, min: '0', onChange: this.handleInputFlowChange.bind(this), defaultValue: percent, type: 'number', placeholder: '%', ref: 'percent' })
           ),
           _react2.default.createElement(
             _reactBootstrap.Col,
             { xs: 4, sm: 4, md: 3, lg: 2 },
-            _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E40\u0E07\u0E34\u0E19', ref: 'amount' })
+            _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', value: this.state[controlName] == null ? amount : this.state[controlName].value, displayType: 'text', ref: amountName })
           ),
           _react2.default.createElement(
             _reactBootstrap.Col,
             { xs: 4, sm: 4, md: 3, lg: 1 },
-            _react2.default.createElement(
+            this.state[controlName] != null ? this.state[controlName].isChange == 'saved' ? _react2.default.createElement(
               _reactBootstrap.Button,
               { block: true, bsStyle: 'success' },
+              '\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
+            ) : this.state[controlName].isChange == 'saving' ? _react2.default.createElement(
+              _reactBootstrap.Button,
+              { disabled: true, block: true, bsStyle: 'warning' },
+              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01...'
+            ) : _react2.default.createElement(
+              _reactBootstrap.Button,
+              { block: true, bsStyle: 'warning', onClick: this.handleUpdateFullJar.bind(this, controlName, amountName, jar) },
               '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01'
+            ) : _react2.default.createElement(
+              _reactBootstrap.Button,
+              { block: true, bsStyle: 'success' },
+              '\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
             )
           )
         );
@@ -52394,7 +52447,7 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Col,
             { xs: 4, sm: 4, md: 3, lg: 2 },
-            '25,500'
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: 25500, displayType: 'text' })
           )
         ),
         _react2.default.createElement('hr', null),

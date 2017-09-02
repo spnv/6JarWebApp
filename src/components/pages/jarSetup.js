@@ -145,14 +145,88 @@ class JarSetup extends React.Component {
     })
   }
 
+  handleInputFlowChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    const amount = (value / 100) * 25700;
+
+    this.setState({
+      [name]: {
+        value: amount,
+        isChange: 'unsave'
+      }
+    });
+  }
+
+  handleUpdateFullJar(controlName, amountName, jar) {
+
+    let parent = this;
+    let amount = this.refs[amountName].props.value;
+
+    this.setState({
+      [controlName]: {
+        value: amount,
+        isChange: 'saving'
+      }
+    });
+
+    let updatedJar = jar;
+    updatedJar.full = amount;
+    this.props.updateAJar(updatedJar, function() {
+      parent.setState({
+        [controlName]: {
+          value: amount,
+          isChange: 'saved'
+        }
+      });
+    });
+
+  }
+
   render() {
     const flowDirectors = this.props.selectedjar.map(function(jar, i) {
+      let percent = ((jar.full / 25700) * 100).toFixed(2);
+      let amount = ((percent / 100) * 25700).toFixed(2);
+      let controlName = 'flow-' + i;
+      let amountName = 'amount-' + i;
+
       return (
         <Row key={i}>
           <Col xs={12} sm={12} md={3} lg={1}>{jar.display}</Col>
-          <Col xs={4} sm={4} md={3} lg={2}><FormControl min="0" type="number" placeholder="%" ref="percent"/></Col>
-          <Col xs={4} sm={4} md={3} lg={2}><FormControl min="0" type="number" placeholder="จำนวนเงิน" ref="amount"/></Col>
-          <Col xs={4} sm={4} md={3} lg={1}><Button block bsStyle="success">บันทึก</Button></Col>
+          <Col xs={4} sm={4} md={3} lg={2}>
+            <FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} defaultValue={percent} type="number" placeholder="%" ref="percent"/>
+          </Col>
+          <Col xs={4} sm={4} md={3} lg={2}>
+            <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={(this.state[controlName] == null)
+              ? amount
+              : this.state[controlName].value} displayType={'text'} ref={amountName}/>
+          </Col>
+          <Col xs={4} sm={4} md={3} lg={1}>
+            {(this.state[controlName] != null)
+              ? (this.state[controlName].isChange == 'saved')
+                ? (
+                  <Button block bsStyle="success">
+                    เรียบร้อย
+                  </Button>
+                )
+                : ((this.state[controlName].isChange == 'saving')
+                  ? (
+                    <Button disabled block bsStyle="warning">
+                      บันทึก...
+                    </Button>
+                  )
+                  : (
+                    <Button block bsStyle="warning" onClick={this.handleUpdateFullJar.bind(this, controlName, amountName, jar)}>
+                      บันทึก
+                    </Button>
+                  ))
+              : (
+                <Button block bsStyle="success">
+                  เรียบร้อย
+                </Button>
+              )}
+          </Col>
         </Row>
       )
     }, this)
@@ -253,7 +327,9 @@ class JarSetup extends React.Component {
         <Row>
           <Col xs={12} sm={12} md={3} lg={1}>รวม</Col>
           <Col xs={4} sm={4} md={3} lg={2}>100</Col>
-          <Col xs={4} sm={4} md={3} lg={2}>25,500</Col>
+          <Col xs={4} sm={4} md={3} lg={2}>
+            <NumberFormat thousandSeparator={true} prefix={'฿ '} value={25500} displayType={'text'}/>
+          </Col>
         </Row>
         <hr/>
         <h3>ใช้งาน</h3>

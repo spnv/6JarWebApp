@@ -69,7 +69,7 @@ export function activeMyJar(_update) {
   }
 }
 
-export function updateAJar(_update) {
+export function updateAJar(_update, cb) {
   return function(dispatch) {
     axios.patch('/api/jar/my-jar/', _update)
       .then(function(response) {
@@ -82,6 +82,8 @@ export function updateAJar(_update) {
           type: "UPDATE_A_JAR_REJECTED",
           payload: err
         })
+      }).then(function() {
+        cb()
       })
   }
 }
