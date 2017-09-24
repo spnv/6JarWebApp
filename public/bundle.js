@@ -52433,12 +52433,12 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: jar.full.toFixed(2), displayType: 'text' })
+            percent
           ),
           _react2.default.createElement(
             'td',
             null,
-            percent
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: jar.full.toFixed(2), displayType: 'text' })
           ),
           _react2.default.createElement(
             'td',
@@ -52647,12 +52647,12 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement(
                 'th',
                 null,
-                '\u0E08\u0E33\u0E19\u0E27\u0E19'
+                '\u0E04\u0E34\u0E14\u0E40\u0E1B\u0E47\u0E19 % (\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14)'
               ),
               _react2.default.createElement(
                 'th',
                 null,
-                '\u0E04\u0E34\u0E14\u0E40\u0E1B\u0E47\u0E19 % (\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14)'
+                '\u0E08\u0E33\u0E19\u0E27\u0E19'
               ),
               _react2.default.createElement(
                 'th',

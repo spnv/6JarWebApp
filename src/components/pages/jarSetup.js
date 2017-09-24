@@ -385,10 +385,10 @@ class JarSetup extends React.Component {
         <tr key={i}>
           <td>{jar.display}</td>
           <td>
-            <NumberFormat thousandSeparator={true} prefix={'฿ '} value={(jar.full).toFixed(2)} displayType={'text'}/>
+            {percent}
           </td>
           <td>
-            {percent}
+            <NumberFormat thousandSeparator={true} prefix={'฿ '} value={(jar.full).toFixed(2)} displayType={'text'}/>
           </td>
           <td><FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} type="number" defaultValue={(jar.full).toFixed(2)} placeholder="จำนวน" ref={amountName}/></td>
           <td>
@@ -517,8 +517,8 @@ class JarSetup extends React.Component {
           <thead>
             <tr>
               <th>#เหยือก</th>
-              <th>จำนวน</th>
               <th>คิดเป็น % (ต่อรายได้ทั้งหมด)</th>
+              <th>จำนวน</th>
               <th>จำนวนปรับ</th>
               <th>จัดการ</th>
             </tr>
