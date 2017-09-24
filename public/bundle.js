@@ -52033,7 +52033,6 @@ var JarSetup = function (_React$Component) {
 
     _this.state = {
       showModal: false,
-      enumerateFlow: {},
       totalAmount: 0,
       myflow: {
         newRecord: {
@@ -52058,45 +52057,15 @@ var JarSetup = function (_React$Component) {
     }
   }, {
     key: 'componentWillMount',
-    value: function componentWillMount() {
-      // const totalAmount = this.props.myflow.reduce(function(a, b) {
-      //   return a + b.amount;
-      // }, 0);
-      //
-      // this.setState({totalAmount: totalAmount})
-    }
+    value: function componentWillMount() {}
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      // this.props.getSelectedJar();
-      // this.props.getNonSelectedJar();
       var contex = this;
       contex.props.getMyJar(); //
       contex.props.getMemberSession();
-      contex.props.getMoneyFlow(function () {
-        // const totalAmount = contex.props.myflow.reduce(function(a, b) {
-        //   return a + b.amount;
-        // }, 0);
-        //
-        // contex.setState({totalAmount: totalAmount})
-
-      });
-
-      // const totalAmount = this.props.myflow.reduce(function(a, b) {
-      //   return a + b.amount;
-      // }, 0);
-      //
-      // this.setState({totalAmount: totalAmount})
+      contex.props.getMoneyFlow(function () {});
     }
-
-    // componentWillReceiveProps(nextProps) {
-    //   if (this.props.myflow != nextProps.myflow) {
-    //     console.log('new flow');
-    //
-    //     console.log(this.state);
-    //   }
-    // }
-
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
@@ -52125,14 +52094,6 @@ var JarSetup = function (_React$Component) {
     value: function handlerUnSelectJar(_id) {
       this.props.activeMyJar({ _id: _id, selected: false });
     }
-
-    // handlerUpdateAJar() {
-    //   let updatedJar = this.state.adjustJar;
-    //   updatedJar.full = parseInt(findDOMNode(this.refs.updateFull).value);
-    //   this.props.updateAJar(updatedJar);
-    //   this.close();
-    // }
-
   }, {
     key: 'handlerUpdateMoneyFlowSubtype',
     value: function handlerUpdateMoneyFlowSubtype(_subtype) {
@@ -52145,6 +52106,11 @@ var JarSetup = function (_React$Component) {
           }
         }
       });
+    }
+  }, {
+    key: 'handlerRemoveMoneyFlow',
+    value: function handlerRemoveMoneyFlow(_income) {
+      this.props.removeMoneyFlow(_income, function () {});
     }
   }, {
     key: 'handlerCreateMoneyFlow',
@@ -52163,7 +52129,6 @@ var JarSetup = function (_React$Component) {
         sub_type: newSubType,
         description: newDescription,
         amount: newAmount
-
         // reformat number to positive
       };if (newRecord.amount < 0) {
         newRecord.amount = newRecord.amount * -1;
@@ -52177,11 +52142,6 @@ var JarSetup = function (_React$Component) {
       }
 
       this.props.createMoneyFlow(newRecord.type, newRecord.sub_type, newRecord.amount, newRecord.description, function () {
-
-        // const totalAmount = contex.props.myflow.reduce(function(a, b) {
-        //   return a + b.amount;
-        // }, 0);
-
         contex.setState({
           myflow: {
             newRecord: {
@@ -52191,8 +52151,6 @@ var JarSetup = function (_React$Component) {
             }
           }
         });
-
-        // console.log(contex.state);
       });
     }
   }, {
@@ -52202,10 +52160,6 @@ var JarSetup = function (_React$Component) {
       var target = event.target;
       var value = target.value;
       var name = target.name;
-      // const amount = (value / 100) * this.state.totalAmount;
-
-      // console.log(name)
-      // console.log(value)
 
       this.setState(_defineProperty({}, name, {
         value: value,
@@ -52218,8 +52172,6 @@ var JarSetup = function (_React$Component) {
 
       var parent = this;
       var amount = parseFloat(this.state[controlName].value);
-
-      // console.log(amount)
 
       this.setState(_defineProperty({}, controlName, {
         value: amount,
@@ -52236,113 +52188,10 @@ var JarSetup = function (_React$Component) {
       });
     }
   }, {
-    key: 'handlerRemoveMoneyFlow',
-    value: function handlerRemoveMoneyFlow(_income) {
-      /* UPDATE TRANSACTION*/
-      // console.log(_income)
-      this.props.removeMoneyFlow(_income, function () {});
-
-      // const totalAmount = this.props.myflow.reduce(function(a, b) {
-      //   return a + b.amount;
-      // }, 0);
-      //
-      // this.setState({totalAmount: totalAmount})
-    }
-  }, {
     key: 'render',
     value: function render() {
 
-      // const enumulateList = this.props.selectedjar.map(function(jar, i) {
-      //
-      //   let percent = ((jar.full / this.state.totalAmount) * 100).toFixed(2);
-      //   let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
-      //   let controlName = 'flow-' + i;
-      //   let amountName = 'amount-' + i;
-      //
-      //   return (
-      //     <Row key={i}>
-      //       <Col xs={12} sm={12} md={3} lg={1}>{jar.display}</Col>
-      //       <Col xs={4} sm={4} md={3} lg={2}>
-      //         <FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} defaultValue={percent} type="number" placeholder="%" ref="percent"/>
-      //       </Col>
-      //       <Col xs={4} sm={4} md={3} lg={2}>
-      //         <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={(this.state[controlName] == null)
-      //           ? amount
-      //           : this.state[controlName].value} displayType={'text'} ref={amountName}/>
-      //       </Col>
-      //       <Col xs={4} sm={4} md={3} lg={1}>
-      //         {(this.state[controlName] != null)
-      //           ? (this.state[controlName].isChange == 'saved')
-      //             ? (
-      //               <Button block bsStyle="success">
-      //                 เรียบร้อย
-      //               </Button>
-      //             )
-      //             : ((this.state[controlName].isChange == 'saving')
-      //               ? (
-      //                 <Button disabled block bsStyle="warning">
-      //                   บันทึก...
-      //                 </Button>
-      //               )
-      //               : (
-      //                 <Button block bsStyle="warning" onClick={this.handleUpdateFullJar.bind(this, controlName, amountName, jar)}>
-      //                   บันทึก
-      //                 </Button>
-      //               ))
-      //           : (
-      //             <Button block bsStyle="success">
-      //               เรียบร้อย
-      //             </Button>
-      //           )}
-      //       </Col>
-      //     </Row>
-      //   )
-      // }, this)
-
-      // const flowDirectors = this.props.selectedjar.map(function(jar, i) {
-      //
-      //   let percent = ((jar.full / this.props.totalAmount) * 100).toFixed(2);
-      //   let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
-      //   let controlName = 'flow-' + i;
-      //   let amountName = 'amount-' + i;
-      //
-      //   return (
-      //     <Row key={i}>
-      //       <Col xs={12} sm={12} md={3} lg={1}>{jar.display}</Col>
-      //       <Col xs={4} sm={4} md={3} lg={2}>
-      //         <FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} defaultValue={percent} type="number" placeholder="%" ref="percent"/>
-      //       </Col>
-      //       <Col xs={4} sm={4} md={3} lg={1}>
-      //         {(this.state[controlName] != null)
-      //           ? (this.state[controlName].isChange == 'saved')
-      //             ? (
-      //               <Button block bsStyle="success">
-      //                 เรียบร้อย
-      //               </Button>
-      //             )
-      //             : ((this.state[controlName].isChange == 'saving')
-      //               ? (
-      //                 <Button disabled block bsStyle="warning">
-      //                   บันทึก...
-      //                 </Button>
-      //               )
-      //               : (
-      //                 <Button block bsStyle="warning" onClick={this.handleUpdateFullJar.bind(this, controlName, amountName, jar)}>
-      //                   บันทึก
-      //                 </Button>
-      //               ))
-      //           : (
-      //             <Button block bsStyle="success">
-      //               เรียบร้อย
-      //             </Button>
-      //           )}
-      //       </Col>
-      //     </Row>
-      //   )
-      // }, this)
-
       var selectedJars = this.props.selectedjar.map(function (jar, i) {
-        // <Button onClick={this.open.bind(this, jar)} bsStyle="warning">แก้ไข</Button>
         return _react2.default.createElement(
           _reactBootstrap.Col,
           { key: i, xs: 6, sm: 6, md: 4, lg: 2 },
@@ -52357,7 +52206,6 @@ var JarSetup = function (_React$Component) {
       }, this);
 
       var nonSelectedJars = this.props.nonselected.map(function (jar, i) {
-        // <Button onClick={this.open.bind(this, jar)} bsStyle="warning">แก้ไข</Button>
         return _react2.default.createElement(
           _reactBootstrap.Col,
           { key: i, xs: 6, sm: 6, md: 4, lg: 2 },
@@ -52419,7 +52267,6 @@ var JarSetup = function (_React$Component) {
 
         var percent = (jar.full / this.props.totalAmount * 100).toFixed(2);
         var jarFull = jar.full.toFixed(2);
-        // let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
         var controlName = 'flow-' + i;
         var amountName = 'amount-' + i;
 
@@ -52477,41 +52324,6 @@ var JarSetup = function (_React$Component) {
       var sumFlow = this.props.selectedjar.reduce(function (a, b) {
         return a + b.full;
       }, 0);
-
-      // <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
-      //   <Modal.Header>
-      //     <Modal.Title>
-      //       <b>แก้ไข [{this.state.adjustJar.display}]</b>
-      //     </Modal.Title>
-      //   </Modal.Header>
-      //   <Modal.Body>
-      //     <Grid>
-      //       <h4>ยอดเงิน</h4>
-      //       <Col xs={12} sm={6} md={6} lg={6}>
-      //         <FormGroup controlId="updateRemain">
-      //           <ControlLabel>คงเหลือ</ControlLabel>
-      //           <InputGroup>
-      //             <InputGroup.Addon>฿</InputGroup.Addon>
-      //             <FormControl ref="updateRemain" min="0" type="number" value={this.state.adjustJar.remain} disabled/>
-      //           </InputGroup>
-      //         </FormGroup>
-      //       </Col>
-      //       <Col xs={12} sm={6} md={6} lg={6}>
-      //         <FormGroup controlId="updateFull">
-      //           <ControlLabel>เต็ม</ControlLabel>
-      //           <InputGroup>
-      //             <InputGroup.Addon>฿</InputGroup.Addon>
-      //             <FormControl ref="updateFull" min="0" type="number" placeholder={this.state.adjustJar.full}/>
-      //           </InputGroup>
-      //         </FormGroup>
-      //       </Col>
-      //     </Grid>
-      //   </Modal.Body>
-      //   <Modal.Footer>
-      //     <Button onClick={this.handlerUpdateAJar.bind(this)} bsStyle="success">บันทึก</Button >
-      //     <Button onClick={this.close.bind(this)} bsStyle="danger">ปิด</Button >
-      //   </Modal.Footer>
-      // </Modal>
 
       return _react2.default.createElement(
         _reactBootstrap.Grid,
@@ -52721,17 +52533,7 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Modal.Header,
             null,
-            _react2.default.createElement(
-              _reactBootstrap.Modal.Title,
-              null,
-              _react2.default.createElement(
-                'b',
-                null,
-                '\u0E41\u0E08\u0E01\u0E41\u0E08\u0E07\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A [',
-                this.state.enumerateFlow.description,
-                ']'
-              )
-            )
+            _react2.default.createElement(_reactBootstrap.Modal.Title, null)
           ),
           _react2.default.createElement(
             _reactBootstrap.Modal.Body,

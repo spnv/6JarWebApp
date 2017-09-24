@@ -44,15 +44,14 @@ router.route('/my-flow')
 
 router.route('/my-flow/:myflowid')
   .delete(function(req, res, next) {
-    MoneyFlow.remove({
+    MoneyFlow.findOneAndRemove({
       _id: req.params.myflowid
-    }, function(err, result) {
+    }, function(err, item) {
       if (err) {
         throw err;
       }
-      res.json({
-        _id: req.params.myflowid
-      })
+
+      res.json(item)
     });
   });
 
