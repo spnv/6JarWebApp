@@ -120,7 +120,7 @@ class Today extends React.Component {
 
     let newJar = currentJarsToUpdate[jarIndex];
     newJar.remain = currentJarsToUpdate[jarIndex].remain + newRecord.amount;
-    this.props.updateAJar(newJar)
+    this.props.updateAJar(newJar,function(){})
 
     this.setState({
       today: {
@@ -147,7 +147,7 @@ class Today extends React.Component {
 
     let newJar = currentJarsToUpdate[jarIndex];
     newJar.remain = currentJarsToUpdate[jarIndex].remain - _transaction.amount;
-    this.props.updateAJar(newJar);
+    this.props.updateAJar(newJar,function(){});
   }
 
   render() {

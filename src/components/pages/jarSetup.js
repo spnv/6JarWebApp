@@ -26,6 +26,7 @@ import {
 import {activeMyJar, updateAJar, myJar} from '../../actions/jarAction';
 import {getMemberSession} from '../../actions/memberAction';
 import {createMoneyFlow, getMoneyFlow, removeMoneyFlow} from '../../actions/moneyFlowAction';
+import {createTransaction} from '../../actions/transactionAction';
 
 var NumberFormat = require('react-number-format');
 
@@ -186,6 +187,34 @@ class JarSetup extends React.Component {
           isChange: 'saved'
         }
       });
+    });
+  }
+
+  handlePaidToJar() {
+    let contex = this;
+    
+    let requests = contex.props.selectedjar.map((jar, i) => {
+      return new Promise((resolve) => {
+        let percent = ((jar.full / contex.props.totalAmount) * 100);
+        let paid = parseFloat((percent / 100 * contex.state.paid.amount).toFixed(2));
+        contex.props.createTransaction(jar.code, jar.display, contex.state.paid.description, paid, 'increase');
+
+        /* UPDATE JAR */
+        const currentJarsToUpdate = [...contex.props.selectedjar];
+        let jarIndex = contex.props.selectedjar.findIndex(function(jarList) {
+          return jarList.display === jar.display;
+        })
+
+        let newJar = currentJarsToUpdate[jarIndex];
+        newJar.remain = currentJarsToUpdate[jarIndex].remain + paid;
+        contex.props.updateAJar(newJar, function() {
+          resolve();
+        });
+      });
+    })
+
+    Promise.all(requests).then(function() {
+      contex.close();
     });
   }
 
@@ -406,9 +435,7 @@ class JarSetup extends React.Component {
           <Modal.Header>
             <Modal.Title>
               <b>แบ่งเงินเข้าจาก {this.state.paid.description}</b>
-              <Button onClick={this.close.bind(this)} bsStyle="danger" className="pull-right">
-                <b>x</b>
-              </Button >
+              <Button bsSize="xsmall" onClick={this.close.bind(this)} bsStyle="danger" className="pull-right">ปิด</Button >
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -439,7 +466,9 @@ class JarSetup extends React.Component {
             </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close.bind(this)} bsStyle="success">จ่ายเข้า</Button >
+            <Button bsSize="large" onClick={this.handlePaidToJar.bind(this)} bsStyle="success">
+              <b>แบ่งจ่ายเข้าเหยือก</b>
+            </Button>
           </Modal.Footer>
         </Modal>
       </Grid>
@@ -461,7 +490,8 @@ function mapDispatchToProps(dispatch) {
     getMyJar: myJar,
     createMoneyFlow: createMoneyFlow,
     getMoneyFlow: getMoneyFlow,
-    removeMoneyFlow: removeMoneyFlow
+    removeMoneyFlow: removeMoneyFlow,
+    createTransaction: createTransaction
   }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(JarSetup);

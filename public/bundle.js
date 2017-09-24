@@ -51745,7 +51745,7 @@ var Today = function (_React$Component) {
 
       var newJar = currentJarsToUpdate[jarIndex];
       newJar.remain = currentJarsToUpdate[jarIndex].remain + newRecord.amount;
-      this.props.updateAJar(newJar);
+      this.props.updateAJar(newJar, function () {});
 
       this.setState({
         today: {
@@ -51773,7 +51773,7 @@ var Today = function (_React$Component) {
 
       var newJar = currentJarsToUpdate[jarIndex];
       newJar.remain = currentJarsToUpdate[jarIndex].remain - _transaction.amount;
-      this.props.updateAJar(newJar);
+      this.props.updateAJar(newJar, function () {});
     }
   }, {
     key: 'render',
@@ -52011,7 +52011,11 @@ var _memberAction = __webpack_require__(74);
 
 var _moneyFlowAction = __webpack_require__(580);
 
+var _transactionAction = __webpack_require__(260);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -52192,6 +52196,35 @@ var JarSetup = function (_React$Component) {
           value: amount,
           isChange: 'saved'
         }));
+      });
+    }
+  }, {
+    key: 'handlePaidToJar',
+    value: function handlePaidToJar() {
+      var contex = this;
+
+      var requests = contex.props.selectedjar.map(function (jar, i) {
+        return new Promise(function (resolve) {
+          var percent = jar.full / contex.props.totalAmount * 100;
+          var paid = parseFloat((percent / 100 * contex.state.paid.amount).toFixed(2));
+          contex.props.createTransaction(jar.code, jar.display, contex.state.paid.description, paid, 'increase');
+
+          /* UPDATE JAR */
+          var currentJarsToUpdate = [].concat(_toConsumableArray(contex.props.selectedjar));
+          var jarIndex = contex.props.selectedjar.findIndex(function (jarList) {
+            return jarList.display === jar.display;
+          });
+
+          var newJar = currentJarsToUpdate[jarIndex];
+          newJar.remain = currentJarsToUpdate[jarIndex].remain + paid;
+          contex.props.updateAJar(newJar, function () {
+            resolve();
+          });
+        });
+      });
+
+      Promise.all(requests).then(function () {
+        contex.close();
       });
     }
   }, {
@@ -52588,12 +52621,8 @@ var JarSetup = function (_React$Component) {
               ),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { onClick: this.close.bind(this), bsStyle: 'danger', className: 'pull-right' },
-                _react2.default.createElement(
-                  'b',
-                  null,
-                  'x'
-                )
+                { bsSize: 'xsmall', onClick: this.close.bind(this), bsStyle: 'danger', className: 'pull-right' },
+                '\u0E1B\u0E34\u0E14'
               )
             )
           ),
@@ -52663,8 +52692,12 @@ var JarSetup = function (_React$Component) {
             null,
             _react2.default.createElement(
               _reactBootstrap.Button,
-              { onClick: this.close.bind(this), bsStyle: 'success' },
-              '\u0E08\u0E48\u0E32\u0E22\u0E40\u0E02\u0E49\u0E32'
+              { bsSize: 'large', onClick: this.handlePaidToJar.bind(this), bsStyle: 'success' },
+              _react2.default.createElement(
+                'b',
+                null,
+                '\u0E41\u0E1A\u0E48\u0E07\u0E08\u0E48\u0E32\u0E22\u0E40\u0E02\u0E49\u0E32\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01'
+              )
             )
           )
         )
@@ -52690,7 +52723,8 @@ function mapDispatchToProps(dispatch) {
     getMyJar: _jarAction.myJar,
     createMoneyFlow: _moneyFlowAction.createMoneyFlow,
     getMoneyFlow: _moneyFlowAction.getMoneyFlow,
-    removeMoneyFlow: _moneyFlowAction.removeMoneyFlow
+    removeMoneyFlow: _moneyFlowAction.removeMoneyFlow,
+    createTransaction: _transactionAction.createTransaction
   }, dispatch);
 }
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(JarSetup);
