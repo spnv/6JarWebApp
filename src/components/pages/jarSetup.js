@@ -35,6 +35,13 @@ class JarSetup extends React.Component {
     super(props);
     this.state = {
       showModal: false,
+      paid: {
+        owner: null,
+        type: null,
+        sub_type: null,
+        amount: null,
+        description: null
+      },
       totalAmount: 0,
       myflow: {
         newRecord: {
@@ -47,21 +54,19 @@ class JarSetup extends React.Component {
   }
 
   open(moneyFlow) {
-    this.setState({showModal: true, enumerateFlow: moneyFlow})
+    this.setState({showModal: true, paid: moneyFlow})
   }
   close() {
     this.setState({showModal: false})
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   componentDidMount() {
     let contex = this;
     contex.props.getMyJar(); //
     contex.props.getMemberSession();
-    contex.props.getMoneyFlow(function() {
-    });
+    contex.props.getMoneyFlow(function() {});
   }
 
   componentDidUpdate() {
@@ -186,6 +191,8 @@ class JarSetup extends React.Component {
 
   render() {
 
+    let contex = this;
+
     const selectedJars = this.props.selectedjar.map(function(jar, i) {
       return (
         <Col key={i} xs={6} sm={6} md={4} lg={2}>
@@ -271,6 +278,33 @@ class JarSetup extends React.Component {
         </tr>
       )
     }, this)
+
+    const paidDirectorItem = this.props.selectedjar.map(function(jar, i) {
+
+      let percent = ((jar.full / this.props.totalAmount) * 100).toFixed(2);
+      let paid = (percent / 100 * this.state.paid.amount).toFixed(2);
+      let controlName = 'paid-flow-' + i;
+      let amountName = 'paid-amount-' + i;
+
+      return (
+        <tr key={i}>
+          <td>{jar.display}</td>
+          <td>
+            <NumberFormat thousandSeparator={true} suffix={' %'} value={percent} displayType={'text'}/>
+          </td>
+          <td>
+            <NumberFormat thousandSeparator={true} prefix={'฿ '} value={paid} displayType={'text'}/>
+          </td>
+        </tr>
+      )
+    }, this)
+
+    const sumPaid = this.props.selectedjar.reduce(function(a, b) {
+      let percent = ((b.full / contex.props.totalAmount) * 100).toFixed(2);
+      let paid = parseFloat(percent / 100 * contex.state.paid.amount);
+
+      return a + paid;
+    }, 0);
 
     const sumIncome = this.props.myflow.reduce(function(a, b) {
       return a + b.amount;
@@ -371,15 +405,41 @@ class JarSetup extends React.Component {
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header>
             <Modal.Title>
+              <b>แบ่งเงินเข้าจาก {this.state.paid.description}</b>
+              <Button onClick={this.close.bind(this)} bsStyle="danger" className="pull-right">
+                <b>x</b>
+              </Button >
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Grid>
-              <h4>รายการ</h4>
-            </Grid>
+            <Table style={{
+              color: 'black'
+            }}>
+              <thead>
+                <tr>
+                  <th>#เหยือก</th>
+                  <th>สัดส่วนต่อรายได้</th>
+                  <th>จำนวนแบ่ง</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paidDirectorItem}
+                <tr style={(sumIncome - sumFlow) >= 0
+                  ? {
+                    color: 'green'
+                  }
+                  : {
+                    color: 'red'
+                  }}>
+                  <td>รวม</td>
+                  <td><NumberFormat decimalPrecision={2} thousandSeparator={true} suffix={' %'} value={(sumFlow / sumIncome * 100)} displayType={'text'}/></td>
+                  <td><NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={sumPaid} displayType={'text'}/></td>
+                </tr>
+              </tbody>
+            </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close.bind(this)} bsStyle="danger">ปิด</Button >
+            <Button onClick={this.close.bind(this)} bsStyle="success">จ่ายเข้า</Button >
           </Modal.Footer>
         </Modal>
       </Grid>

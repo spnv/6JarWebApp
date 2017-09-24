@@ -52033,6 +52033,13 @@ var JarSetup = function (_React$Component) {
 
     _this.state = {
       showModal: false,
+      paid: {
+        owner: null,
+        type: null,
+        sub_type: null,
+        amount: null,
+        description: null
+      },
       totalAmount: 0,
       myflow: {
         newRecord: {
@@ -52048,7 +52055,7 @@ var JarSetup = function (_React$Component) {
   _createClass(JarSetup, [{
     key: 'open',
     value: function open(moneyFlow) {
-      this.setState({ showModal: true, enumerateFlow: moneyFlow });
+      this.setState({ showModal: true, paid: moneyFlow });
     }
   }, {
     key: 'close',
@@ -52191,6 +52198,8 @@ var JarSetup = function (_React$Component) {
     key: 'render',
     value: function render() {
 
+      var contex = this;
+
       var selectedJars = this.props.selectedjar.map(function (jar, i) {
         return _react2.default.createElement(
           _reactBootstrap.Col,
@@ -52316,6 +52325,41 @@ var JarSetup = function (_React$Component) {
           )
         );
       }, this);
+
+      var paidDirectorItem = this.props.selectedjar.map(function (jar, i) {
+
+        var percent = (jar.full / this.props.totalAmount * 100).toFixed(2);
+        var paid = (percent / 100 * this.state.paid.amount).toFixed(2);
+        var controlName = 'paid-flow-' + i;
+        var amountName = 'paid-amount-' + i;
+
+        return _react2.default.createElement(
+          'tr',
+          { key: i },
+          _react2.default.createElement(
+            'td',
+            null,
+            jar.display
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, suffix: ' %', value: percent, displayType: 'text' })
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: paid, displayType: 'text' })
+          )
+        );
+      }, this);
+
+      var sumPaid = this.props.selectedjar.reduce(function (a, b) {
+        var percent = (b.full / contex.props.totalAmount * 100).toFixed(2);
+        var paid = parseFloat(percent / 100 * contex.state.paid.amount);
+
+        return a + paid;
+      }, 0);
 
       var sumIncome = this.props.myflow.reduce(function (a, b) {
         return a + b.amount;
@@ -52533,18 +52577,84 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Modal.Header,
             null,
-            _react2.default.createElement(_reactBootstrap.Modal.Title, null)
+            _react2.default.createElement(
+              _reactBootstrap.Modal.Title,
+              null,
+              _react2.default.createElement(
+                'b',
+                null,
+                '\u0E41\u0E1A\u0E48\u0E07\u0E40\u0E07\u0E34\u0E19\u0E40\u0E02\u0E49\u0E32\u0E08\u0E32\u0E01 ',
+                this.state.paid.description
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { onClick: this.close.bind(this), bsStyle: 'danger', className: 'pull-right' },
+                _react2.default.createElement(
+                  'b',
+                  null,
+                  'x'
+                )
+              )
+            )
           ),
           _react2.default.createElement(
             _reactBootstrap.Modal.Body,
             null,
             _react2.default.createElement(
-              _reactBootstrap.Grid,
-              null,
+              _reactBootstrap.Table,
+              { style: {
+                  color: 'black'
+                } },
               _react2.default.createElement(
-                'h4',
+                'thead',
                 null,
-                '\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23'
+                _react2.default.createElement(
+                  'tr',
+                  null,
+                  _react2.default.createElement(
+                    'th',
+                    null,
+                    '#\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01'
+                  ),
+                  _react2.default.createElement(
+                    'th',
+                    null,
+                    '\u0E2A\u0E31\u0E14\u0E2A\u0E48\u0E27\u0E19\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49'
+                  ),
+                  _react2.default.createElement(
+                    'th',
+                    null,
+                    '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E41\u0E1A\u0E48\u0E07'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'tbody',
+                null,
+                paidDirectorItem,
+                _react2.default.createElement(
+                  'tr',
+                  { style: sumIncome - sumFlow >= 0 ? {
+                      color: 'green'
+                    } : {
+                      color: 'red'
+                    } },
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    '\u0E23\u0E27\u0E21'
+                  ),
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, suffix: ' %', value: sumFlow / sumIncome * 100, displayType: 'text' })
+                  ),
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', value: sumPaid, displayType: 'text' })
+                  )
+                )
               )
             )
           ),
@@ -52553,8 +52663,8 @@ var JarSetup = function (_React$Component) {
             null,
             _react2.default.createElement(
               _reactBootstrap.Button,
-              { onClick: this.close.bind(this), bsStyle: 'danger' },
-              '\u0E1B\u0E34\u0E14'
+              { onClick: this.close.bind(this), bsStyle: 'success' },
+              '\u0E08\u0E48\u0E32\u0E22\u0E40\u0E02\u0E49\u0E32'
             )
           )
         )
