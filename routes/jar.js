@@ -22,11 +22,13 @@ router.route('/my-jar')
   )
   .patch(
     function(req, res, next) {
+      console.log(req.body)
       MyJar.findOneAndUpdate({
         _id: req.body._id
       }, req.body, {
         new: true
       }, function(err, updated) {
+        console.log(updated)
         res.json(updated);
       });
     }

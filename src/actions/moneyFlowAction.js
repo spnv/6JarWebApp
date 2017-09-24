@@ -32,7 +32,7 @@ export function createMoneyFlow(
 }
 
 // read
-export function getMoneyFlow() {
+export function getMoneyFlow(cb) {
   return function(dispatch) {
     axios.get('/api/money-flow/my-flow')
       .then(function(response) {
@@ -45,9 +45,30 @@ export function getMoneyFlow() {
           type: "GET_MONEY_FLOW_REJECTED",
           payload: err
         })
+      }).then(function() {
+        cb()
       })
   }
 }
 // update
 
 // delete
+export function removeMoneyFlow(_flowItem, cb) {
+  return function(dispatch) {
+    // TODO : Add duplicate detector
+    axios.delete('/api/money-flow/my-flow/' + _flowItem._id, )
+      .then(function(response) {
+        dispatch({
+          type: "DELETE_MONEY_FLOW",
+          payload: response.data
+        })
+      }).catch(function(err) {
+        dispatch({
+          type: "DELETE_MONEY_FLOW_REJECTED",
+          payload: err
+        })
+      }).then(function() {
+        cb()
+      })
+  }
+}

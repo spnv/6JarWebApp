@@ -27,11 +27,11 @@ router.route('/today')
     let newTransaction = req.body;
     newTransaction.owner = req.session.member.email;
     Transaction.create(newTransaction,
-      function(err, newTransaction) {
+      function(err, createdNewTransaction) {
         if (err) {
           throw err;
         }
-        res.json(newTransaction);
+        res.json(createdNewTransaction);
       });
   });
 

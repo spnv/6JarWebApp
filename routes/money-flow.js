@@ -13,8 +13,21 @@ router.route('/my-flow')
     var member = req.session.member.email;
     MoneyFlow.find({
       owner: member
+    }, null, {
+      sort: {
+        sub_type: 1
+      }
     }, function(err, items) {
-      res.json(items);
+      // console.log(items)
+
+      const totalAmount = items.reduce(function(a, b) {
+        return a + b.amount;
+      }, 0);
+
+      res.json({
+        items : items,
+        totalAmount : totalAmount
+      });
     });
   })
   // create
@@ -25,7 +38,21 @@ router.route('/my-flow')
       if (err) {
         throw err;
       }
-      res.json(newMoneyFlowItem);
+      res.json(item);
+    });
+  });
+
+router.route('/my-flow/:myflowid')
+  .delete(function(req, res, next) {
+    MoneyFlow.remove({
+      _id: req.params.myflowid
+    }, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      res.json({
+        _id: req.params.myflowid
+      })
     });
   });
 

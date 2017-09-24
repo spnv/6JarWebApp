@@ -39090,16 +39090,40 @@ function moneyFlowReducers() {
     case "CREATE_MONEY_FLOW":
       var newMoneyFlow = action.payload;
       var currentMyFlow = [].concat(_toConsumableArray(state.myflow));
+      var currentTotalAmount = state.totalAmount;
 
       var newMoneyFlows = [].concat(_toConsumableArray(currentMyFlow), [newMoneyFlow]);
 
+      var newTotalAmount = currentTotalAmount + newMoneyFlow.amount;
+
       return _extends({}, state, {
-        myflow: newMoneyFlows
+        myflow: newMoneyFlows,
+        totalAmount: newTotalAmount
       });
       break;
     case "GET_MONEY_FLOW":
       return _extends({}, state, {
-        myflow: action.payload
+        myflow: action.payload.items,
+        totalAmount: action.payload.totalAmount
+      });
+      break;
+    case "DELETE_MONEY_FLOW":
+
+      var deletedMoneyFlow = action.payload;
+      var currentTotalAmountToDelete = state.totalAmount;
+      // remove
+      var currentMoneyFlowToDelete = [].concat(_toConsumableArray(state.myflow));
+      var indexToDelete = currentMoneyFlowToDelete.findIndex(function (item) {
+        return item._id === deletedMoneyFlow._id;
+      });
+
+      var newMoneyFlowToDelete = [].concat(_toConsumableArray(currentMoneyFlowToDelete.slice(0, indexToDelete)), _toConsumableArray(currentMoneyFlowToDelete.slice(indexToDelete + 1)));
+
+      var newTotalAmountAfterDelete = currentTotalAmountToDelete - deletedMoneyFlow.amount;
+
+      return _extends({}, state, {
+        myflow: newMoneyFlowToDelete,
+        totalAmount: newTotalAmountAfterDelete
       });
       break;
   }
@@ -52009,7 +52033,8 @@ var JarSetup = function (_React$Component) {
 
     _this.state = {
       showModal: false,
-      adjustJar: {},
+      enumerateFlow: {},
+      totalAmount: 0,
       myflow: {
         newRecord: {
           amount: 0,
@@ -52023,8 +52048,8 @@ var JarSetup = function (_React$Component) {
 
   _createClass(JarSetup, [{
     key: 'open',
-    value: function open(jar) {
-      this.setState({ showModal: true, adjustJar: jar });
+    value: function open(moneyFlow) {
+      this.setState({ showModal: true, enumerateFlow: moneyFlow });
     }
   }, {
     key: 'close',
@@ -52032,14 +52057,46 @@ var JarSetup = function (_React$Component) {
       this.setState({ showModal: false });
     }
   }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      // const totalAmount = this.props.myflow.reduce(function(a, b) {
+      //   return a + b.amount;
+      // }, 0);
+      //
+      // this.setState({totalAmount: totalAmount})
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // this.props.getSelectedJar();
       // this.props.getNonSelectedJar();
-      this.props.getMyJar(); //
-      this.props.getMemberSession();
-      this.props.getMoneyFlow();
+      var contex = this;
+      contex.props.getMyJar(); //
+      contex.props.getMemberSession();
+      contex.props.getMoneyFlow(function () {
+        // const totalAmount = contex.props.myflow.reduce(function(a, b) {
+        //   return a + b.amount;
+        // }, 0);
+        //
+        // contex.setState({totalAmount: totalAmount})
+
+      });
+
+      // const totalAmount = this.props.myflow.reduce(function(a, b) {
+      //   return a + b.amount;
+      // }, 0);
+      //
+      // this.setState({totalAmount: totalAmount})
     }
+
+    // componentWillReceiveProps(nextProps) {
+    //   if (this.props.myflow != nextProps.myflow) {
+    //     console.log('new flow');
+    //
+    //     console.log(this.state);
+    //   }
+    // }
+
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
@@ -52068,14 +52125,14 @@ var JarSetup = function (_React$Component) {
     value: function handlerUnSelectJar(_id) {
       this.props.activeMyJar({ _id: _id, selected: false });
     }
-  }, {
-    key: 'handlerUpdateAJar',
-    value: function handlerUpdateAJar() {
-      var updatedJar = this.state.adjustJar;
-      updatedJar.full = parseInt((0, _reactDom.findDOMNode)(this.refs.updateFull).value);
-      this.props.updateAJar(updatedJar);
-      this.close();
-    }
+
+    // handlerUpdateAJar() {
+    //   let updatedJar = this.state.adjustJar;
+    //   updatedJar.full = parseInt(findDOMNode(this.refs.updateFull).value);
+    //   this.props.updateAJar(updatedJar);
+    //   this.close();
+    // }
+
   }, {
     key: 'handlerUpdateMoneyFlowSubtype',
     value: function handlerUpdateMoneyFlowSubtype(_subtype) {
@@ -52093,6 +52150,7 @@ var JarSetup = function (_React$Component) {
     key: 'handlerCreateMoneyFlow',
     value: function handlerCreateMoneyFlow(position) {
 
+      var contex = this;
       var newSubType = this.state.myflow.newRecord.sub_type;
       var newDescription = (0, _reactDom.findDOMNode)(this.refs.newDescription).value;
       var newAmount = parseInt((0, _reactDom.findDOMNode)(this.refs.newAmount).value);
@@ -52118,28 +52176,39 @@ var JarSetup = function (_React$Component) {
         newRecord.type = 'out';
       }
 
-      this.props.createMoneyFlow(newRecord.type, newRecord.sub_type, newRecord.amount, newRecord.description);
+      this.props.createMoneyFlow(newRecord.type, newRecord.sub_type, newRecord.amount, newRecord.description, function () {
 
-      this.setState({
-        myflow: {
-          newRecord: {
-            amount: 0,
-            sub_type: 'เลือกชนิด',
-            description: null
+        // const totalAmount = contex.props.myflow.reduce(function(a, b) {
+        //   return a + b.amount;
+        // }, 0);
+
+        contex.setState({
+          myflow: {
+            newRecord: {
+              amount: 0,
+              sub_type: 'เลือกชนิด',
+              description: null
+            }
           }
-        }
+        });
+
+        // console.log(contex.state);
       });
     }
   }, {
     key: 'handleInputFlowChange',
     value: function handleInputFlowChange(event) {
+
       var target = event.target;
       var value = target.value;
       var name = target.name;
-      var amount = value / 100 * 25700;
+      // const amount = (value / 100) * this.state.totalAmount;
+
+      // console.log(name)
+      // console.log(value)
 
       this.setState(_defineProperty({}, name, {
-        value: amount,
+        value: value,
         isChange: 'unsave'
       }));
     }
@@ -52148,7 +52217,9 @@ var JarSetup = function (_React$Component) {
     value: function handleUpdateFullJar(controlName, amountName, jar) {
 
       var parent = this;
-      var amount = this.refs[amountName].props.value;
+      var amount = parseFloat(this.state[controlName].value);
+
+      // console.log(amount)
 
       this.setState(_defineProperty({}, controlName, {
         value: amount,
@@ -52165,98 +52236,137 @@ var JarSetup = function (_React$Component) {
       });
     }
   }, {
+    key: 'handlerRemoveMoneyFlow',
+    value: function handlerRemoveMoneyFlow(_income) {
+      /* UPDATE TRANSACTION*/
+      // console.log(_income)
+      this.props.removeMoneyFlow(_income, function () {});
+
+      // const totalAmount = this.props.myflow.reduce(function(a, b) {
+      //   return a + b.amount;
+      // }, 0);
+      //
+      // this.setState({totalAmount: totalAmount})
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var flowDirectors = this.props.selectedjar.map(function (jar, i) {
-        var percent = (jar.full / 25700 * 100).toFixed(2);
-        var amount = (percent / 100 * 25700).toFixed(2);
-        var controlName = 'flow-' + i;
-        var amountName = 'amount-' + i;
 
-        return _react2.default.createElement(
-          _reactBootstrap.Row,
-          { key: i },
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12, sm: 12, md: 3, lg: 1 },
-            jar.display
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 2 },
-            _react2.default.createElement(_reactBootstrap.FormControl, { step: 0.01, name: controlName, min: '0', onChange: this.handleInputFlowChange.bind(this), defaultValue: percent, type: 'number', placeholder: '%', ref: 'percent' })
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 2 },
-            _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', value: this.state[controlName] == null ? amount : this.state[controlName].value, displayType: 'text', ref: amountName })
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 1 },
-            this.state[controlName] != null ? this.state[controlName].isChange == 'saved' ? _react2.default.createElement(
-              _reactBootstrap.Button,
-              { block: true, bsStyle: 'success' },
-              '\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
-            ) : this.state[controlName].isChange == 'saving' ? _react2.default.createElement(
-              _reactBootstrap.Button,
-              { disabled: true, block: true, bsStyle: 'warning' },
-              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01...'
-            ) : _react2.default.createElement(
-              _reactBootstrap.Button,
-              { block: true, bsStyle: 'warning', onClick: this.handleUpdateFullJar.bind(this, controlName, amountName, jar) },
-              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01'
-            ) : _react2.default.createElement(
-              _reactBootstrap.Button,
-              { block: true, bsStyle: 'success' },
-              '\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
-            )
-          )
-        );
-      }, this);
+      // const enumulateList = this.props.selectedjar.map(function(jar, i) {
+      //
+      //   let percent = ((jar.full / this.state.totalAmount) * 100).toFixed(2);
+      //   let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
+      //   let controlName = 'flow-' + i;
+      //   let amountName = 'amount-' + i;
+      //
+      //   return (
+      //     <Row key={i}>
+      //       <Col xs={12} sm={12} md={3} lg={1}>{jar.display}</Col>
+      //       <Col xs={4} sm={4} md={3} lg={2}>
+      //         <FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} defaultValue={percent} type="number" placeholder="%" ref="percent"/>
+      //       </Col>
+      //       <Col xs={4} sm={4} md={3} lg={2}>
+      //         <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={(this.state[controlName] == null)
+      //           ? amount
+      //           : this.state[controlName].value} displayType={'text'} ref={amountName}/>
+      //       </Col>
+      //       <Col xs={4} sm={4} md={3} lg={1}>
+      //         {(this.state[controlName] != null)
+      //           ? (this.state[controlName].isChange == 'saved')
+      //             ? (
+      //               <Button block bsStyle="success">
+      //                 เรียบร้อย
+      //               </Button>
+      //             )
+      //             : ((this.state[controlName].isChange == 'saving')
+      //               ? (
+      //                 <Button disabled block bsStyle="warning">
+      //                   บันทึก...
+      //                 </Button>
+      //               )
+      //               : (
+      //                 <Button block bsStyle="warning" onClick={this.handleUpdateFullJar.bind(this, controlName, amountName, jar)}>
+      //                   บันทึก
+      //                 </Button>
+      //               ))
+      //           : (
+      //             <Button block bsStyle="success">
+      //               เรียบร้อย
+      //             </Button>
+      //           )}
+      //       </Col>
+      //     </Row>
+      //   )
+      // }, this)
+
+      // const flowDirectors = this.props.selectedjar.map(function(jar, i) {
+      //
+      //   let percent = ((jar.full / this.props.totalAmount) * 100).toFixed(2);
+      //   let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
+      //   let controlName = 'flow-' + i;
+      //   let amountName = 'amount-' + i;
+      //
+      //   return (
+      //     <Row key={i}>
+      //       <Col xs={12} sm={12} md={3} lg={1}>{jar.display}</Col>
+      //       <Col xs={4} sm={4} md={3} lg={2}>
+      //         <FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} defaultValue={percent} type="number" placeholder="%" ref="percent"/>
+      //       </Col>
+      //       <Col xs={4} sm={4} md={3} lg={1}>
+      //         {(this.state[controlName] != null)
+      //           ? (this.state[controlName].isChange == 'saved')
+      //             ? (
+      //               <Button block bsStyle="success">
+      //                 เรียบร้อย
+      //               </Button>
+      //             )
+      //             : ((this.state[controlName].isChange == 'saving')
+      //               ? (
+      //                 <Button disabled block bsStyle="warning">
+      //                   บันทึก...
+      //                 </Button>
+      //               )
+      //               : (
+      //                 <Button block bsStyle="warning" onClick={this.handleUpdateFullJar.bind(this, controlName, amountName, jar)}>
+      //                   บันทึก
+      //                 </Button>
+      //               ))
+      //           : (
+      //             <Button block bsStyle="success">
+      //               เรียบร้อย
+      //             </Button>
+      //           )}
+      //       </Col>
+      //     </Row>
+      //   )
+      // }, this)
 
       var selectedJars = this.props.selectedjar.map(function (jar, i) {
+        // <Button onClick={this.open.bind(this, jar)} bsStyle="warning">แก้ไข</Button>
         return _react2.default.createElement(
           _reactBootstrap.Col,
           { key: i, xs: 6, sm: 6, md: 4, lg: 2 },
           _react2.default.createElement(_jarItem2.default, { code: jar.code, remain: jar.remain, full: jar.full }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
-            _reactBootstrap.ButtonGroup,
-            null,
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.open.bind(this, jar), bsStyle: 'warning' },
-              '\u0E41\u0E01\u0E49\u0E44\u0E02'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.handlerUnSelectJar.bind(this, jar._id), bsStyle: 'danger' },
-              '\u0E40\u0E01\u0E47\u0E1A'
-            )
+            _reactBootstrap.Button,
+            { onClick: this.handlerUnSelectJar.bind(this, jar._id), bsStyle: 'danger', block: true },
+            '\u0E40\u0E01\u0E47\u0E1A'
           )
         );
       }, this);
 
       var nonSelectedJars = this.props.nonselected.map(function (jar, i) {
+        // <Button onClick={this.open.bind(this, jar)} bsStyle="warning">แก้ไข</Button>
         return _react2.default.createElement(
           _reactBootstrap.Col,
           { key: i, xs: 6, sm: 6, md: 4, lg: 2 },
           _react2.default.createElement(_jarItem2.default, { code: jar.code, remain: jar.remain, full: jar.full }),
           _react2.default.createElement('br', null),
           _react2.default.createElement(
-            _reactBootstrap.ButtonGroup,
-            null,
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.open.bind(this, jar), bsStyle: 'warning' },
-              '\u0E41\u0E01\u0E49\u0E44\u0E02'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.handlerSelectJar.bind(this, jar._id), bsStyle: 'success' },
-              '\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
-            )
+            _reactBootstrap.Button,
+            { onClick: this.handlerSelectJar.bind(this, jar._id), bsStyle: 'success', block: true },
+            '\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
           )
         );
       }, this);
@@ -52289,12 +52399,118 @@ var JarSetup = function (_React$Component) {
             null,
             _react2.default.createElement(
               _reactBootstrap.Button,
-              { block: true },
+              { onClick: this.open.bind(this, item), bsStyle: 'success', block: true },
+              '\u0E40\u0E07\u0E34\u0E19\u0E40\u0E02\u0E49\u0E32'
+            )
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.handlerRemoveMoneyFlow.bind(this, item), block: true },
               '\u0E25\u0E1A'
             )
           )
         );
-      });
+      }, this);
+
+      var flowDirectorItem = this.props.selectedjar.map(function (jar, i) {
+
+        var percent = (jar.full / this.props.totalAmount * 100).toFixed(2);
+        var amount = (percent / 100 * this.state.totalAmount).toFixed(2);
+        var controlName = 'flow-' + i;
+        var amountName = 'amount-' + i;
+
+        return _react2.default.createElement(
+          'tr',
+          { key: i },
+          _react2.default.createElement(
+            'td',
+            null,
+            jar.display
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: jar.full.toFixed(2), displayType: 'text' })
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            percent
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(_reactBootstrap.FormControl, { step: 0.01, name: controlName, min: '0', onChange: this.handleInputFlowChange.bind(this), type: 'number', defaultValue: jar.full.toFixed(2), placeholder: '\u0E08\u0E33\u0E19\u0E27\u0E19', ref: amountName })
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            this.state[controlName] != null ? this.state[controlName].isChange == 'saved' ? _react2.default.createElement(
+              _reactBootstrap.Button,
+              { block: true, bsStyle: 'success' },
+              '\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
+            ) : this.state[controlName].isChange == 'saving' ? _react2.default.createElement(
+              _reactBootstrap.Button,
+              { disabled: true, block: true, bsStyle: 'warning' },
+              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01...'
+            ) : _react2.default.createElement(
+              _reactBootstrap.Button,
+              { block: true, bsStyle: 'warning', onClick: this.handleUpdateFullJar.bind(this, controlName, amountName, jar) },
+              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01'
+            ) : _react2.default.createElement(
+              _reactBootstrap.Button,
+              { block: true, bsStyle: 'success' },
+              '\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
+            )
+          )
+        );
+      }, this);
+
+      var sumIncome = this.props.myflow.reduce(function (a, b) {
+        return a + b.amount;
+      }, 0);
+
+      var sumFlow = this.props.selectedjar.reduce(function (a, b) {
+        return a + b.full;
+      }, 0);
+
+      // <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+      //   <Modal.Header>
+      //     <Modal.Title>
+      //       <b>แก้ไข [{this.state.adjustJar.display}]</b>
+      //     </Modal.Title>
+      //   </Modal.Header>
+      //   <Modal.Body>
+      //     <Grid>
+      //       <h4>ยอดเงิน</h4>
+      //       <Col xs={12} sm={6} md={6} lg={6}>
+      //         <FormGroup controlId="updateRemain">
+      //           <ControlLabel>คงเหลือ</ControlLabel>
+      //           <InputGroup>
+      //             <InputGroup.Addon>฿</InputGroup.Addon>
+      //             <FormControl ref="updateRemain" min="0" type="number" value={this.state.adjustJar.remain} disabled/>
+      //           </InputGroup>
+      //         </FormGroup>
+      //       </Col>
+      //       <Col xs={12} sm={6} md={6} lg={6}>
+      //         <FormGroup controlId="updateFull">
+      //           <ControlLabel>เต็ม</ControlLabel>
+      //           <InputGroup>
+      //             <InputGroup.Addon>฿</InputGroup.Addon>
+      //             <FormControl ref="updateFull" min="0" type="number" placeholder={this.state.adjustJar.full}/>
+      //           </InputGroup>
+      //         </FormGroup>
+      //       </Col>
+      //     </Grid>
+      //   </Modal.Body>
+      //   <Modal.Footer>
+      //     <Button onClick={this.handlerUpdateAJar.bind(this)} bsStyle="success">บันทึก</Button >
+      //     <Button onClick={this.close.bind(this)} bsStyle="danger">ปิด</Button >
+      //   </Modal.Footer>
+      // </Modal>
 
       return _react2.default.createElement(
         _reactBootstrap.Grid,
@@ -52388,66 +52604,86 @@ var JarSetup = function (_React$Component) {
                   { onClick: this.handlerCreateMoneyFlow.bind(this, 1), block: true, bsStyle: 'success' },
                   '\u0E40\u0E1E\u0E34\u0E48\u0E21'
                 )
-              )
+              ),
+              _react2.default.createElement('td', null)
             )
           )
         ),
         _react2.default.createElement('hr', null),
         _react2.default.createElement(
           'h3',
-          { style: {
-              color: 'red'
-            } },
-          '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
+          null,
+          '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A'
         ),
         _react2.default.createElement(
           'p',
           null,
-          '\u0E22\u0E2D\u0E14\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14 25,500 \u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D 25,500 (100%)'
+          '\u0E22\u0E2D\u0E14\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14',
+          _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', displayType: 'text', value: sumIncome }),
+          _react2.default.createElement('br', null),
+          '\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E43\u0E19\u0E01\u0E32\u0E23\u0E41\u0E1A\u0E48\u0E07',
+          _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', displayType: 'text', value: sumIncome - sumFlow }),
+          '(',
+          _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, displayType: 'text', value: (sumIncome - sumFlow) / sumIncome * 100 }),
+          '% )'
         ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
+          _reactBootstrap.Table,
+          { style: {
+              color: 'black'
+            } },
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12, sm: 12, md: 3, lg: 1 },
-            '#\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01'
+            'thead',
+            null,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'th',
+                null,
+                '#\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E08\u0E33\u0E19\u0E27\u0E19'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E04\u0E34\u0E14\u0E40\u0E1B\u0E47\u0E19 % (\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14)'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E1B\u0E23\u0E31\u0E1A'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
+              )
+            )
           ),
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 2 },
-            '% (\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49)'
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 2 },
-            '\u0E04\u0E34\u0E14\u0E40\u0E1B\u0E47\u0E19\u0E40\u0E07\u0E34\u0E19'
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 1 },
-            '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
-          )
-        ),
-        flowDirectors,
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12, sm: 12, md: 3, lg: 1 },
-            '\u0E23\u0E27\u0E21'
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 2 },
-            '100'
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 4, sm: 4, md: 3, lg: 2 },
-            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: 25500, displayType: 'text' })
+            'tbody',
+            null,
+            flowDirectorItem,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                '\u0E23\u0E27\u0E21'
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, value: sumFlow / sumIncome * 100, displayType: 'text' })
+              )
+            )
           )
         ),
         _react2.default.createElement('hr', null),
@@ -52484,8 +52720,8 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement(
                 'b',
                 null,
-                '\u0E41\u0E01\u0E49\u0E44\u0E02 [',
-                this.state.adjustJar.display,
+                '\u0E41\u0E08\u0E01\u0E41\u0E08\u0E07\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A [',
+                this.state.enumerateFlow.description,
                 ']'
               )
             )
@@ -52499,64 +52735,13 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement(
                 'h4',
                 null,
-                '\u0E22\u0E2D\u0E14\u0E40\u0E07\u0E34\u0E19'
-              ),
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 12, sm: 6, md: 6, lg: 6 },
-                _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  { controlId: 'updateRemain' },
-                  _react2.default.createElement(
-                    _reactBootstrap.ControlLabel,
-                    null,
-                    '\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D'
-                  ),
-                  _react2.default.createElement(
-                    _reactBootstrap.InputGroup,
-                    null,
-                    _react2.default.createElement(
-                      _reactBootstrap.InputGroup.Addon,
-                      null,
-                      '\u0E3F'
-                    ),
-                    _react2.default.createElement(_reactBootstrap.FormControl, { ref: 'updateRemain', min: '0', type: 'number', value: this.state.adjustJar.remain, disabled: true })
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                _reactBootstrap.Col,
-                { xs: 12, sm: 6, md: 6, lg: 6 },
-                _react2.default.createElement(
-                  _reactBootstrap.FormGroup,
-                  { controlId: 'updateFull' },
-                  _react2.default.createElement(
-                    _reactBootstrap.ControlLabel,
-                    null,
-                    '\u0E40\u0E15\u0E47\u0E21'
-                  ),
-                  _react2.default.createElement(
-                    _reactBootstrap.InputGroup,
-                    null,
-                    _react2.default.createElement(
-                      _reactBootstrap.InputGroup.Addon,
-                      null,
-                      '\u0E3F'
-                    ),
-                    _react2.default.createElement(_reactBootstrap.FormControl, { ref: 'updateFull', min: '0', type: 'number', placeholder: this.state.adjustJar.full })
-                  )
-                )
+                '\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23'
               )
             )
           ),
           _react2.default.createElement(
             _reactBootstrap.Modal.Footer,
             null,
-            _react2.default.createElement(
-              _reactBootstrap.Button,
-              { onClick: this.handlerUpdateAJar.bind(this), bsStyle: 'success' },
-              '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01'
-            ),
             _react2.default.createElement(
               _reactBootstrap.Button,
               { onClick: this.close.bind(this), bsStyle: 'danger' },
@@ -52572,7 +52757,7 @@ var JarSetup = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-  return { selectedjar: state.myJar.selected, nonselected: state.myJar.nonselected, member: state.member, myflow: state.moneyflow.myflow
+  return { selectedjar: state.myJar.selected, nonselected: state.myJar.nonselected, member: state.member, myflow: state.moneyflow.myflow, totalAmount: state.moneyflow.totalAmount
     // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
   };
 }
@@ -52585,7 +52770,8 @@ function mapDispatchToProps(dispatch) {
     updateAJar: _jarAction.updateAJar,
     getMyJar: _jarAction.myJar,
     createMoneyFlow: _moneyFlowAction.createMoneyFlow,
-    getMoneyFlow: _moneyFlowAction.getMoneyFlow
+    getMoneyFlow: _moneyFlowAction.getMoneyFlow,
+    removeMoneyFlow: _moneyFlowAction.removeMoneyFlow
   }, dispatch);
 }
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(JarSetup);
@@ -52602,6 +52788,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createMoneyFlow = createMoneyFlow;
 exports.getMoneyFlow = getMoneyFlow;
+exports.removeMoneyFlow = removeMoneyFlow;
 
 var _axios = __webpack_require__(95);
 
@@ -52636,7 +52823,7 @@ function createMoneyFlow(_type, _sub_type, _amount, _description, cb) {
 }
 
 // read
-function getMoneyFlow() {
+function getMoneyFlow(cb) {
   return function (dispatch) {
     _axios2.default.get('/api/money-flow/my-flow').then(function (response) {
       dispatch({
@@ -52648,12 +52835,32 @@ function getMoneyFlow() {
         type: "GET_MONEY_FLOW_REJECTED",
         payload: err
       });
+    }).then(function () {
+      cb();
     });
   };
 }
 // update
 
 // delete
+function removeMoneyFlow(_flowItem, cb) {
+  return function (dispatch) {
+    // TODO : Add duplicate detector
+    _axios2.default.delete('/api/money-flow/my-flow/' + _flowItem._id).then(function (response) {
+      dispatch({
+        type: "DELETE_MONEY_FLOW",
+        payload: response.data
+      });
+    }).catch(function (err) {
+      dispatch({
+        type: "DELETE_MONEY_FLOW_REJECTED",
+        payload: err
+      });
+    }).then(function () {
+      cb();
+    });
+  };
+}
 
 /***/ })
 /******/ ]);
