@@ -52418,7 +52418,8 @@ var JarSetup = function (_React$Component) {
       var flowDirectorItem = this.props.selectedjar.map(function (jar, i) {
 
         var percent = (jar.full / this.props.totalAmount * 100).toFixed(2);
-        var amount = (percent / 100 * this.state.totalAmount).toFixed(2);
+        var jarFull = jar.full.toFixed(2);
+        // let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
         var controlName = 'flow-' + i;
         var amountName = 'amount-' + i;
 
@@ -52433,17 +52434,17 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             'td',
             null,
-            percent
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, suffix: ' %', value: percent, displayType: 'text' })
           ),
           _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: jar.full.toFixed(2), displayType: 'text' })
+            _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: jarFull, displayType: 'text' })
           ),
           _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement(_reactBootstrap.FormControl, { step: 0.01, name: controlName, min: '0', onChange: this.handleInputFlowChange.bind(this), type: 'number', defaultValue: jar.full.toFixed(2), placeholder: '\u0E08\u0E33\u0E19\u0E27\u0E19', ref: amountName })
+            _react2.default.createElement(_reactBootstrap.FormControl, { step: 0.01, name: controlName, min: '0', onChange: this.handleInputFlowChange.bind(this), type: 'number', defaultValue: jarFull, placeholder: '\u0E08\u0E33\u0E19\u0E27\u0E19', ref: amountName })
           ),
           _react2.default.createElement(
             'td',
@@ -52610,24 +52611,12 @@ var JarSetup = function (_React$Component) {
           )
         ),
         _react2.default.createElement('hr', null),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',
           null,
           '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A'
         ),
-        _react2.default.createElement(
-          'p',
-          null,
-          '\u0E22\u0E2D\u0E14\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14',
-          _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', displayType: 'text', value: sumIncome }),
-          _react2.default.createElement('br', null),
-          '\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E43\u0E19\u0E01\u0E32\u0E23\u0E41\u0E1A\u0E48\u0E07',
-          _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', displayType: 'text', value: sumIncome - sumFlow }),
-          '(',
-          _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, displayType: 'text', value: (sumIncome - sumFlow) / sumIncome * 100 }),
-          '% )'
-        ),
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
           _reactBootstrap.Table,
           { style: {
@@ -52647,17 +52636,17 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement(
                 'th',
                 null,
-                '\u0E04\u0E34\u0E14\u0E40\u0E1B\u0E47\u0E19 % (\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49\u0E17\u0E31\u0E49\u0E07\u0E2B\u0E21\u0E14)'
+                '\u0E2A\u0E31\u0E14\u0E2A\u0E48\u0E27\u0E19\u0E15\u0E48\u0E2D\u0E23\u0E32\u0E22\u0E44\u0E14\u0E49'
               ),
               _react2.default.createElement(
                 'th',
                 null,
-                '\u0E08\u0E33\u0E19\u0E27\u0E19'
+                '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E41\u0E1A\u0E48\u0E07'
               ),
               _react2.default.createElement(
                 'th',
                 null,
-                '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E1B\u0E23\u0E31\u0E1A'
+                '\u0E41\u0E01\u0E49\u0E44\u0E02\u0E08\u0E33\u0E19\u0E27\u0E19'
               ),
               _react2.default.createElement(
                 'th',
@@ -52672,7 +52661,11 @@ var JarSetup = function (_React$Component) {
             flowDirectorItem,
             _react2.default.createElement(
               'tr',
-              null,
+              { style: sumIncome - sumFlow >= 0 ? {
+                  color: 'green'
+                } : {
+                  color: 'red'
+                } },
               _react2.default.createElement(
                 'td',
                 null,
@@ -52681,12 +52674,25 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement(
                 'td',
                 null,
-                _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, value: sumFlow / sumIncome * 100, displayType: 'text' })
+                _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, suffix: ' %', value: sumFlow / sumIncome * 100, displayType: 'text' })
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: '฿ ', value: sumFlow, displayType: 'text' })
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                sumIncome - sumFlow >= 0 ? 'คงเหลือในการแบ่ง' : 'เกินจำนวนรายรับ ',
+                _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: ' ฿ ', value: sumIncome - sumFlow, displayType: 'text' }),
+                _react2.default.createElement(NumberFormat, { decimalPrecision: 2, thousandSeparator: true, prefix: ' (', suffix: ' %)', displayType: 'text', value: (sumIncome - sumFlow) / sumIncome * 100 })
               )
             )
           )
         ),
         _react2.default.createElement('hr', null),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',
           null,
@@ -52698,6 +52704,7 @@ var JarSetup = function (_React$Component) {
           selectedJars
         ),
         _react2.default.createElement('hr', null),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',
           null,

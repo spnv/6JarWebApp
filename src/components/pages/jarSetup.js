@@ -377,7 +377,8 @@ class JarSetup extends React.Component {
     const flowDirectorItem = this.props.selectedjar.map(function(jar, i) {
 
       let percent = ((jar.full / this.props.totalAmount) * 100).toFixed(2);
-      let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
+      let jarFull = (jar.full).toFixed(2);
+      // let amount = ((percent / 100) * this.state.totalAmount).toFixed(2);
       let controlName = 'flow-' + i;
       let amountName = 'amount-' + i;
 
@@ -385,12 +386,12 @@ class JarSetup extends React.Component {
         <tr key={i}>
           <td>{jar.display}</td>
           <td>
-            {percent}
+            <NumberFormat thousandSeparator={true} suffix={' %'} value={percent} displayType={'text'}/>
           </td>
           <td>
-            <NumberFormat thousandSeparator={true} prefix={'฿ '} value={(jar.full).toFixed(2)} displayType={'text'}/>
+            <NumberFormat thousandSeparator={true} prefix={'฿ '} value={jarFull} displayType={'text'}/>
           </td>
-          <td><FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} type="number" defaultValue={(jar.full).toFixed(2)} placeholder="จำนวน" ref={amountName}/></td>
+          <td><FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} type="number" defaultValue={jarFull} placeholder="จำนวน" ref={amountName}/></td>
           <td>
             {(this.state[controlName] != null)
               ? (this.state[controlName].isChange == 'saved')
@@ -502,41 +503,50 @@ class JarSetup extends React.Component {
           </tbody>
         </Table>
         <hr/>
-        <h3>จัดการรายรับ</h3>
-        <p>ยอดรายรับทั้งหมด
-          <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} displayType={'text'} value={sumIncome}/>
-          <br/>
-          คงเหลือในการแบ่ง
-          <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} displayType={'text'} value={sumIncome - sumFlow}/>
-          (
-          <NumberFormat decimalPrecision={2} thousandSeparator={true} displayType={'text'} value={((sumIncome - sumFlow) / sumIncome * 100)}/>% )</p>
         <br/>
+        <h3>จัดการรายรับ</h3>
         <Table style={{
           color: 'black'
         }}>
           <thead>
             <tr>
               <th>#เหยือก</th>
-              <th>คิดเป็น % (ต่อรายได้ทั้งหมด)</th>
-              <th>จำนวน</th>
-              <th>จำนวนปรับ</th>
+              <th>สัดส่วนต่อรายได้</th>
+              <th>จำนวนแบ่ง</th>
+              <th>แก้ไขจำนวน</th>
               <th>จัดการ</th>
             </tr>
           </thead>
           <tbody>
             {flowDirectorItem}
-            <tr >
+            <tr style={(sumIncome - sumFlow) >= 0
+              ? {
+                color: 'green'
+              }
+              : {
+                color: 'red'
+              }}>
               <td>รวม</td>
-              <td><NumberFormat decimalPrecision={2} thousandSeparator={true} value={(sumFlow / sumIncome * 100)} displayType={'text'}/></td>
+              <td><NumberFormat decimalPrecision={2} thousandSeparator={true} suffix={' %'} value={(sumFlow / sumIncome * 100)} displayType={'text'}/></td>
+              <td><NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={sumFlow} displayType={'text'}/></td>
+              <td>
+                {(sumIncome - sumFlow) >= 0
+                  ? 'คงเหลือในการแบ่ง'
+                  : 'เกินจำนวนรายรับ '}
+                <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={' ฿ '} value={sumIncome - sumFlow} displayType={'text'}/>
+                <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={' ('} suffix={' %)'} displayType={'text'} value={((sumIncome - sumFlow) / sumIncome * 100)}/>
+              </td>
             </tr>
           </tbody>
         </Table>
         <hr/>
+        <br/>
         <h3>ใช้งาน</h3>
         <Row>
           {selectedJars}
         </Row>
         <hr/>
+        <br/>
         <h3>เก็บ</h3>
         <Row>
           {nonSelectedJars}
@@ -563,7 +573,7 @@ class JarSetup extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {selectedjar: state.myJar.selected, nonselected: state.myJar.nonselected, member: state.member, myflow: state.moneyflow.myflow , totalAmount : state.moneyflow.totalAmount}
+  return {selectedjar: state.myJar.selected, nonselected: state.myJar.nonselected, member: state.member, myflow: state.moneyflow.myflow, totalAmount: state.moneyflow.totalAmount}
   // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
 }
 function mapDispatchToProps(dispatch) {
