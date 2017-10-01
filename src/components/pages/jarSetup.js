@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {findDOMNode} from 'react-dom';
 
+var PieChart = require('react-d3-components').PieChart;
+
 import JarItem from './jarItem';
 
 import {
@@ -192,7 +194,7 @@ class JarSetup extends React.Component {
 
   handlePaidToJar() {
     let contex = this;
-    
+
     let requests = contex.props.selectedjar.map((jar, i) => {
       return new Promise((resolve) => {
         let percent = ((jar.full / contex.props.totalAmount) * 100);
@@ -219,7 +221,6 @@ class JarSetup extends React.Component {
   }
 
   render() {
-
     let contex = this;
 
     const selectedJars = this.props.selectedjar.map(function(jar, i) {
@@ -266,6 +267,7 @@ class JarSetup extends React.Component {
 
       let percent = ((jar.full / this.props.totalAmount) * 100).toFixed(2);
       let jarFull = (jar.full).toFixed(2);
+      let percentName = 'percent-' + i;
       let controlName = 'flow-' + i;
       let amountName = 'amount-' + i;
 
@@ -278,7 +280,16 @@ class JarSetup extends React.Component {
           <td>
             <NumberFormat thousandSeparator={true} prefix={'฿ '} value={jarFull} displayType={'text'}/>
           </td>
-          <td><FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} type="number" defaultValue={jarFull} placeholder="จำนวน" ref={amountName}/></td>
+          <td style={{
+            width: 50
+          }}>
+            <FormGroup>
+              <InputGroup>
+                <InputGroup.Addon>฿</InputGroup.Addon>
+                <FormControl step={0.01} name={controlName} min="0" onChange={this.handleInputFlowChange.bind(this)} type="number" defaultValue={jarFull} placeholder="จำนวน" ref={amountName}/>
+              </InputGroup>
+            </FormGroup>
+          </td>
           <td>
             {(this.state[controlName] != null)
               ? (this.state[controlName].isChange == 'saved')
@@ -343,6 +354,13 @@ class JarSetup extends React.Component {
       return a + b.full;
     }, 0);
 
+    const pieData = this.props.selectedjar.map(function(jar, i) {
+
+      let percent = parseFloat((jar.full / contex.props.totalAmount) * 100).toFixed(2);
+
+      return {x: jar.display, y: percent}
+    });
+
     return (
       <Grid>
         <h3>รายรับ - จ่ายคงที่</h3>
@@ -373,7 +391,14 @@ class JarSetup extends React.Component {
                 </InputGroup>
               </td>
               <td><FormControl type="text" placeholder="กรอกช่องทาง" ref="newDescription"/></td>
-              <td><FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
+              <td>
+                <FormGroup>
+                  <InputGroup>
+                    <InputGroup.Addon>฿</InputGroup.Addon>
+                    <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/>
+                  </InputGroup>
+                </FormGroup>
+              </td>
               <td>
                 <Button onClick={this.handlerCreateMoneyFlow.bind(this, 1)} block bsStyle="success">เพิ่ม</Button>
               </td>
@@ -384,40 +409,54 @@ class JarSetup extends React.Component {
         <hr/>
         <br/>
         <h3>จัดการรายรับ</h3>
-        <Table style={{
-          color: 'black'
-        }}>
-          <thead>
-            <tr>
-              <th>#เหยือก</th>
-              <th>สัดส่วนต่อรายได้</th>
-              <th>จำนวนแบ่ง</th>
-              <th>แก้ไขจำนวน</th>
-              <th>จัดการ</th>
-            </tr>
-          </thead>
-          <tbody>
-            {flowDirectorItem}
-            <tr style={(sumIncome - sumFlow) >= 0
-              ? {
-                color: 'green'
-              }
-              : {
-                color: 'red'
-              }}>
-              <td>รวม</td>
-              <td><NumberFormat decimalPrecision={2} thousandSeparator={true} suffix={' %'} value={(sumFlow / sumIncome * 100)} displayType={'text'}/></td>
-              <td><NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={sumFlow} displayType={'text'}/></td>
-              <td>
-                {(sumIncome - sumFlow) >= 0
-                  ? 'คงเหลือในการแบ่ง'
-                  : 'เกินจำนวนรายรับ '}
-                <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={' ฿ '} value={sumIncome - sumFlow} displayType={'text'}/>
-                <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={' ('} suffix={' %)'} displayType={'text'} value={((sumIncome - sumFlow) / sumIncome * 100)}/>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
+        <Row>
+          <Col lg={12}>
+            <Table style={{
+              color: 'black'
+            }}>
+              <thead>
+                <tr>
+                  <th>#เหยือก</th>
+                  <th>สัดส่วนต่อรายได้</th>
+                  <th>จำนวนแบ่ง</th>
+                  <th>แก้ไขจำนวน</th>
+                  <th>จัดการ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {flowDirectorItem}
+                <tr style={(sumIncome - sumFlow) >= 0
+                  ? {
+                    color: 'green'
+                  }
+                  : {
+                    color: 'red'
+                  }}>
+                  <td>รวม</td>
+                  <td><NumberFormat decimalPrecision={2} thousandSeparator={true} suffix={' %'} value={(sumFlow / sumIncome * 100)} displayType={'text'}/></td>
+                  <td><NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={'฿ '} value={sumFlow} displayType={'text'}/></td>
+                  <td>
+                    {(sumIncome - sumFlow) >= 0
+                      ? 'คงเหลือในการแบ่ง'
+                      : 'เกินจำนวนรายรับ '}
+                    <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={' ฿ '} value={sumIncome - sumFlow} displayType={'text'}/>
+                    <NumberFormat decimalPrecision={2} thousandSeparator={true} prefix={' ('} suffix={' %)'} displayType={'text'} value={((sumIncome - sumFlow) / sumIncome * 100)}/>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          </Col>
+          <Col lg={6}><PieChart data={{
+        label: 'chart',
+        values: pieData
+      }} width={600} height={400} margin={{
+        top: 2,
+        bottom: 2,
+        left: 2,
+        right: 2
+      }} sort={null}/>
+          </Col>
+        </Row>
         <hr/>
         <br/>
         <h3>ใช้งาน</h3>

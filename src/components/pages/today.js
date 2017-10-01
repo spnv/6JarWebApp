@@ -15,6 +15,7 @@ import {
   Button,
   Well,
   Grid,
+  FormGroup,
   FormControl,
   Row,
   Col
@@ -231,7 +232,14 @@ class Today extends React.Component {
                 </InputGroup>
               </td>
               <td><FormControl type="text" placeholder="กรอกรายละเอียด" ref="newDescription"/></td>
-              <td><FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/></td>
+              <td>
+                <FormGroup>
+                  <InputGroup>
+                    <InputGroup.Addon>฿</InputGroup.Addon>
+                    <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/>
+                  </InputGroup>
+                </FormGroup>
+          </td>
               <td>
                 <ButtonGroup vertical block>
                   <Button onClick={this.handlerCreateTransaction.bind(this, 1)} bsStyle="success">เพิ่มเข้า</Button>
