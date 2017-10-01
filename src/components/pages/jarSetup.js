@@ -4,7 +4,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {findDOMNode} from 'react-dom';
 
+import {HorizontalBar, Pie} from 'react-chartjs-2';
+var ProgressBar = require('react-progressbar.js')
+var Line = ProgressBar.Line;
+// var Bars = require("react-chartjs").Bars;
+// var LineChart = require("react-chartjs").Line;
+
 var PieChart = require('react-d3-components').PieChart;
+// var HorizontalBar = require("react-chartjs-2").HorizontalBar;
 
 import JarItem from './jarItem';
 
@@ -62,8 +69,6 @@ class JarSetup extends React.Component {
   close() {
     this.setState({showModal: false})
   }
-
-  componentWillMount() {}
 
   componentDidMount() {
     let contex = this;
@@ -271,11 +276,20 @@ class JarSetup extends React.Component {
       let controlName = 'flow-' + i;
       let amountName = 'amount-' + i;
 
+      var options = {
+        strokeWidth: 5
+      };
+
+      var containerStyle = {
+        width: '100px'
+      };
+
       return (
         <tr key={i}>
           <td>{jar.display}</td>
           <td>
             <NumberFormat thousandSeparator={true} suffix={' %'} value={percent} displayType={'text'}/>
+            <Line progress={percent/100} options={options} initialAnimate={true} containerStyle={containerStyle} containerClassName={'.progressbar'}/>
           </td>
           <td>
             <NumberFormat thousandSeparator={true} prefix={'฿ '} value={jarFull} displayType={'text'}/>
@@ -410,7 +424,7 @@ class JarSetup extends React.Component {
         <br/>
         <h3>จัดการรายรับ</h3>
         <Row>
-          <Col lg={12}>
+          <Col lg={8}>
             <Table style={{
               color: 'black'
             }}>
@@ -446,10 +460,10 @@ class JarSetup extends React.Component {
               </tbody>
             </Table>
           </Col>
-          <Col lg={6}><PieChart data={{
+          <Col lg={4}><PieChart data={{
         label: 'chart',
         values: pieData
-      }} width={600} height={400} margin={{
+      }} width={450} height={300} margin={{
         top: 2,
         bottom: 2,
         left: 2,
@@ -469,7 +483,6 @@ class JarSetup extends React.Component {
         <Row>
           {nonSelectedJars}
         </Row>
-
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header>
             <Modal.Title>

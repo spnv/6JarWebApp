@@ -43,7 +43,7 @@ class Today extends React.Component {
       }
     }
   }
-
+  
   componentDidMount() {
     this.props.getSelectedJar();//
     this.props.getTodayTransaction(); //
