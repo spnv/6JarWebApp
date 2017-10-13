@@ -1,7 +1,7 @@
 "use strict"
 //MEMBER REDUCERS
 export function assetReducers(state = {
-  asset: []
+  myasset: []
 }, action) {
   switch (action.type) {
     case "CREATE_ASSET":

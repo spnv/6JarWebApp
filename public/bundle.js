@@ -63290,6 +63290,8 @@ var _reactDom = __webpack_require__(15);
 
 var _reactBootstrap = __webpack_require__(39);
 
+var _assetAction = __webpack_require__(618);
+
 var _memberAction = __webpack_require__(65);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -63300,18 +63302,147 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var NumberFormat = __webpack_require__(168);
+
 var Asset = function (_React$Component) {
   _inherits(Asset, _React$Component);
 
-  function Asset() {
+  function Asset(props) {
     _classCallCheck(this, Asset);
 
-    return _possibleConstructorReturn(this, (Asset.__proto__ || Object.getPrototypeOf(Asset)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Asset.__proto__ || Object.getPrototypeOf(Asset)).call(this, props));
+
+    _this.state = {
+      myasset: {
+        newRecord: {
+          name: null,
+          catagory: 'ประเภท',
+          risk_level: 'ความเสี่ยง',
+          invest_amount: 0,
+          description: null
+        }
+      }
+    };
+    return _this;
   }
 
   _createClass(Asset, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.getgetMyAsset(); //
+      this.props.getMemberSession();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var myMemberMessage = this.props.member.mymember.message;
+      if (myMemberMessage == 'no session' || myMemberMessage == null) {
+        this.handlerRedirect('signin');
+      }
+    }
+  }, {
+    key: 'handlerRedirect',
+    value: function handlerRedirect(path) {
+      switch (path) {
+        case 'signin':
+          this.props.router.push('/signin');
+          break;
+        default:
+      }
+    }
+  }, {
+    key: 'handlerCreateAsset',
+    value: function handlerCreateAsset() {
+
+      var contex = this;
+      var newName = this.state.myasset.newRecord.name;
+      var newCatagory = this.state.myasset.newRecord.catagory;
+      var newRiskLevel = this.state.myasset.newRecord.risk_level;
+      var newDescription = (0, _reactDom.findDOMNode)(this.refs.newDescription).value;
+      var newAmount = parseInt((0, _reactDom.findDOMNode)(this.refs.newAmount).value);
+      if (newName == '' | newCatagory == 'ประเภท' | newRiskLevel == 'ความเสี่ยง' | newDescription == '' | isNaN(newAmount)) {
+        return 0;
+      }
+      // build new record
+      var newRecord = {
+        name: newName,
+        catagory: newCatagory,
+        risk_level: newRiskLevel,
+        invest_amount: newAmount,
+        description: newDescription
+        // reformat number to positive
+      };if (newRecord.amount < 0) {
+        newRecord.amount = newRecord.amount * -1;
+      }
+
+      this.props.createAsset(newRecord.name, newRecord.catagory, newRecord.risk_level, newRecord.description, newRecord.invest_amount, function () {
+        contex.setState({
+          myasset: {
+            newRecord: {
+              name: null,
+              catagory: 'ประเภท',
+              risk_level: 'ความเสี่ยง',
+              invest_amount: 0,
+              description: null
+            }
+          }
+        });
+      });
+    }
+  }, {
+    key: 'handlerRemoveAsset',
+    value: function handlerRemoveAsset(_aseet) {
+      this.props.deleteAsset(_asset, function () {});
+    }
+  }, {
     key: 'render',
     value: function render() {
+
+      var assetItems = this.props.myasset.map(function (item, i) {
+        return _react2.default.createElement(
+          'tr',
+          { key: i },
+          _react2.default.createElement(
+            'td',
+            null,
+            item.catagory
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            item.risk_level
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            item.name
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(
+              'b',
+              null,
+              _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: item.invest_amount, displayType: 'text' })
+            )
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            item.description
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.handlerRemoveAsset.bind(this, item), block: true },
+              '\u0E25\u0E1A'
+            )
+          )
+        );
+      }, this);
+
       return _react2.default.createElement(
         _reactBootstrap.Grid,
         null,
@@ -63321,15 +63452,108 @@ var Asset = function (_React$Component) {
           '\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C\u0E2A\u0E34\u0E19'
         ),
         _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
+          Table,
+          { striped: true, bordered: true, condensed: true, hover: true, style: {
+              color: 'black'
+            } },
           _react2.default.createElement(
-            _reactBootstrap.Col,
-            { xs: 12, sm: 6, md: 4, lg: 3 },
+            'thead',
+            null,
             _react2.default.createElement(
-              'b',
+              'tr',
               null,
-              '\u0E40\u0E1E\u0E34\u0E48\u0E21'
+              _react2.default.createElement(
+                'th',
+                null,
+                '#\u0E1B\u0E23\u0E30\u0E40\u0E20\u0E17'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E2A\u0E34\u0E19\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E17\u0E38\u0E19'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
+                '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'tbody',
+            null,
+            assetRecords,
+            _react2.default.createElement(
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  _reactBootstrap.InputGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.DropdownButton,
+                    { componentClass: _reactBootstrap.InputGroup.Button, id: 'input-dropdown-addon', title: this.state.myasset.newRecord.catagory, bsStyle: 'default' },
+                    assetCatagory
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  _reactBootstrap.InputGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.DropdownButton,
+                    { componentClass: _reactBootstrap.InputGroup.Button, id: 'input-dropdown-addon', title: this.state.myasset.newRecord.risk_level, bsStyle: 'default' },
+                    assetRiskLevel
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(FormControl, { type: 'text', placeholder: '\u0E0A\u0E37\u0E48\u0E2D\u0E2A\u0E34\u0E19\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C', ref: 'newDescription' })
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  FormGroup,
+                  null,
+                  _react2.default.createElement(
+                    _reactBootstrap.InputGroup,
+                    null,
+                    _react2.default.createElement(
+                      _reactBootstrap.InputGroup.Addon,
+                      null,
+                      '\u0E3F'
+                    ),
+                    _react2.default.createElement(FormControl, { min: '0', type: 'number', placeholder: '\u0E08\u0E33\u0E19\u0E27\u0E19\u0E17\u0E38\u0E19', ref: 'newAmount' })
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  _reactBootstrap.Button,
+                  { onClick: this.handlerCreateAsset.bind(this), bsStyle: 'success' },
+                  '\u0E40\u0E1E\u0E34\u0E48\u0E21'
+                )
+              )
             )
           )
         )
@@ -63341,7 +63565,7 @@ var Asset = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-  return { member: state.member
+  return { myasset: state.asset.myasset, member: state.member
     // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
   };
 }
@@ -63349,7 +63573,10 @@ function mapDispatchToProps(dispatch) {
 
   // / * TODO : Template Active - map dispatch to prop getCart : getCart * /
   return (0, _redux.bindActionCreators)({
-    getMemberSession: _memberAction.getMemberSession
+    getMemberSession: _memberAction.getMemberSession,
+    getMyAsset: _assetAction.getAsset,
+    createAsset: _assetAction.createAsset,
+    deleteAsset: _assetAction.removeAsset
   }, dispatch);
 }
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Asset);
@@ -70132,7 +70359,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function assetReducers() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    asset: []
+    myasset: []
   };
   var action = arguments[1];
 
@@ -70178,6 +70405,93 @@ function assetReducers() {
       break;
   }
   return state;
+}
+
+/***/ }),
+/* 618 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createAsset = createAsset;
+exports.getAsset = getAsset;
+exports.removeAsset = removeAsset;
+
+var _axios = __webpack_require__(106);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// create
+function createAsset(_name, _catagory, _risk_level, _description, _invest_amount, cb) {
+  return function (dispatch) {
+    _axios2.default.post('/api/asset/my-asset', {
+      name: _name,
+      catagory: _catagory,
+      risk_level: _risk_level,
+      description: _description,
+      invest_amount: _invest_amount
+    }).then(function (response) {
+      // cb()
+      dispatch({
+        type: "CREATE_ASSET",
+        payload: response.data
+      });
+    }).catch(function (err) {
+      // cb()
+      dispatch({
+        type: "CREATE_ASSET_REJECTED",
+        payload: err
+      });
+    }).then(function () {
+      cb();
+    });
+  };
+}
+
+// read
+function getAsset(cb) {
+  return function (dispatch) {
+    _axios2.default.get('/api/asset/my-asset').then(function (response) {
+      dispatch({
+        type: "GET_ASSET_FLOW",
+        payload: response.data
+      });
+    }).catch(function (err) {
+      dispatch({
+        type: "GET_ASSET_REJECTED",
+        payload: err
+      });
+    }).then(function () {
+      cb();
+    });
+  };
+}
+// update
+
+// delete
+function removeAsset(_assetItem, cb) {
+  return function (dispatch) {
+    // TODO : Add duplicate detector
+    _axios2.default.delete('/api/asset/my-asset/' + _assetItem._id).then(function (response) {
+      dispatch({
+        type: "DELETE_ASSET",
+        payload: response.data
+      });
+    }).catch(function (err) {
+      dispatch({
+        type: "DELETE_ASSET_REJECTED",
+        payload: err
+      });
+    }).then(function () {
+      cb();
+    });
+  };
 }
 
 /***/ })

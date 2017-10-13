@@ -4,12 +4,16 @@ import axios from 'axios';
 // create
 export function createAsset(
   _name,
+  _catagory,
+  _risk_level,
   _description,
   _invest_amount,
   cb) {
   return function(dispatch) {
     axios.post('/api/asset/my-asset', {
       name: _name,
+      catagory: _catagory,
+      risk_level : _risk_level,
       description: _description,
       invest_amount: _invest_amount
     }).then(function(response) {
