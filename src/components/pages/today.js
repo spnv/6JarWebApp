@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {findDOMNode} from 'react-dom';
 
-import JarItem from './jarItem';
+import JarItem from '../items/jarItem';
 
 import {
   MenuItem,
@@ -43,7 +43,7 @@ class Today extends React.Component {
       }
     }
   }
-  
+
   componentDidMount() {
     this.props.getSelectedJar();//
     this.props.getTodayTransaction(); //
@@ -204,12 +204,12 @@ class Today extends React.Component {
 
     return (
       <Grid>
-        <h2>ยอดคงเหลือ (ต่อเดือน)</h2>
+        <h3>ยอดคงเหลือ (ต่อเดือน)</h3>
         <Row>
           {jars}
         </Row>
         <hr/>
-        <h2>บันทึกวันนี้</h2>
+        <h3>บันทึกวันนี้</h3>
         <Table striped bordered condensed hover style={{
           color: 'black'
         }}>

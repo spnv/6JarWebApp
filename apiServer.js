@@ -45,6 +45,8 @@ var transaction = require('./routes/transaction');
 app.use('/transaction', transaction);
 var moneyFlow = require('./routes/money-flow');
 app.use('/money-flow', moneyFlow);
+var asset = require('./routes/asset');
+app.use('/asset', asset);
 
 app.get('/images', function(req, res) {
   const imgFolder = __dirname + '/public/images/';

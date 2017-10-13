@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {findDOMNode} from 'react-dom';
 
-import {HorizontalBar, Pie} from 'react-chartjs-2';
+// import {HorizontalBar, Pie} from 'react-chartjs-2';
 var ProgressBar = require('react-progressbar.js')
 var Line = ProgressBar.Line;
 // var Bars = require("react-chartjs").Bars;
@@ -13,7 +13,7 @@ var Line = ProgressBar.Line;
 var PieChart = require('react-d3-components').PieChart;
 // var HorizontalBar = require("react-chartjs-2").HorizontalBar;
 
-import JarItem from './jarItem';
+import JarItem from '../items/jarItem';
 
 import {
   MenuItem,

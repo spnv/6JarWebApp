@@ -14,6 +14,9 @@ import {
 import {
   moneyFlowReducers
 } from './moneyFlowReducer';
+import {
+  assetReducers
+} from './assetReducer';
 /* TODO : Template Active - import reducer */
 // HERE IMPORT REDUCERS TO BE COMBINED
 // import {
@@ -31,5 +34,6 @@ export default combineReducers({
   member: memberReducers,
   myJar: jarReducers,
   transaction: transactionReducers,
-  moneyflow:moneyFlowReducers
+  moneyflow:moneyFlowReducers,
+  asset:assetReducers
 })
