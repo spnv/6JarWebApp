@@ -63923,7 +63923,8 @@ var JarSetup = function (_React$Component) {
           sub_type: 'เลือกชนิด',
           description: null
         }
-      }
+      },
+      paiding: 'none'
     };
     return _this;
   }
@@ -64070,7 +64071,12 @@ var JarSetup = function (_React$Component) {
   }, {
     key: 'handlePaidToJar',
     value: function handlePaidToJar() {
+
       var contex = this;
+
+      contex.setState({
+        paiding: 'paiding'
+      });
 
       var requests = contex.props.selectedjar.map(function (jar, i) {
         return new Promise(function (resolve) {
@@ -64093,6 +64099,9 @@ var JarSetup = function (_React$Component) {
       });
 
       Promise.all(requests).then(function () {
+        contex.setState({
+          paiding: 'none'
+        });
         contex.close();
       });
     }
@@ -64624,13 +64633,21 @@ var JarSetup = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Modal.Footer,
             null,
-            _react2.default.createElement(
+            this.state.paiding == 'none' ? _react2.default.createElement(
               _reactBootstrap.Button,
               { bsSize: 'large', onClick: this.handlePaidToJar.bind(this), bsStyle: 'success' },
               _react2.default.createElement(
                 'b',
                 null,
                 '\u0E41\u0E1A\u0E48\u0E07\u0E08\u0E48\u0E32\u0E22\u0E40\u0E02\u0E49\u0E32\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01'
+              )
+            ) : _react2.default.createElement(
+              _reactBootstrap.Button,
+              { disabled: true, bsSize: 'large', bsStyle: 'success' },
+              _react2.default.createElement(
+                'b',
+                null,
+                '\u0E01\u0E33\u0E25\u0E31\u0E07\u0E08\u0E48\u0E32\u0E22...'
               )
             )
           )

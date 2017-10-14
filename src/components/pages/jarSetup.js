@@ -59,7 +59,8 @@ class JarSetup extends React.Component {
           sub_type: 'เลือกชนิด',
           description: null
         }
-      }
+      },
+      paiding : 'none'
     }
   }
 
@@ -198,7 +199,12 @@ class JarSetup extends React.Component {
   }
 
   handlePaidToJar() {
+
     let contex = this;
+
+    contex.setState({
+      paiding: 'paiding'
+    });
 
     let requests = contex.props.selectedjar.map((jar, i) => {
       return new Promise((resolve) => {
@@ -221,6 +227,9 @@ class JarSetup extends React.Component {
     })
 
     Promise.all(requests).then(function() {
+      contex.setState({
+        paiding: 'none'
+      });
       contex.close();
     });
   }
@@ -518,9 +527,15 @@ class JarSetup extends React.Component {
             </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsSize="large" onClick={this.handlePaidToJar.bind(this)} bsStyle="success">
-              <b>แบ่งจ่ายเข้าเหยือก</b>
-            </Button>
+            {
+              (this.state.paiding == 'none')?
+              (<Button bsSize="large" onClick={this.handlePaidToJar.bind(this)} bsStyle="success">
+                <b>แบ่งจ่ายเข้าเหยือก</b>
+              </Button>):
+              (<Button disabled bsSize="large" bsStyle="success">
+                <b>กำลังจ่าย...</b>
+              </Button>)
+            }
           </Modal.Footer>
         </Modal>
       </Grid>
