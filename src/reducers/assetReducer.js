@@ -6,7 +6,7 @@ export function assetReducers(state = {
   switch (action.type) {
     case "CREATE_ASSET":
       let newAsset = action.payload;
-      let currentAsset = [...state.myflow];
+      let currentAsset = [...state.myasset];
       let currentTotalAmount = state.totalAmount;
 
       const newAssets = [
@@ -17,13 +17,13 @@ export function assetReducers(state = {
       const newTotalAmount = currentTotalAmount + newAsset.invest_amount;
 
       return { ...state,
-        asset: newMoneyFlows,
+        myasset: newAssets,
         totalAssetAmount : newTotalAmount
       }
       break;
     case "GET_ASSET":
       return { ...state,
-        asset: action.payload.items,
+        myasset: action.payload.items,
         totalAssetAmount : action.payload.totalAmount
       }
       break;
@@ -32,7 +32,7 @@ export function assetReducers(state = {
       let deletedAsset = action.payload;
       let currentTotalAmountToDelete = state.totalAmount;
       // remove
-      let currentAssetToDelete = [...state.myflow];
+      let currentAssetToDelete = [...state.myasset];
       const indexToDelete = currentAssetToDelete.findIndex(function(item) {
         return item._id === deletedAsset._id;
       })
@@ -46,7 +46,7 @@ export function assetReducers(state = {
 
       return {
         ...state,
-        asset: newAssetToDelete,
+        myasset: newAssetToDelete,
         totalAssetAmount : newTotalAmountAfterDelete
       }
       break;

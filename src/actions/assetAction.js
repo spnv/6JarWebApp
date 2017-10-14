@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // create
 export function createAsset(
-  _name,
   _catagory,
   _risk_level,
   _description,
@@ -11,7 +10,6 @@ export function createAsset(
   cb) {
   return function(dispatch) {
     axios.post('/api/asset/my-asset', {
-      name: _name,
       catagory: _catagory,
       risk_level : _risk_level,
       description: _description,
@@ -40,7 +38,7 @@ export function getAsset(cb) {
     axios.get('/api/asset/my-asset')
       .then(function(response) {
         dispatch({
-          type: "GET_ASSET_FLOW",
+          type: "GET_ASSET",
           payload: response.data
         })
       }).catch(function(err) {

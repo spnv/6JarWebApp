@@ -1,9 +1,8 @@
 "use strict"
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema({
-  name: String,
   catagory: String,
-  risk_level: String,
+  risk_level: Number,
   description: String,
   invest_amount: Number,
   owner: String,
