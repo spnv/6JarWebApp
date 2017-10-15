@@ -63940,16 +63940,11 @@ var JarSetup = function (_React$Component) {
       this.setState({ showModal: false });
     }
   }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var contex = this;
-      contex.props.getMemberSession();
-    }
-  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var contex = this;
       contex.props.getMyJar();
+      contex.props.getMemberSession();
       contex.props.getMoneyFlow(function () {});
     }
   }, {
