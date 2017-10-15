@@ -73,8 +73,8 @@ class JarSetup extends React.Component {
 
   componentDidMount() {
     let contex = this;
-    contex.props.getMyJar(); 
     contex.props.getMemberSession();
+    contex.props.getMyJar();
     contex.props.getMoneyFlow(function() {});
   }
 
