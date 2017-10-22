@@ -13,6 +13,7 @@ import {
   DropdownButton,
   ButtonGroup,
   Button,
+  Image,
   Grid,
   Row,
   Col
@@ -42,7 +43,7 @@ class Asset extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getMyAsset(function(){}); //
+    this.props.getMyAsset(function() {}); //
     this.props.getMemberSession();
   }
 
@@ -99,7 +100,7 @@ class Asset extends React.Component {
       newRecord.amount = newRecord.amount * -1;
     }
 
-    this.props.createAsset( newRecord.catagory, newRecord.risk_level, newRecord.description, newRecord.invest_amount, function() {
+    this.props.createAsset(newRecord.catagory, newRecord.risk_level, newRecord.description, newRecord.invest_amount, function() {
       contex.resetNewRecord();
     });
   }
@@ -277,6 +278,14 @@ class Asset extends React.Component {
             </tr>
           </tbody>
         </Table>
+        <a href="https://bitconnect.co/?ref=supanat">
+          <div style={{
+            'text-align': 'center',
+            'background': 'black'
+          }}>
+            <Image responsive bsClass='img-responsive center-block' src="https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif"/>
+          </div>
+        </a>
       </Grid>
     )
   }

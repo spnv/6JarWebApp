@@ -17,6 +17,7 @@ import {
   Grid,
   FormGroup,
   FormControl,
+  Image,
   Row,
   Col
 } from 'react-bootstrap';
@@ -45,7 +46,7 @@ class Today extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getSelectedJar();//
+    this.props.getSelectedJar(); //
     this.props.getTodayTransaction(); //
     this.props.getMemberSession();
   }
@@ -121,7 +122,7 @@ class Today extends React.Component {
 
     let newJar = currentJarsToUpdate[jarIndex];
     newJar.remain = (currentJarsToUpdate[jarIndex].remain + newRecord.amount).toFixed(2);
-    this.props.updateAJar(newJar,function(){})
+    this.props.updateAJar(newJar, function() {})
 
     this.setState({
       today: {
@@ -148,7 +149,7 @@ class Today extends React.Component {
 
     let newJar = currentJarsToUpdate[jarIndex];
     newJar.remain = (currentJarsToUpdate[jarIndex].remain - _transaction.amount).toFixed(2);
-    this.props.updateAJar(newJar,function(){});
+    this.props.updateAJar(newJar, function() {});
   }
 
   render() {
@@ -239,7 +240,7 @@ class Today extends React.Component {
                     <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/>
                   </InputGroup>
                 </FormGroup>
-          </td>
+              </td>
               <td>
                 <ButtonGroup vertical block>
                   <Button onClick={this.handlerCreateTransaction.bind(this, 1)} bsStyle="success">เพิ่มเข้า</Button>
@@ -249,6 +250,14 @@ class Today extends React.Component {
             </tr>
           </tbody>
         </Table>
+        <a href="https://bitconnect.co/?ref=supanat">
+          <div style={{
+            'text-align': 'center',
+            'background': 'black'
+          }}>
+            <Image responsive bsClass='img-responsive center-block' src="https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif"/>
+          </div>
+        </a>
       </Grid>
     )
   }

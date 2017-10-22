@@ -63306,6 +63306,18 @@ var Today = function (_React$Component) {
               )
             )
           )
+        ),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://bitconnect.co/?ref=supanat' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'text-align': 'center',
+                'background': 'black'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+          )
         )
       );
     }
@@ -63728,6 +63740,18 @@ var Asset = function (_React$Component) {
               )
             )
           )
+        ),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://bitconnect.co/?ref=supanat' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'text-align': 'center',
+                'background': 'black'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+          )
         )
       );
     }
@@ -64074,9 +64098,7 @@ var JarSetup = function (_React$Component) {
 
       var contex = this;
 
-      contex.setState({
-        paiding: 'paiding'
-      });
+      contex.setState({ paiding: 'paiding' });
 
       var requests = contex.props.selectedjar.map(function (jar, i) {
         return new Promise(function (resolve) {
@@ -64099,9 +64121,7 @@ var JarSetup = function (_React$Component) {
       });
 
       Promise.all(requests).then(function () {
-        contex.setState({
-          paiding: 'none'
-        });
+        contex.setState({ paiding: 'none' });
         contex.close();
       });
     }
@@ -64421,7 +64441,18 @@ var JarSetup = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement('hr', null),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://bitconnect.co/?ref=supanat' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'text-align': 'center',
+                'background': 'black'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+          )
+        ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',

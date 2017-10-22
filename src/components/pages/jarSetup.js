@@ -26,6 +26,7 @@ import {
   Grid,
   FormControl,
   FormGroup,
+  Image,
   ControlLabel,
   Row,
   Col,
@@ -60,7 +61,7 @@ class JarSetup extends React.Component {
           description: null
         }
       },
-      paiding : 'none'
+      paiding: 'none'
     }
   }
 
@@ -202,9 +203,7 @@ class JarSetup extends React.Component {
 
     let contex = this;
 
-    contex.setState({
-      paiding: 'paiding'
-    });
+    contex.setState({paiding: 'paiding'});
 
     let requests = contex.props.selectedjar.map((jar, i) => {
       return new Promise((resolve) => {
@@ -227,9 +226,7 @@ class JarSetup extends React.Component {
     })
 
     Promise.all(requests).then(function() {
-      contex.setState({
-        paiding: 'none'
-      });
+      contex.setState({paiding: 'none'});
       contex.close();
     });
   }
@@ -298,7 +295,7 @@ class JarSetup extends React.Component {
           <td>{jar.display}</td>
           <td>
             <NumberFormat thousandSeparator={true} suffix={' %'} value={percent} displayType={'text'}/>
-            <Line progress={percent/100} options={options} initialAnimate={true} containerStyle={containerStyle} containerClassName={'.progressbar'}/>
+            <Line progress={percent / 100} options={options} initialAnimate={true} containerStyle={containerStyle} containerClassName={'.progressbar'}/>
           </td>
           <td>
             <NumberFormat thousandSeparator={true} prefix={'฿ '} value={jarFull} displayType={'text'}/>
@@ -429,7 +426,14 @@ class JarSetup extends React.Component {
             </tr>
           </tbody>
         </Table>
-        <hr/>
+        <a href="https://bitconnect.co/?ref=supanat">
+          <div style={{
+            'text-align': 'center',
+            'background': 'black'
+          }}>
+            <Image responsive bsClass='img-responsive center-block' src="https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif"/>
+          </div>
+        </a>
         <br/>
         <h3>จัดการรายรับ</h3>
         <Row>
@@ -527,15 +531,18 @@ class JarSetup extends React.Component {
             </Table>
           </Modal.Body>
           <Modal.Footer>
-            {
-              (this.state.paiding == 'none')?
-              (<Button bsSize="large" onClick={this.handlePaidToJar.bind(this)} bsStyle="success">
-                <b>แบ่งจ่ายเข้าเหยือก</b>
-              </Button>):
-              (<Button disabled bsSize="large" bsStyle="success">
-                <b>กำลังจ่าย...</b>
-              </Button>)
-            }
+            {(this.state.paiding == 'none')
+              ? (
+                <Button bsSize="large" onClick={this.handlePaidToJar.bind(this)} bsStyle="success">
+                  <b>แบ่งจ่ายเข้าเหยือก</b>
+                </Button>
+              )
+              : (
+                <Button disabled bsSize="large" bsStyle="success">
+                  <b>กำลังจ่าย...</b>
+                </Button>
+              )
+}
           </Modal.Footer>
         </Modal>
       </Grid>
