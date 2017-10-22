@@ -14,6 +14,7 @@ import SignUp from './components/pages/signUp';
 import Today from './components/pages/today';
 import Asset from './components/pages/asset';
 import JarSetup from './components/pages/jarSetup';
+import SupportUs from './components/pages/supportus';
 
 const routes = (
   <Router history={browserHistory}>
@@ -23,6 +24,7 @@ const routes = (
         <Route path="/signup" component={SignUp}/>
       </Route>
       <Route path="today" component={Today}/>
+      <Route path="support-us" component={SupportUs}/>
       <Route path="asset" component={Asset}/>
       <Route path="jar-setup" component={JarSetup}/>
     </Route>

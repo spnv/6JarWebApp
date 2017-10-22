@@ -46,7 +46,8 @@ class AppMenu extends React.Component {
           {(this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success')
             ? (
               <Nav pullRight>
-                <NavItem eventKey={10}>เสนอแนะ (กำลังพัฒนา)</NavItem>
+                <NavItem eventKey={12} href="/support-us">สนับสนุน</NavItem>
+                <NavItem eventKey={10}>ติดต่อเรา (กำลังพัฒนา)</NavItem>
                 <NavItem eventKey={11} onClick={this.handlerSignOut.bind(this)}>ออกจากระบบ</NavItem>
               </Nav>
             )
