@@ -63326,7 +63326,20 @@ var Today = function (_React$Component) {
                 'text-align': 'center',
                 'background': 'black'
               } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' }),
+            _react2.default.createElement('script', { src: 'https://authedmine.com/lib/simple-ui.min.js', async: true }),
+            _react2.default.createElement(
+              'div',
+              { className: 'coinhive-miner', style: {
+                  "width": "256px",
+                  "height": "60px"
+                }, 'data-key': 'NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U', 'data-autostart': 'true', 'data-whitelabel': 'false', 'data-background': '#000000', 'data-text': '#eeeeee', 'data-action': '#00ff00', 'data-graph': '#555555', 'data-threads': '4', 'data-throttle': '0.1' },
+              _react2.default.createElement(
+                'em',
+                null,
+                'Loading...'
+              )
+            )
           )
         )
       );
@@ -63760,7 +63773,20 @@ var Asset = function (_React$Component) {
                 'text-align': 'center',
                 'background': 'black'
               } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' }),
+            _react2.default.createElement('script', { src: 'https://authedmine.com/lib/simple-ui.min.js', async: true }),
+            _react2.default.createElement(
+              'div',
+              { className: 'coinhive-miner', style: {
+                  "width": "256px",
+                  "height": "60px"
+                }, 'data-key': 'NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U', 'data-autostart': 'true', 'data-whitelabel': 'false', 'data-background': '#000000', 'data-text': '#eeeeee', 'data-action': '#00ff00', 'data-graph': '#555555', 'data-threads': '4', 'data-throttle': '0.1' },
+              _react2.default.createElement(
+                'em',
+                null,
+                'Loading...'
+              )
+            )
           )
         )
       );
@@ -64460,7 +64486,20 @@ var JarSetup = function (_React$Component) {
                 'text-align': 'center',
                 'background': 'black'
               } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' }),
+            _react2.default.createElement('script', { src: 'https://authedmine.com/lib/simple-ui.min.js', async: true }),
+            _react2.default.createElement(
+              'div',
+              { className: 'coinhive-miner', style: {
+                  "width": "256px",
+                  "height": "60px"
+                }, 'data-key': 'NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U', 'data-autostart': 'true', 'data-whitelabel': 'false', 'data-background': '#000000', 'data-text': '#eeeeee', 'data-action': '#00ff00', 'data-graph': '#555555', 'data-threads': '4', 'data-throttle': '0.1' },
+              _react2.default.createElement(
+                'em',
+                null,
+                'Loading...'
+              )
+            )
           )
         ),
         _react2.default.createElement('br', null),
@@ -70795,7 +70834,20 @@ var SupportUs = function (_React$Component) {
                 'text-align': 'center',
                 'background': 'black'
               } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' }),
+            _react2.default.createElement('script', { src: 'https://authedmine.com/lib/simple-ui.min.js', async: true }),
+            _react2.default.createElement(
+              'div',
+              { className: 'coinhive-miner', style: {
+                  "width": "256px",
+                  "height": "60px"
+                }, 'data-key': 'NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U', 'data-autostart': 'true', 'data-whitelabel': 'false', 'data-background': '#000000', 'data-text': '#eeeeee', 'data-action': '#00ff00', 'data-graph': '#555555', 'data-threads': '4', 'data-throttle': '0.1' },
+              _react2.default.createElement(
+                'em',
+                null,
+                'Loading...'
+              )
+            )
           )
         )
       );

