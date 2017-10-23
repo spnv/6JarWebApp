@@ -203,6 +203,12 @@ class Asset extends React.Component {
       }, {
         catagory: 'C000001',
         catagory_display: 'สลากรัฐ'
+      }, {
+        catagory: 'D000001',
+        catagory_display: 'ทองคำ'
+      }, {
+        catagory: 'E000001',
+        catagory_display: 'หุ้น'
       }
     ].map(function(item, i) {
       return (
@@ -273,7 +279,7 @@ class Asset extends React.Component {
                 </FormGroup>
               </td>
               <td>
-                <Button onClick={this.handlerCreateAsset.bind(this)} bsStyle="success">เพิ่ม</Button>
+                <Button onClick={this.handlerCreateAsset.bind(this)} block bsStyle="success">เพิ่ม</Button>
               </td>
             </tr>
           </tbody>

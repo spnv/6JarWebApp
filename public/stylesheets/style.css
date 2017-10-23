@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'supermarket';
-  src: local('supermarket'), url(fonts/supermarket.ttf) format('ttf');
+  src: url('/fonts/supermarket.ttf') format('ttf'), font-url("/fonts/supermarket.ttf");
 }
 
 body {
@@ -31,4 +31,10 @@ button.link {
   outline: none;
   outline-offset: 0;
   color: white
+}
+
+* {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
 }

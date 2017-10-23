@@ -47,13 +47,13 @@ class AppMenu extends React.Component {
             ? (
               <Nav pullRight>
                 <NavItem eventKey={12} href="/support-us">สนับสนุน</NavItem>
-                <NavItem eventKey={10}>ติดต่อเรา (กำลังพัฒนา)</NavItem>
+                <NavItem eventKey={10} href="/contact-us">ติดต่อเรา</NavItem>
                 <NavItem eventKey={11} onClick={this.handlerSignOut.bind(this)}>ออกจากระบบ</NavItem>
               </Nav>
             )
             : (
               <Nav pullRight>
-                <NavItem eventKey={11} href="/signin">เข้าใช้ระบบ</NavItem>
+                <NavItem eventKey={13} href="/signin">เข้าใช้ระบบ</NavItem>
               </Nav>
             )}
         </Navbar.Collapse>
