@@ -47,7 +47,7 @@ class AppMenu extends React.Component {
             ? (
               <Nav pullRight>
                 <NavItem eventKey={12} href="/support-us">สนับสนุน</NavItem>
-                <NavItem eventKey={10} href="/contact-us">ติดต่อเรา</NavItem>
+                <NavItem eventKey={10} href="/contact-us">ติดต่อเรา (กำลังพัฒนา)</NavItem>
                 <NavItem eventKey={11} onClick={this.handlerSignOut.bind(this)}>ออกจากระบบ</NavItem>
               </Nav>
             )

@@ -45,7 +45,7 @@ class ContactUs extends React.Component {
                   'width': '100%'
                 }}>
                   <ControlLabel>ชื่อ</ControlLabel>
-                  <FormControl type="text" ref="newAmount"/>
+                  <FormControl disabled type="text" ref="newAmount"/>
                 </InputGroup>
               </FormGroup>
 
@@ -54,13 +54,13 @@ class ContactUs extends React.Component {
                   'width': '100%'
                 }}>
                   <ControlLabel>อีเมล์</ControlLabel>
-                  <FormControl type="text" ref="newAmount"/>
+                  <FormControl disabled type="text" ref="newAmount"/>
                 </InputGroup>
               </FormGroup>
 
               <FormGroup bsSize="large" controlId="formControlsSelect">
                 <ControlLabel>ติดต่อเรื่อง</ControlLabel>
-                <FormControl componentClass="select" placeholder="...">
+                <FormControl disabled componentClass="select" placeholder="...">
                   <option value="แนะนำ">แนะนำ</option>
                   <option value="โฆษณา">โฆษณา</option>
                 </FormControl>
@@ -68,9 +68,9 @@ class ContactUs extends React.Component {
 
               <FormGroup bsSize="large" controlId="formControlsTextarea">
                 <ControlLabel>ข้อความ</ControlLabel>
-                <FormControl rows="4" componentClass="textarea"/>
+                <FormControl disabled rows="4" componentClass="textarea"/>
               </FormGroup>
-              <Button  bsStyle="default">ส่ง</Button>
+              <Button disabled bsStyle="default">ส่ง</Button>
             </form>
           </Col>
         </Row>

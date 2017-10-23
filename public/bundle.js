@@ -50761,7 +50761,7 @@ var AppMenu = function (_React$Component) {
             _react2.default.createElement(
               _reactBootstrap.NavItem,
               { eventKey: 10, href: '/contact-us' },
-              '\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E40\u0E23\u0E32'
+              '\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E40\u0E23\u0E32 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
             ),
             _react2.default.createElement(
               _reactBootstrap.NavItem,
@@ -72568,7 +72568,7 @@ var ContactUs = function (_React$Component) {
                     null,
                     '\u0E0A\u0E37\u0E48\u0E2D'
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', ref: 'newAmount' })
+                  _react2.default.createElement(_reactBootstrap.FormControl, { disabled: true, type: 'text', ref: 'newAmount' })
                 )
               ),
               _react2.default.createElement(
@@ -72584,7 +72584,7 @@ var ContactUs = function (_React$Component) {
                     null,
                     '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', ref: 'newAmount' })
+                  _react2.default.createElement(_reactBootstrap.FormControl, { disabled: true, type: 'text', ref: 'newAmount' })
                 )
               ),
               _react2.default.createElement(
@@ -72597,7 +72597,7 @@ var ContactUs = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   _reactBootstrap.FormControl,
-                  { componentClass: 'select', placeholder: '...' },
+                  { disabled: true, componentClass: 'select', placeholder: '...' },
                   _react2.default.createElement(
                     'option',
                     { value: '\u0E41\u0E19\u0E30\u0E19\u0E33' },
@@ -72618,11 +72618,11 @@ var ContactUs = function (_React$Component) {
                   null,
                   '\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21'
                 ),
-                _react2.default.createElement(_reactBootstrap.FormControl, { rows: '4', componentClass: 'textarea' })
+                _react2.default.createElement(_reactBootstrap.FormControl, { disabled: true, rows: '4', componentClass: 'textarea' })
               ),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { bsStyle: 'default' },
+                { disabled: true, bsStyle: 'default' },
                 '\u0E2A\u0E48\u0E07'
               )
             )
