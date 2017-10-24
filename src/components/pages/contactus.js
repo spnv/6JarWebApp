@@ -22,7 +22,23 @@ import {
 
 } from 'react-bootstrap';
 
+import {sendMessage} from '../../actions/messageAction';
+
 class ContactUs extends React.Component {
+
+  handlerSendMessage() {
+
+    let name = findDOMNode(this.refs.name).value;
+    let email = findDOMNode(this.refs.email).value;
+    let type = findDOMNode(this.refs.type).value;
+    let message = findDOMNode(this.refs.message).value;
+
+    this.props.sendMessage(name, email, type, message, function(){
+      
+    });
+
+  }
+
   render() {
     return (
       <Grid>
@@ -45,7 +61,7 @@ class ContactUs extends React.Component {
                   'width': '100%'
                 }}>
                   <ControlLabel>ชื่อ</ControlLabel>
-                  <FormControl disabled type="text" ref="newAmount"/>
+                  <FormControl type="text" ref="name"/>
                 </InputGroup>
               </FormGroup>
 
@@ -54,13 +70,13 @@ class ContactUs extends React.Component {
                   'width': '100%'
                 }}>
                   <ControlLabel>อีเมล์</ControlLabel>
-                  <FormControl disabled type="text" ref="newAmount"/>
+                  <FormControl type="text" ref="email"/>
                 </InputGroup>
               </FormGroup>
 
               <FormGroup bsSize="large" controlId="formControlsSelect">
                 <ControlLabel>ติดต่อเรื่อง</ControlLabel>
-                <FormControl disabled componentClass="select" placeholder="...">
+                <FormControl componentClass="select" placeholder="..." ref="type">
                   <option value="แนะนำ">แนะนำ</option>
                   <option value="โฆษณา">โฆษณา</option>
                 </FormControl>
@@ -68,9 +84,9 @@ class ContactUs extends React.Component {
 
               <FormGroup bsSize="large" controlId="formControlsTextarea">
                 <ControlLabel>ข้อความ</ControlLabel>
-                <FormControl disabled rows="4" componentClass="textarea"/>
+                <FormControl rows="4" componentClass="textarea" ref="message"/>
               </FormGroup>
-              <Button disabled bsStyle="default">ส่ง</Button>
+              <Button onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
             </form>
           </Col>
         </Row>
@@ -80,14 +96,16 @@ class ContactUs extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {member: state.member}
   // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
 }
 
 function mapDispatchToProps(dispatch) {
 
   // / * TODO : Template Active - map dispatch to prop getCart : getCart * /
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({
+    sendMessage: sendMessage
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactUs);

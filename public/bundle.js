@@ -50062,6 +50062,8 @@ var _moneyFlowReducer = __webpack_require__(437);
 
 var _assetReducer = __webpack_require__(438);
 
+var _messageReducer = __webpack_require__(630);
+
 /* TODO : Template Active - import reducer */
 // HERE IMPORT REDUCERS TO BE COMBINED
 // import {
@@ -50080,7 +50082,8 @@ exports.default = (0, _redux.combineReducers)({
   myJar: _jarReducer.jarReducers,
   transaction: _transactionReducer.transactionReducers,
   moneyflow: _moneyFlowReducer.moneyFlowReducers,
-  asset: _assetReducer.assetReducers
+  asset: _assetReducer.assetReducers,
+  message: _messageReducer.messageReducers
 });
 
 /***/ }),
@@ -72493,6 +72496,8 @@ var _reactDom = __webpack_require__(14);
 
 var _reactBootstrap = __webpack_require__(31);
 
+var _messageAction = __webpack_require__(631);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72511,6 +72516,17 @@ var ContactUs = function (_React$Component) {
   }
 
   _createClass(ContactUs, [{
+    key: 'handlerSendMessage',
+    value: function handlerSendMessage() {
+
+      var name = (0, _reactDom.findDOMNode)(this.refs.name).value;
+      var email = (0, _reactDom.findDOMNode)(this.refs.email).value;
+      var type = (0, _reactDom.findDOMNode)(this.refs.type).value;
+      var message = (0, _reactDom.findDOMNode)(this.refs.message).value;
+
+      this.props.sendMessage(name, email, type, message, function () {});
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -72568,7 +72584,7 @@ var ContactUs = function (_React$Component) {
                     null,
                     '\u0E0A\u0E37\u0E48\u0E2D'
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, { disabled: true, type: 'text', ref: 'newAmount' })
+                  _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', ref: 'name' })
                 )
               ),
               _react2.default.createElement(
@@ -72584,7 +72600,7 @@ var ContactUs = function (_React$Component) {
                     null,
                     '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, { disabled: true, type: 'text', ref: 'newAmount' })
+                  _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', ref: 'email' })
                 )
               ),
               _react2.default.createElement(
@@ -72597,7 +72613,7 @@ var ContactUs = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   _reactBootstrap.FormControl,
-                  { disabled: true, componentClass: 'select', placeholder: '...' },
+                  { componentClass: 'select', placeholder: '...', ref: 'type' },
                   _react2.default.createElement(
                     'option',
                     { value: '\u0E41\u0E19\u0E30\u0E19\u0E33' },
@@ -72618,11 +72634,11 @@ var ContactUs = function (_React$Component) {
                   null,
                   '\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21'
                 ),
-                _react2.default.createElement(_reactBootstrap.FormControl, { disabled: true, rows: '4', componentClass: 'textarea' })
+                _react2.default.createElement(_reactBootstrap.FormControl, { rows: '4', componentClass: 'textarea', ref: 'message' })
               ),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { disabled: true, bsStyle: 'default' },
+                { onClick: this.handlerSendMessage.bind(this), bsStyle: 'default' },
                 '\u0E2A\u0E48\u0E07'
               )
             )
@@ -72636,17 +72652,94 @@ var ContactUs = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-  return {};
-  // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
+  return { member: state.member
+    // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
+  };
 }
 
 function mapDispatchToProps(dispatch) {
 
   // / * TODO : Template Active - map dispatch to prop getCart : getCart * /
-  return (0, _redux.bindActionCreators)({}, dispatch);
+  return (0, _redux.bindActionCreators)({
+    sendMessage: _messageAction.sendMessage
+  }, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ContactUs);
+
+/***/ }),
+/* 630 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* TODO : Template Passive - assign reducer */
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.messageReducers = messageReducers;
+function messageReducers() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    message: []
+  };
+  var action = arguments[1];
+
+  switch (action.type) {
+    case "CREATE_MESSAGE":
+      return _extends({}, state);
+      break;
+    case "CREATE_MESSAGE_REJECTED":
+      return _extends({}, state);
+      break;
+  }
+  return state;
+}
+
+/***/ }),
+/* 631 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sendMessage = sendMessage;
+
+var _axios = __webpack_require__(81);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function sendMessage(_name, _email, _type, _message, cb) {
+  return function (dispatch) {
+    // TODO : Add duplicate detector
+    _axios2.default.post('/api/message/my-msg', {
+      name: _name,
+      email: _email,
+      type: _type,
+      message: _message
+    }).then(function (response) {
+      dispatch({
+        type: "CREATE_MESSAGE",
+        payload: response.data
+      });
+    }).catch(function (err) {
+      dispatch({
+        type: "CREATE_MESSAGE_REJECTED",
+        payload: err
+      });
+    }).then(function () {
+      cb();
+    });
+  };
+}
 
 /***/ })
 /******/ ]);

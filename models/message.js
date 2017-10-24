@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 var messageSchema = mongoose.Schema({
   name: String,
   email: String,
-  title: String,
-  description: String
+  type: String,
+  message: String
 });
 var Messages = mongoose.model('Messages', messageSchema);
 module.exports = Messages;
