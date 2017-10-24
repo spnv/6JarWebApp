@@ -35142,7 +35142,7 @@ var JarItem = function (_React$Component) {
         _react2.default.createElement(
           'b',
           { style: this.moneyStyle(this.props.remain, this.props.full) },
-          _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: this.props.remain, displayType: 'text' })
+          _react2.default.createElement(NumberFormat, { thousandSeparator: true, prefix: '฿ ', value: this.props.remain.toFixed(2), displayType: 'text' })
         )
       );
     }

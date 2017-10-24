@@ -70,7 +70,7 @@ class JarItem extends React.Component {
       <div className='text-center'>
         <Image src={this.selectImage(this.props.remain, this.props.full, this.props.code)} responsive/>
         <b style={this.moneyStyle(this.props.remain, this.props.full)}>
-          <NumberFormat thousandSeparator={true} prefix={'฿ '} value={this.props.remain} displayType={'text'}/>
+          <NumberFormat thousandSeparator={true} prefix={'฿ '} value={(this.props.remain).toFixed(2)} displayType={'text'}/>
         </b>
       </div>
     )
