@@ -8,7 +8,6 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 // import BooksList from './components/pages/booksList';
 // import Cart from './components/pages/cart';
 import App from './app';
-import AccessApp from './components/pages/accessApp';
 import SignIn from './components/pages/signIn';
 import SignUp from './components/pages/signUp';
 import Today from './components/pages/today';
@@ -20,10 +19,8 @@ import ContactUs from './components/pages/contactus';
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="access-app" component={AccessApp}>
-        <Route path="/signin" component={SignIn}/>
-        <Route path="/signup" component={SignUp}/>
-      </Route>
+      <Route path="signin" component={SignIn}/>
+      <Route path="signup" component={SignUp}/>
       <Route path="today" component={Today}/>
       <Route path="support-us" component={SupportUs}/>
       <Route path="asset" component={Asset}/>

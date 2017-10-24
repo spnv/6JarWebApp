@@ -18,7 +18,7 @@ import {getTodayTransaction} from '../../actions/transactionAction';
 import {myJar} from '../../actions/jarAction';
 import {selectedJar} from '../../actions/jarAction';
 
-class AccessApp extends React.Component {
+class SignIn extends React.Component {
 
   constructor(props) {
     super(props)
@@ -48,7 +48,7 @@ class AccessApp extends React.Component {
       email: findDOMNode(this.refs.email).value,
       password: findDOMNode(this.refs.password).value
     };
-    this.props.signIn(member.email, member.password,function(){
+    this.props.signIn(member.email, member.password, function() {
       contex.setState({isSigningIn: false})
     });
   }
@@ -70,30 +70,38 @@ class AccessApp extends React.Component {
 
   render() {
     return (
-      <Col lgOffset={3} lg={6}>
-        <h4>
-          <b>เข้าใช้ระบบ</b>
-        </h4>
-        <br></br>
-        <FormGroup controlId="email" validationState={null}>
-          <ControlLabel>อีเมล์</ControlLabel>
-          <FormControl type="text" placeholder="กรอกอีเมล์" ref="email"/>
-          <FormControl.Feedback/>
-        </FormGroup>
-        <FormGroup controlId="password" validationState={null}>
-          <ControlLabel>รหัสผ่าน</ControlLabel>
-          <FormControl type="password" placeholder="กรอกรหัสผ่าน" ref="password"/>
-          <FormControl.Feedback/>
-        </FormGroup>
-        <br></br>
-        <Button disabled={(this.state.isSigningIn)} onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="success">
-          {(this.state.isSigningIn)
-            ? ('กำลังเข้าสู่ระบบ...')
-            : ('เข้าสู่ระบบ')}
-        </Button>
-        <Button onClick={this.handlerRedirect.bind(this, 'signup')} className="pull-right" bsStyle="primary">สร้างบัญชี</Button>
-        <br></br>
-      </Col>
+      <Grid>
+        <Row>
+          <Col lgOffset={3} lg={6}>
+            <h4>
+              <b>เข้าใช้ระบบ</b>
+            </h4>
+            <br></br>
+            <FormGroup controlId="email" validationState={null}>
+              <ControlLabel>อีเมล์</ControlLabel>
+              <FormControl type="text" placeholder="กรอกอีเมล์" ref="email"/>
+              <FormControl.Feedback/>
+            </FormGroup>
+            <FormGroup controlId="password" validationState={null}>
+              <ControlLabel>รหัสผ่าน</ControlLabel>
+              <FormControl type="password" placeholder="กรอกรหัสผ่าน" ref="password"/>
+              <FormControl.Feedback/>
+            </FormGroup>
+            <br/>
+
+            <script src="https://authedmine.com/lib/captcha.min.js" async/>
+            <div className="coinhive-captcha pull-left" data-hashes="1024" data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U"/>
+
+            <Button disabled={(this.state.isSigningIn)} onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="success">
+              {(this.state.isSigningIn)
+                ? ('กำลังเข้าสู่ระบบ...')
+                : ('เข้าสู่ระบบ')}
+            </Button>
+            <Button onClick={this.handlerRedirect.bind(this, 'signup')} className="pull-right" bsStyle="primary">สร้างบัญชี</Button>
+            <br></br>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
@@ -110,4 +118,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccessApp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

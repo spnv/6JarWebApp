@@ -50496,10 +50496,6 @@ var _app = __webpack_require__(440);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _accessApp = __webpack_require__(597);
-
-var _accessApp2 = _interopRequireDefault(_accessApp);
-
 var _signIn = __webpack_require__(598);
 
 var _signIn2 = _interopRequireDefault(_signIn);
@@ -50530,19 +50526,17 @@ var _contactus2 = _interopRequireDefault(_contactus);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// REACT-ROUTER
+/* TODO : Template Active - import*/
+// import BooksList from './components/pages/booksList';
+// import Cart from './components/pages/cart';
 var routes = _react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.browserHistory },
   _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: _app2.default },
-    _react2.default.createElement(
-      _reactRouter.Route,
-      { path: 'access-app', component: _accessApp2.default },
-      _react2.default.createElement(_reactRouter.Route, { path: '/signin', component: _signIn2.default }),
-      _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _signUp2.default })
-    ),
+    _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signIn2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signUp2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'today', component: _today2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'support-us', component: _supportus2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'asset', component: _asset2.default }),
@@ -50558,9 +50552,7 @@ var routes = _react2.default.createElement(
   <Route path="/cart" component={Cart}/>
 </Route>*/
 
-/* TODO : Template Active - import*/
-// import BooksList from './components/pages/booksList';
-// import Cart from './components/pages/cart';
+// REACT-ROUTER
 exports.default = routes;
 
 /***/ }),
@@ -62512,81 +62504,7 @@ var Footer = function (_React$Component) {
 exports.default = Footer;
 
 /***/ }),
-/* 597 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(26);
-
-var _redux = __webpack_require__(22);
-
-var _reactDom = __webpack_require__(14);
-
-var _reactBootstrap = __webpack_require__(31);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AccessApp = function (_React$Component) {
-  _inherits(AccessApp, _React$Component);
-
-  function AccessApp() {
-    _classCallCheck(this, AccessApp);
-
-    return _possibleConstructorReturn(this, (AccessApp.__proto__ || Object.getPrototypeOf(AccessApp)).apply(this, arguments));
-  }
-
-  _createClass(AccessApp, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // TODO : get session
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _reactBootstrap.Grid,
-        null,
-        _react2.default.createElement(
-          _reactBootstrap.Row,
-          null,
-          this.props.children
-        )
-      );
-    }
-  }]);
-
-  return AccessApp;
-}(_react2.default.Component);
-
-function mapStateToProps(state) {
-  return {};
-}
-
-function mapDispatchToProps(dispatch) {
-  return (0, _redux.bindActionCreators)({}, dispatch);
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AccessApp);
-
-/***/ }),
+/* 597 */,
 /* 598 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -62625,13 +62543,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AccessApp = function (_React$Component) {
-  _inherits(AccessApp, _React$Component);
+var SignIn = function (_React$Component) {
+  _inherits(SignIn, _React$Component);
 
-  function AccessApp(props) {
-    _classCallCheck(this, AccessApp);
+  function SignIn(props) {
+    _classCallCheck(this, SignIn);
 
-    var _this = _possibleConstructorReturn(this, (AccessApp.__proto__ || Object.getPrototypeOf(AccessApp)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SignIn.__proto__ || Object.getPrototypeOf(SignIn)).call(this, props));
 
     _this.state = {
       isSigningIn: false
@@ -62639,7 +62557,7 @@ var AccessApp = function (_React$Component) {
     return _this;
   }
 
-  _createClass(AccessApp, [{
+  _createClass(SignIn, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.getMemberSession();
@@ -62688,57 +62606,67 @@ var AccessApp = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactBootstrap.Col,
-        { lgOffset: 3, lg: 6 },
+        _reactBootstrap.Grid,
+        null,
         _react2.default.createElement(
-          'h4',
+          _reactBootstrap.Row,
           null,
           _react2.default.createElement(
-            'b',
-            null,
-            '\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
+            _reactBootstrap.Col,
+            { lgOffset: 3, lg: 6 },
+            _react2.default.createElement(
+              'h4',
+              null,
+              _react2.default.createElement(
+                'b',
+                null,
+                '\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              _reactBootstrap.FormGroup,
+              { controlId: 'email', validationState: null },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
+              _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.FormGroup,
+              { controlId: 'password', validationState: null },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                '\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'password' }),
+              _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement('script', { src: 'https://authedmine.com/lib/captcha.min.js', async: true }),
+            _react2.default.createElement('div', { className: 'coinhive-captcha pull-left', 'data-hashes': '1024', 'data-key': 'NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U' }),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { disabled: this.state.isSigningIn, onClick: this.handleSubmit.bind(this), className: 'pull-right', bsStyle: 'success' },
+              this.state.isSigningIn ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.handlerRedirect.bind(this, 'signup'), className: 'pull-right', bsStyle: 'primary' },
+              '\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
+            ),
+            _react2.default.createElement('br', null)
           )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          { controlId: 'email', validationState: null },
-          _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
-          ),
-          _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          { controlId: 'password', validationState: null },
-          _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            '\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
-          ),
-          _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'password' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.Button,
-          { disabled: this.state.isSigningIn, onClick: this.handleSubmit.bind(this), className: 'pull-right', bsStyle: 'success' },
-          this.state.isSigningIn ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Button,
-          { onClick: this.handlerRedirect.bind(this, 'signup'), className: 'pull-right', bsStyle: 'primary' },
-          '\u0E2A\u0E23\u0E49\u0E32\u0E07\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
-        ),
-        _react2.default.createElement('br', null)
+        )
       );
     }
   }]);
 
-  return AccessApp;
+  return SignIn;
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
@@ -62753,7 +62681,7 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AccessApp);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SignIn);
 
 /***/ }),
 /* 599 */
@@ -62790,13 +62718,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AccessApp = function (_React$Component) {
-  _inherits(AccessApp, _React$Component);
+var SignUp = function (_React$Component) {
+  _inherits(SignUp, _React$Component);
 
-  function AccessApp(props) {
-    _classCallCheck(this, AccessApp);
+  function SignUp(props) {
+    _classCallCheck(this, SignUp);
 
-    var _this = _possibleConstructorReturn(this, (AccessApp.__proto__ || Object.getPrototypeOf(AccessApp)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
 
     _this.state = {
       isCreating: false
@@ -62804,7 +62732,7 @@ var AccessApp = function (_React$Component) {
     return _this;
   }
 
-  _createClass(AccessApp, [{
+  _createClass(SignUp, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.getMemberSession();
@@ -62852,95 +62780,103 @@ var AccessApp = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactBootstrap.Col,
-        { lgOffset: 3, lg: 6 },
+        _reactBootstrap.Grid,
+        null,
         _react2.default.createElement(
-          'h4',
+          _reactBootstrap.Row,
           null,
           _react2.default.createElement(
-            'b',
-            null,
-            '\u0E01\u0E32\u0E23\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
+            _reactBootstrap.Col,
+            { lgOffset: 3, lg: 6 },
+            _react2.default.createElement(
+              'h4',
+              null,
+              _react2.default.createElement(
+                'b',
+                null,
+                '\u0E01\u0E32\u0E23\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              _reactBootstrap.FormGroup,
+              { controlId: 'email', validationState: null },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
+              _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null),
+              ' ',
+              this.props.member.mymember.message == 'email already exist' ? _react2.default.createElement(
+                'p',
+                null,
+                '*email already exist'
+              ) : ''
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.FormGroup,
+              { controlId: 'password', validationState: null },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                '\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'password' }),
+              _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.FormGroup,
+              { controlId: 're-password', validationState: null },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'rePassword' }),
+              _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              'h4',
+              null,
+              _react2.default.createElement(
+                'b',
+                null,
+                '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49'
+              )
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              _reactBootstrap.FormGroup,
+              { controlId: 'name' },
+              _react2.default.createElement(
+                _reactBootstrap.ControlLabel,
+                null,
+                '\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E48\u0E19'
+              ),
+              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E48\u0E19', ref: 'name' }),
+              _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
+            ),
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { disabled: this.state.isCreating, onClick: this.handleSubmit.bind(this), className: 'pull-right', bsStyle: 'primary' },
+              this.state.isCreating ? 'กำลังสร้างบัญชี...' : 'สร้างบัญชี'
+            ),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { href: '/signin', className: 'pull-right', bsStyle: 'warning' },
+              '\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E25\u0E31\u0E1A'
+            )
           )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          { controlId: 'email', validationState: null },
-          _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
-          ),
-          _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null),
-          ' ',
-          this.props.member.mymember.message == 'email already exist' ? _react2.default.createElement(
-            'p',
-            null,
-            '*email already exist'
-          ) : ''
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          { controlId: 'password', validationState: null },
-          _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            '\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
-          ),
-          _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'password' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          { controlId: 're-password', validationState: null },
-          _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
-          ),
-          _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'rePassword' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'h4',
-          null,
-          _react2.default.createElement(
-            'b',
-            null,
-            '\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E1C\u0E39\u0E49\u0E43\u0E0A\u0E49'
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          { controlId: 'name' },
-          _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            '\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E48\u0E19'
-          ),
-          _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E0A\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E48\u0E19', ref: 'name' }),
-          _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactBootstrap.Button,
-          { disabled: this.state.isCreating, onClick: this.handleSubmit.bind(this), className: 'pull-right', bsStyle: 'primary' },
-          this.state.isCreating ? 'กำลังสร้างบัญชี...' : 'สร้างบัญชี'
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Button,
-          { onClick: this.handlerRedirect.bind(this, 'signin'), className: 'pull-right', bsStyle: 'warning' },
-          '\u0E22\u0E49\u0E2D\u0E19\u0E01\u0E25\u0E31\u0E1A'
         )
       );
     }
   }]);
 
-  return AccessApp;
+  return SignUp;
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
@@ -62954,7 +62890,7 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(AccessApp);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SignUp);
 
 /***/ }),
 /* 600 */
@@ -72498,6 +72434,8 @@ var _reactBootstrap = __webpack_require__(31);
 
 var _messageAction = __webpack_require__(631);
 
+var _memberAction = __webpack_require__(65);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -72525,6 +72463,24 @@ var ContactUs = function (_React$Component) {
       var message = (0, _reactDom.findDOMNode)(this.refs.message).value;
 
       this.props.sendMessage(name, email, type, message, function () {});
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var myMemberMessage = this.props.member.mymember.message;
+      if (myMemberMessage == 'no session' || myMemberMessage == null) {
+        this.handlerRedirect('signin');
+      }
+    }
+  }, {
+    key: 'handlerRedirect',
+    value: function handlerRedirect(path) {
+      switch (path) {
+        case 'signin':
+          this.props.router.push('/signin');
+          break;
+        default:
+      }
     }
   }, {
     key: 'render',
@@ -72636,9 +72592,11 @@ var ContactUs = function (_React$Component) {
                 ),
                 _react2.default.createElement(_reactBootstrap.FormControl, { rows: '4', componentClass: 'textarea', ref: 'message' })
               ),
+              _react2.default.createElement('script', { src: 'https://authedmine.com/lib/captcha.min.js', async: true }),
+              _react2.default.createElement('div', { className: 'coinhive-captcha pull-left', 'data-hashes': '1024', 'data-key': 'NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U' }),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { onClick: this.handlerSendMessage.bind(this), bsStyle: 'default' },
+                { className: 'pull-right', onClick: this.handlerSendMessage.bind(this), bsStyle: 'default' },
                 '\u0E2A\u0E48\u0E07'
               )
             )

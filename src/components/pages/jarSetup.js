@@ -84,7 +84,6 @@ class JarSetup extends React.Component {
     if (myMemberMessage == 'no session' || myMemberMessage == null) {
       this.handlerRedirect('signin')
     }
-
   }
 
   handlerRedirect(path) {

@@ -23,6 +23,7 @@ import {
 } from 'react-bootstrap';
 
 import {sendMessage} from '../../actions/messageAction';
+import {getMemberSession} from '../../actions/memberAction';
 
 class ContactUs extends React.Component {
 
@@ -33,11 +34,26 @@ class ContactUs extends React.Component {
     let type = findDOMNode(this.refs.type).value;
     let message = findDOMNode(this.refs.message).value;
 
-    this.props.sendMessage(name, email, type, message, function(){
-      
-    });
+    this.props.sendMessage(name, email, type, message, function() {});
 
   }
+
+  componentDidUpdate() {
+    let myMemberMessage = this.props.member.mymember.message;
+    if (myMemberMessage == 'no session' || myMemberMessage == null) {
+      this.handlerRedirect('signin')
+    }
+  }
+
+  handlerRedirect(path) {
+    switch (path) {
+      case 'signin':
+        this.props.router.push('/signin');
+        break;
+      default:
+    }
+  }
+
 
   render() {
     return (
@@ -86,7 +102,9 @@ class ContactUs extends React.Component {
                 <ControlLabel>ข้อความ</ControlLabel>
                 <FormControl rows="4" componentClass="textarea" ref="message"/>
               </FormGroup>
-              <Button onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
+              <script src="https://authedmine.com/lib/captcha.min.js" async/>
+              <div className="coinhive-captcha pull-left" data-hashes="1024" data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U"/>
+              <Button className="pull-right" onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
             </form>
           </Col>
         </Row>
