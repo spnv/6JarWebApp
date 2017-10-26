@@ -18,8 +18,8 @@ import {
   Image,
   FormGroup,
   ControlLabel,
-  FormControl
-
+  FormControl,
+  Modal
 } from 'react-bootstrap';
 
 import {sendMessage} from '../../actions/messageAction';
@@ -27,14 +27,36 @@ import {getMemberSession} from '../../actions/memberAction';
 
 class ContactUs extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+      send_btn_state: 'none'
+    }
+  }
+
+  open() {
+    this.setState({showModal: true})
+  }
+  close() {
+    this.setState({showModal: false})
+  }
+
   handlerSendMessage() {
+
+    let contex = this;
+
+    this.setState({send_btn_state: 'sending'});
 
     let name = findDOMNode(this.refs.name).value;
     let email = findDOMNode(this.refs.email).value;
     let type = findDOMNode(this.refs.type).value;
     let message = findDOMNode(this.refs.message).value;
 
-    this.props.sendMessage(name, email, type, message, function() {});
+    this.props.sendMessage(name, email, type, message, function() {
+      contex.setState({send_btn_state: 'none'})
+      contex.open();
+    });
 
   }
 
@@ -53,7 +75,6 @@ class ContactUs extends React.Component {
       default:
     }
   }
-
 
   render() {
     return (
@@ -102,10 +123,25 @@ class ContactUs extends React.Component {
                 <ControlLabel>ข้อความ</ControlLabel>
                 <FormControl rows="4" componentClass="textarea" ref="message"/>
               </FormGroup>
-              <Button className="pull-left" onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
+              {(this.state.send_btn_state == 'none')
+                ? (
+                  <Button className="pull-left" onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
+                )
+                : (
+                  <Button disabled className="pull-left" bsStyle="default">กำลังส่ง...</Button>
+                )}
             </form>
           </Col>
         </Row>
+        <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal.Header style={{
+              'backgroundColor' : 'green'
+            }}>
+          </Modal.Header>
+          <Modal.Body>
+            ข้อความถูกส่งเรียบร้อย
+          </Modal.Body>
+        </Modal>
       </Grid>
     )
   }

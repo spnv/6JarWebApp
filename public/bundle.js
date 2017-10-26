@@ -64043,6 +64043,9 @@ var JarSetup = function (_React$Component) {
         case 'signin':
           this.props.router.push('/signin');
           break;
+        case 'today':
+          this.props.router.push('/today');
+          break;
         default:
       }
     }
@@ -64180,6 +64183,7 @@ var JarSetup = function (_React$Component) {
       Promise.all(requests).then(function () {
         contex.setState({ paiding: 'none' });
         contex.close();
+        contex.handlerRedirect('today');
       });
     }
   }, {
@@ -72575,22 +72579,45 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ContactUs = function (_React$Component) {
   _inherits(ContactUs, _React$Component);
 
-  function ContactUs() {
+  function ContactUs(props) {
     _classCallCheck(this, ContactUs);
 
-    return _possibleConstructorReturn(this, (ContactUs.__proto__ || Object.getPrototypeOf(ContactUs)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ContactUs.__proto__ || Object.getPrototypeOf(ContactUs)).call(this, props));
+
+    _this.state = {
+      showModal: false,
+      send_btn_state: 'none'
+    };
+    return _this;
   }
 
   _createClass(ContactUs, [{
+    key: 'open',
+    value: function open() {
+      this.setState({ showModal: true });
+    }
+  }, {
+    key: 'close',
+    value: function close() {
+      this.setState({ showModal: false });
+    }
+  }, {
     key: 'handlerSendMessage',
     value: function handlerSendMessage() {
+
+      var contex = this;
+
+      this.setState({ send_btn_state: 'sending' });
 
       var name = (0, _reactDom.findDOMNode)(this.refs.name).value;
       var email = (0, _reactDom.findDOMNode)(this.refs.email).value;
       var type = (0, _reactDom.findDOMNode)(this.refs.type).value;
       var message = (0, _reactDom.findDOMNode)(this.refs.message).value;
 
-      this.props.sendMessage(name, email, type, message, function () {});
+      this.props.sendMessage(name, email, type, message, function () {
+        contex.setState({ send_btn_state: 'none' });
+        contex.open();
+      });
     }
   }, {
     key: 'componentDidUpdate',
@@ -72720,12 +72747,28 @@ var ContactUs = function (_React$Component) {
                 ),
                 _react2.default.createElement(_reactBootstrap.FormControl, { rows: '4', componentClass: 'textarea', ref: 'message' })
               ),
-              _react2.default.createElement(
+              this.state.send_btn_state == 'none' ? _react2.default.createElement(
                 _reactBootstrap.Button,
                 { className: 'pull-left', onClick: this.handlerSendMessage.bind(this), bsStyle: 'default' },
                 '\u0E2A\u0E48\u0E07'
+              ) : _react2.default.createElement(
+                _reactBootstrap.Button,
+                { disabled: true, className: 'pull-left', bsStyle: 'default' },
+                '\u0E01\u0E33\u0E25\u0E31\u0E07\u0E2A\u0E48\u0E07...'
               )
             )
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Modal,
+          { show: this.state.showModal, onHide: this.close.bind(this) },
+          _react2.default.createElement(_reactBootstrap.Modal.Header, { style: {
+              'backgroundColor': 'green'
+            } }),
+          _react2.default.createElement(
+            _reactBootstrap.Modal.Body,
+            null,
+            '\u0E02\u0E49\u0E2D\u0E04\u0E27\u0E32\u0E21\u0E16\u0E39\u0E01\u0E2A\u0E48\u0E07\u0E40\u0E23\u0E35\u0E22\u0E1A\u0E23\u0E49\u0E2D\u0E22'
           )
         )
       );

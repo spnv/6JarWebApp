@@ -91,6 +91,9 @@ class JarSetup extends React.Component {
       case 'signin':
         this.props.router.push('/signin');
         break;
+      case 'today':
+        this.props.router.push('/today');
+        break;
       default:
     }
   }
@@ -227,6 +230,7 @@ class JarSetup extends React.Component {
     Promise.all(requests).then(function() {
       contex.setState({paiding: 'none'});
       contex.close();
+      contex.handlerRedirect('today');
     });
   }
 
