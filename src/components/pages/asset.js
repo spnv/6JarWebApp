@@ -284,6 +284,14 @@ class Asset extends React.Component {
             </tr>
           </tbody>
         </Table>
+        <a href="https://bx.in.th/ref/sgrNrC/">
+          <div style={{
+            'textAlign': 'center',
+            'background': '#144498'
+          }}><Image responsive src="https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif" alt="BX.in.th Bitcoin Exchange Thailand"/>
+          </div>
+        </a>
+        <br></br>
         <a href="https://bitconnect.co/?ref=supanat">
           <div style={{
             'textAlign': 'center',

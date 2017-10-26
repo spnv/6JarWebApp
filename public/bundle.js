@@ -63292,6 +63292,19 @@ var Today = function (_React$Component) {
         ),
         _react2.default.createElement(
           'a',
+          { href: 'https://bx.in.th/ref/sgrNrC/' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'textAlign': 'center',
+                'background': '#144498'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'a',
           { href: 'https://bitconnect.co/?ref=supanat' },
           _react2.default.createElement(
             'div',
@@ -63730,6 +63743,19 @@ var Asset = function (_React$Component) {
             )
           )
         ),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://bx.in.th/ref/sgrNrC/' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'textAlign': 'center',
+                'background': '#144498'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
+          )
+        ),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'a',
           { href: 'https://bitconnect.co/?ref=supanat' },
@@ -64545,6 +64571,19 @@ var JarSetup = function (_React$Component) {
           )
         ),
         _react2.default.createElement('hr', null),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://bx.in.th/ref/sgrNrC/' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'textAlign': 'center',
+                'background': '#144498'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
+          )
+        ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',
@@ -70763,6 +70802,19 @@ var SupportUs = function (_React$Component) {
               { 'data-clipboard-text': '009-3-79637-3' },
               'copy to clipboard'
             )
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'a',
+          { href: 'https://bx.in.th/ref/sgrNrC/' },
+          _react2.default.createElement(
+            'div',
+            { style: {
+                'textAlign': 'center',
+                'background': '#144498'
+              } },
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
           )
         ),
         _react2.default.createElement(
