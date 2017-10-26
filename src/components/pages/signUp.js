@@ -109,7 +109,7 @@ class SignUp extends React.Component {
                 ? ('กำลังสร้างบัญชี...')
                 : ('สร้างบัญชี')}
             </Button>
-            <Button href="/signin" className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
+            <Button onClick={this.handlerRedirect.bind(this,'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
           </Col>
         </Row>
       </Grid>

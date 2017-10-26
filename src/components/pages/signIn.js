@@ -88,10 +88,6 @@ class SignIn extends React.Component {
               <FormControl.Feedback/>
             </FormGroup>
             <br/>
-
-            <script src="https://authedmine.com/lib/captcha.min.js" async/>
-            <div className="coinhive-captcha pull-left" data-hashes="1024" data-key="NiiRozU9BSqWfKNl81wpAS5lwJgbhb1U"/>
-
             <Button disabled={(this.state.isSigningIn)} onClick={this.handleSubmit.bind(this)} className="pull-right" bsStyle="success">
               {(this.state.isSigningIn)
                 ? ('กำลังเข้าสู่ระบบ...')
