@@ -50746,6 +50746,9 @@ var AppMenu = function (_React$Component) {
     key: 'handlerRedirect',
     value: function handlerRedirect(path) {
       switch (path) {
+        case '/':
+          this.props.router.push('/');
+          break;
         case 'today':
           this.props.router.push('/today');
           break;
@@ -50781,12 +50784,8 @@ var AppMenu = function (_React$Component) {
             null,
             _react2.default.createElement(
               _reactBootstrap.Navbar.Brand,
-              null,
-              _react2.default.createElement(
-                'a',
-                { href: '/' },
-                '\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
-              )
+              { onClick: this.handlerRedirect.bind(this, '/') },
+              '\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
             ),
             _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
           ),

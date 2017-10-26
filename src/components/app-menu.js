@@ -22,6 +22,9 @@ class AppMenu extends React.Component {
 
   handlerRedirect(path) {
     switch (path) {
+      case '/':
+        this.props.router.push('/');
+        break;
       case 'today':
         this.props.router.push('/today');
         break;
@@ -49,8 +52,8 @@ class AppMenu extends React.Component {
       <div>
         <Navbar inverse fixedTop>
           <Navbar.Header>
-            <Navbar.Brand>
-              <a href="/">บัญชี</a>
+            <Navbar.Brand onClick={this.handlerRedirect.bind(this, '/')}>
+              บัญชี
             </Navbar.Brand>
             <Navbar.Toggle/>
           </Navbar.Header>
@@ -60,7 +63,7 @@ class AppMenu extends React.Component {
               ? (
                 <Nav>
                   <NavItem eventKey={1} onClick={this.handlerRedirect.bind(this, 'today')}>รายการวันนี้</NavItem>
-                  <NavItem eventKey={2} >สรุปการใช้จ่าย (กำลังพัฒนา)</NavItem>
+                  <NavItem eventKey={2}>สรุปการใช้จ่าย (กำลังพัฒนา)</NavItem>
                   <NavItem eventKey={3} onClick={this.handlerRedirect.bind(this, 'asset')}>ทรัพย์สิน</NavItem>
                   <NavItem eventKey={4} onClick={this.handlerRedirect.bind(this, 'jar-setup')}>จัดการ</NavItem>
                 </Nav>
