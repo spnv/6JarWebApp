@@ -15,10 +15,11 @@ import Asset from './components/pages/asset';
 import JarSetup from './components/pages/jarSetup';
 import SupportUs from './components/pages/supportus';
 import ContactUs from './components/pages/contactus';
+import AppMenu from './components/app-menu';
 
 const routes = (
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={AppMenu}>
       <Route path="signin" component={SignIn}/>
       <Route path="signup" component={SignUp}/>
       <Route path="today" component={Today}/>

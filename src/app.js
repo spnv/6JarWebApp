@@ -18,7 +18,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <AppMenu/> {this.props.children}
+        <AppMenu> {this.props.children} </AppMenu>
         <Footer/>
       </div>
     );

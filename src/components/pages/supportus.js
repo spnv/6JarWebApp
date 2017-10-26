@@ -19,7 +19,32 @@ import {
   Image
 } from 'react-bootstrap';
 
+import {getMemberSession} from '../../actions/memberAction';
+
 class SupportUs extends React.Component {
+
+  componentDidUpdate() {
+    let myMemberMessage = this.props.member.mymember.message;
+    if (myMemberMessage == 'no session' || myMemberMessage == null) {
+      this.handlerRedirect('signin')
+    }
+  }
+
+  componentDidMount() {
+    let contex = this;
+    contex.props.getMemberSession();
+  }
+
+  handlerRedirect(path) {
+    switch (path) {
+      case 'signin':
+        this.props.router.push('/signin');
+        break;
+      default:
+    }
+  }
+
+
   render() {
     return (
       <Grid>
@@ -80,14 +105,16 @@ class SupportUs extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {member: state.member}
   // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
 }
 
 function mapDispatchToProps(dispatch) {
 
   // / * TODO : Template Active - map dispatch to prop getCart : getCart * /
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({
+    getMemberSession: getMemberSession
+  }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupportUs);

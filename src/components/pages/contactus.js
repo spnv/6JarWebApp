@@ -93,8 +93,8 @@ class ContactUs extends React.Component {
               <FormGroup bsSize="large" controlId="formControlsSelect">
                 <ControlLabel>ติดต่อเรื่อง</ControlLabel>
                 <FormControl componentClass="select" placeholder="..." ref="type">
-                  <option value="แนะนำ">แนะนำ</option>
-                  <option value="โฆษณา">โฆษณา</option>
+                  <option value="แนะนำ">แนะนำเกี่ยวกับเว็บไซต์</option>
+                  <option value="โฆษณา">ติดต่อพื้นที่โฆษณา</option>
                 </FormControl>
               </FormGroup>
 

@@ -50556,17 +50556,19 @@ var _contactus = __webpack_require__(629);
 
 var _contactus2 = _interopRequireDefault(_contactus);
 
+var _appMenu = __webpack_require__(442);
+
+var _appMenu2 = _interopRequireDefault(_appMenu);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* TODO : Template Active - import*/
-// import BooksList from './components/pages/booksList';
-// import Cart from './components/pages/cart';
+// REACT-ROUTER
 var routes = _react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.browserHistory },
   _react2.default.createElement(
     _reactRouter.Route,
-    { path: '/', component: _app2.default },
+    { path: '/', component: _appMenu2.default },
     _react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _signIn2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _signUp2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: 'today', component: _today2.default }),
@@ -50584,7 +50586,9 @@ var routes = _react2.default.createElement(
   <Route path="/cart" component={Cart}/>
 </Route>*/
 
-// REACT-ROUTER
+/* TODO : Template Active - import*/
+// import BooksList from './components/pages/booksList';
+// import Cart from './components/pages/cart';
 exports.default = routes;
 
 /***/ }),
@@ -50650,9 +50654,13 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_appMenu2.default, null),
-        ' ',
-        this.props.children,
+        _react2.default.createElement(
+          _appMenu2.default,
+          null,
+          ' ',
+          this.props.children,
+          ' '
+        ),
         _react2.default.createElement(_footer2.default, null)
       );
     }
@@ -50703,6 +50711,10 @@ var _reactBootstrap = __webpack_require__(36);
 
 var _memberAction = __webpack_require__(49);
 
+var _footer = __webpack_require__(597);
+
+var _footer2 = _interopRequireDefault(_footer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50731,80 +50743,111 @@ var AppMenu = function (_React$Component) {
       this.props.signOut();
     }
   }, {
+    key: 'handlerRedirect',
+    value: function handlerRedirect(path) {
+      switch (path) {
+        case 'today':
+          this.props.router.push('/today');
+          break;
+        case 'asset':
+          this.props.router.push('/asset');
+          break;
+        case 'jar-setup':
+          this.props.router.push('/jar-setup');
+          break;
+        case 'support-us':
+          this.props.router.push('/support-us');
+          break;
+        case 'contact-us':
+          this.props.router.push('/contact-us');
+          break;
+        case 'signin':
+          this.props.router.push('/signin');
+          break;
+        default:
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _reactBootstrap.Navbar,
-        { inverse: true, fixedTop: true },
+        'div',
+        null,
         _react2.default.createElement(
-          _reactBootstrap.Navbar.Header,
-          null,
+          _reactBootstrap.Navbar,
+          { inverse: true, fixedTop: true },
           _react2.default.createElement(
-            _reactBootstrap.Navbar.Brand,
+            _reactBootstrap.Navbar.Header,
             null,
             _react2.default.createElement(
-              'a',
-              { href: '/' },
-              '\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
-            )
+              _reactBootstrap.Navbar.Brand,
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: '/' },
+                '\u0E1A\u0E31\u0E0D\u0E0A\u0E35'
+              )
+            ),
+            _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
           ),
-          _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
-        ),
-        _react2.default.createElement(
-          _reactBootstrap.Navbar.Collapse,
-          null,
-          this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success' ? _react2.default.createElement(
-            _reactBootstrap.Nav,
+          _react2.default.createElement(
+            _reactBootstrap.Navbar.Collapse,
             null,
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 1, href: '/today' },
-              '\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 2 },
-              '\u0E2A\u0E23\u0E38\u0E1B\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E08\u0E48\u0E32\u0E22 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 3, href: '/asset' },
-              '\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C\u0E2A\u0E34\u0E19'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 4, href: '/jar-setup' },
-              '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
-            )
-          ) : _react2.default.createElement(_reactBootstrap.Nav, null),
-          this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success' ? _react2.default.createElement(
-            _reactBootstrap.Nav,
-            { pullRight: true },
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 12, href: '/support-us' },
-              '\u0E2A\u0E19\u0E31\u0E1A\u0E2A\u0E19\u0E38\u0E19'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 10, href: '/contact-us' },
-              '\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E40\u0E23\u0E32 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 11, onClick: this.handlerSignOut.bind(this) },
-              '\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E23\u0E30\u0E1A\u0E1A'
-            )
-          ) : _react2.default.createElement(
-            _reactBootstrap.Nav,
-            { pullRight: true },
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 13, href: '/signin' },
-              '\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
+            this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success' ? _react2.default.createElement(
+              _reactBootstrap.Nav,
+              null,
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 1, onClick: this.handlerRedirect.bind(this, 'today') },
+                '\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 2 },
+                '\u0E2A\u0E23\u0E38\u0E1B\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E08\u0E48\u0E32\u0E22 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 3, onClick: this.handlerRedirect.bind(this, 'asset') },
+                '\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C\u0E2A\u0E34\u0E19'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 4, onClick: this.handlerRedirect.bind(this, 'jar-setup') },
+                '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
+              )
+            ) : _react2.default.createElement(_reactBootstrap.Nav, null),
+            this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success' ? _react2.default.createElement(
+              _reactBootstrap.Nav,
+              { pullRight: true },
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 12, onClick: this.handlerRedirect.bind(this, 'support-us') },
+                '\u0E2A\u0E19\u0E31\u0E1A\u0E2A\u0E19\u0E38\u0E19'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 10, onClick: this.handlerRedirect.bind(this, 'contact-us') },
+                '\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E40\u0E23\u0E32 (\u0E01\u0E33\u0E25\u0E31\u0E07\u0E1E\u0E31\u0E12\u0E19\u0E32)'
+              ),
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 11, onClick: this.handlerSignOut.bind(this) },
+                '\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E23\u0E30\u0E1A\u0E1A'
+              )
+            ) : _react2.default.createElement(
+              _reactBootstrap.Nav,
+              { pullRight: true },
+              _react2.default.createElement(
+                _reactBootstrap.NavItem,
+                { eventKey: 13, onClick: this.handlerRedirect.bind(this, 'signin') },
+                '\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
+              )
             )
           )
-        )
+        ),
+        this.props.children,
+        _react2.default.createElement(_footer2.default, null)
       );
     }
   }]);
@@ -64459,14 +64502,14 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'a',
-          { href: 'https://bitconnect.co/?ref=supanat' },
+          { href: 'https://bx.in.th/ref/sgrNrC/' },
           _react2.default.createElement(
             'div',
             { style: {
                 'textAlign': 'center',
-                'background': 'black'
+                'background': '#144498'
               } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
           )
         ),
         _react2.default.createElement('br', null),
@@ -64574,14 +64617,14 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'a',
-          { href: 'https://bx.in.th/ref/sgrNrC/' },
+          { href: 'https://bitconnect.co/?ref=supanat' },
           _react2.default.createElement(
             'div',
             { style: {
                 'textAlign': 'center',
-                'background': '#144498'
+                'background': 'black'
               } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
+            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
           )
         ),
         _react2.default.createElement('br', null),
@@ -70703,6 +70746,8 @@ var _reactClipboard2 = _interopRequireDefault(_reactClipboard);
 
 var _reactBootstrap = __webpack_require__(36);
 
+var _memberAction = __webpack_require__(49);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70721,6 +70766,30 @@ var SupportUs = function (_React$Component) {
   }
 
   _createClass(SupportUs, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var myMemberMessage = this.props.member.mymember.message;
+      if (myMemberMessage == 'no session' || myMemberMessage == null) {
+        this.handlerRedirect('signin');
+      }
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var contex = this;
+      contex.props.getMemberSession();
+    }
+  }, {
+    key: 'handlerRedirect',
+    value: function handlerRedirect(path) {
+      switch (path) {
+        case 'signin':
+          this.props.router.push('/signin');
+          break;
+        default:
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -70838,14 +70907,17 @@ var SupportUs = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-  return {};
-  // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
+  return { member: state.member
+    // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
+  };
 }
 
 function mapDispatchToProps(dispatch) {
 
   // / * TODO : Template Active - map dispatch to prop getCart : getCart * /
-  return (0, _redux.bindActionCreators)({}, dispatch);
+  return (0, _redux.bindActionCreators)({
+    getMemberSession: _memberAction.getMemberSession
+  }, dispatch);
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SupportUs);
@@ -72630,12 +72702,12 @@ var ContactUs = function (_React$Component) {
                   _react2.default.createElement(
                     'option',
                     { value: '\u0E41\u0E19\u0E30\u0E19\u0E33' },
-                    '\u0E41\u0E19\u0E30\u0E19\u0E33'
+                    '\u0E41\u0E19\u0E30\u0E19\u0E33\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E40\u0E27\u0E47\u0E1A\u0E44\u0E0B\u0E15\u0E4C'
                   ),
                   _react2.default.createElement(
                     'option',
                     { value: '\u0E42\u0E06\u0E29\u0E13\u0E32' },
-                    '\u0E42\u0E06\u0E29\u0E13\u0E32'
+                    '\u0E15\u0E34\u0E14\u0E15\u0E48\u0E2D\u0E1E\u0E37\u0E49\u0E19\u0E17\u0E35\u0E48\u0E42\u0E06\u0E29\u0E13\u0E32'
                   )
                 )
               ),
