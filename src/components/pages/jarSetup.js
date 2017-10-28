@@ -30,7 +30,11 @@ import {
   ControlLabel,
   Row,
   Col,
-  Modal
+  Modal,
+  Badge,
+  Collapse,
+  Overlay,
+  Tooltip
 } from 'react-bootstrap';
 
 import {activeMyJar, updateAJar, myJar} from '../../actions/jarAction';
@@ -61,6 +65,7 @@ class JarSetup extends React.Component {
           description: null
         }
       },
+      open:false,
       paiding: 'none'
     }
   }
@@ -386,7 +391,20 @@ class JarSetup extends React.Component {
 
     return (
       <Grid>
-        <h3>รายรับ - จ่ายคงที่</h3>
+        <h3>รายรับ - จ่ายคงที่ <Badge onClick={() => this.setState({
+            open: !this.state.open
+          })}>?</Badge>
+        </h3>
+        <Collapse in={this.state.open}>
+          <div>
+            <Well>
+              ใช้จัดการ รายรับ-รายจ่าย ที่แน่นอนและมีการวนซ้ำ เช่น เงินเดือน, ค่าขนม, ค่าหอพัก โดยช่วยจัดการด้วยการบันทึกรายการนั้นไว้และสามารถกดบันทึกอัตโนมัติ
+              ไม่ต้องทำการกรอกเองที่หน้าบันทึกของวัน
+              <br></br>
+              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+            </Well>
+          </div>
+        </Collapse>
         <Table style={{
           color: 'black'
         }}>
@@ -438,7 +456,8 @@ class JarSetup extends React.Component {
           </div>
         </a>
         <br/>
-        <h3>จัดการรายรับ</h3>
+        <h3>จัดการรายรับ <Badge>?</Badge>
+        </h3>
         <Row>
           <Col lg={8}>
             <Table style={{
@@ -498,20 +517,23 @@ class JarSetup extends React.Component {
           </div>
         </a>
         <br></br>
-        <h3>ใช้งาน</h3>
+        <h3>ใช้งาน <Badge>?</Badge>
+        </h3>
         <Row>
           {selectedJars}
         </Row>
         <hr/>
         <br/>
-        <h3>เก็บ</h3>
+        <h3>เก็บ <Badge>?</Badge>
+        </h3>
         <Row>
           {nonSelectedJars}
         </Row>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header>
             <Modal.Title>
-              <b>แบ่งเงินเข้าจาก {this.state.paid.description}</b>
+              <b>แบ่งเงินเข้าจาก {this.state.paid.description} <Badge>?</Badge>
+              </b>
               <Button bsSize="xsmall" onClick={this.close.bind(this)} bsStyle="danger" className="pull-right">ปิด</Button >
             </Modal.Title>
           </Modal.Header>

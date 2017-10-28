@@ -62625,7 +62625,8 @@ var SignIn = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SignIn.__proto__ || Object.getPrototypeOf(SignIn)).call(this, props));
 
     _this.state = {
-      isSigningIn: false
+      isSigningIn: false,
+      correction: null
     };
     return _this;
   }
@@ -62657,6 +62658,13 @@ var SignIn = function (_React$Component) {
       };
       this.props.signIn(member.email, member.password, function () {
         contex.setState({ isSigningIn: false });
+        var myMemberMessage = contex.props.member.mymember.message;
+        if (myMemberMessage != 'session success' && myMemberMessage != 'signin success') {
+          contex.setState({ correction: false });
+          // this.props.getSelectedJar();
+          // this.props.getTodayTransaction();
+          // this.props.getMyJar();
+        }
       });
     }
   }, {
@@ -62696,6 +62704,13 @@ var SignIn = function (_React$Component) {
                 '\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
               )
             ),
+            this.state.correction == false ? _react2.default.createElement(
+              'p',
+              { style: {
+                  'color': 'red'
+                } },
+              'username or password is incorrect'
+            ) : '',
             _react2.default.createElement('br', null),
             _react2.default.createElement(
               _reactBootstrap.FormGroup,
@@ -62779,7 +62794,13 @@ var _reactDom = __webpack_require__(15);
 
 var _reactBootstrap = __webpack_require__(36);
 
+var _emailValidator = __webpack_require__(714);
+
+var EmailValidator = _interopRequireWildcard(_emailValidator);
+
 var _memberAction = __webpack_require__(44);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -62798,7 +62819,11 @@ var SignUp = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
 
     _this.state = {
-      isCreating: false
+      isCreating: false,
+      email: '',
+      password: '',
+      confirm_password: '',
+      isFulFil: null
     };
     return _this;
   }
@@ -62820,6 +62845,13 @@ var SignUp = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit() {
       var contex = this;
+
+      /* Check form fulfill */
+      if ((0, _reactDom.findDOMNode)(this.refs.rePassword).value == null || (0, _reactDom.findDOMNode)(this.refs.rePassword).value == '' || (0, _reactDom.findDOMNode)(this.refs.rePassword).value == undefined || (0, _reactDom.findDOMNode)(this.refs.password).value == null || (0, _reactDom.findDOMNode)(this.refs.password).value == '' || (0, _reactDom.findDOMNode)(this.refs.password).value == undefined || (0, _reactDom.findDOMNode)(this.refs.name).value == null || (0, _reactDom.findDOMNode)(this.refs.name).value == '' || (0, _reactDom.findDOMNode)(this.refs.name).value == undefined || (0, _reactDom.findDOMNode)(this.refs.email).value == null || (0, _reactDom.findDOMNode)(this.refs.email).value == '' || (0, _reactDom.findDOMNode)(this.refs.email).value == undefined) {
+        contex.setState({ isFulFil: false });
+        return;
+      }
+
       contex.setState({ isCreating: true });
       if ((0, _reactDom.findDOMNode)(this.refs.password).value != (0, _reactDom.findDOMNode)(this.refs.rePassword).value) {
         contex.setState({ isCreating: false });
@@ -62831,6 +62863,7 @@ var SignUp = function (_React$Component) {
         name: (0, _reactDom.findDOMNode)(this.refs.name).value
       };
       this.props.createMember(newMember.email, newMember.password, newMember.name, function () {
+        contex.setState({ isFulFil: null });
         contex.setState({ isCreating: false });
       });
     }
@@ -62846,6 +62879,35 @@ var SignUp = function (_React$Component) {
           break;
         default:
       }
+    }
+  }, {
+    key: 'getEmailValidationState',
+    value: function getEmailValidationState() {
+      if (this.state.email.length > 0) {
+        if (EmailValidator.validate(this.state.email) == true) return 'success';else return 'error';
+      } else return null;
+    }
+  }, {
+    key: 'getPasswordValidationState',
+    value: function getPasswordValidationState() {
+      if (this.state.confirm_password.length > 0) {
+        if (this.state.confirm_password == this.state.password) return 'success';else return 'error';
+      } else return null;
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({ email: e.target.value });
+    }
+  }, {
+    key: 'handleChangePass',
+    value: function handleChangePass(e) {
+      this.setState({ password: e.target.value });
+    }
+  }, {
+    key: 'handleChangeConPass',
+    value: function handleChangeConPass(e) {
+      this.setState({ confirm_password: e.target.value });
     }
   }, {
     key: 'render',
@@ -62868,22 +62930,30 @@ var SignUp = function (_React$Component) {
                 '\u0E01\u0E32\u0E23\u0E40\u0E02\u0E49\u0E32\u0E43\u0E0A\u0E49\u0E23\u0E30\u0E1A\u0E1A'
               )
             ),
+            this.state.isFulFil == false ? _react2.default.createElement(
+              'p',
+              { style: {
+                  'color': 'red'
+                } },
+              'Please complete the form'
+            ) : '',
             _react2.default.createElement('br', null),
             _react2.default.createElement(
               _reactBootstrap.FormGroup,
-              { controlId: 'email', validationState: null },
+              { controlId: 'email', validationState: this.getEmailValidationState() },
               _react2.default.createElement(
                 _reactBootstrap.ControlLabel,
                 null,
                 '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
               ),
-              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
+              _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleChange.bind(this), value: this.state.email, type: 'email', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C', ref: 'email' }),
               _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null),
-              ' ',
               this.props.member.mymember.message == 'email already exist' ? _react2.default.createElement(
                 'p',
-                null,
-                '*email already exist'
+                { style: {
+                    'color': 'red'
+                  } },
+                'email already exist'
               ) : ''
             ),
             _react2.default.createElement(
@@ -62894,18 +62964,18 @@ var SignUp = function (_React$Component) {
                 null,
                 '\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
               ),
-              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'password' }),
+              _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleChangePass.bind(this), value: this.state.password, type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'password' }),
               _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
             ),
             _react2.default.createElement(
               _reactBootstrap.FormGroup,
-              { controlId: 're-password', validationState: null },
+              { controlId: 're-password', validationState: this.getPasswordValidationState() },
               _react2.default.createElement(
                 _reactBootstrap.ControlLabel,
                 null,
                 '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19'
               ),
-              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'rePassword' }),
+              _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleChangeConPass.bind(this), value: this.state.confirm_password, type: 'password', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E23\u0E2B\u0E31\u0E2A\u0E1C\u0E48\u0E32\u0E19', ref: 'rePassword' }),
               _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
             ),
             _react2.default.createElement('br', null),
@@ -64005,6 +64075,7 @@ var JarSetup = function (_React$Component) {
           description: null
         }
       },
+      open: false,
       paiding: 'none'
     };
     return _this;
@@ -64189,6 +64260,8 @@ var JarSetup = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var contex = this;
 
       var selectedJars = this.props.selectedjar.map(function (jar, i) {
@@ -64398,7 +64471,35 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A - \u0E08\u0E48\u0E32\u0E22\u0E04\u0E07\u0E17\u0E35\u0E48'
+          '\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A - \u0E08\u0E48\u0E32\u0E22\u0E04\u0E07\u0E17\u0E35\u0E48 ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            { onClick: function onClick() {
+                return _this2.setState({
+                  open: !_this2.state.open
+                });
+              } },
+            '?'
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Collapse,
+          { 'in': this.state.open },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Well,
+              null,
+              '\u0E43\u0E0A\u0E49\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23 \u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E23\u0E32\u0E22\u0E08\u0E48\u0E32\u0E22 \u0E17\u0E35\u0E48\u0E41\u0E19\u0E48\u0E19\u0E2D\u0E19\u0E41\u0E25\u0E30\u0E21\u0E35\u0E01\u0E32\u0E23\u0E27\u0E19\u0E0B\u0E49\u0E33 \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E07\u0E34\u0E19\u0E40\u0E14\u0E37\u0E2D\u0E19, \u0E04\u0E48\u0E32\u0E02\u0E19\u0E21, \u0E04\u0E48\u0E32\u0E2B\u0E2D\u0E1E\u0E31\u0E01 \u0E42\u0E14\u0E22\u0E0A\u0E48\u0E27\u0E22\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E14\u0E49\u0E27\u0E22\u0E01\u0E32\u0E23\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E19\u0E31\u0E49\u0E19\u0E44\u0E27\u0E49\u0E41\u0E25\u0E30\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E01\u0E14\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E2D\u0E31\u0E15\u0E42\u0E19\u0E21\u0E31\u0E15\u0E34 \u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E17\u0E33\u0E01\u0E32\u0E23\u0E01\u0E23\u0E2D\u0E01\u0E40\u0E2D\u0E07\u0E17\u0E35\u0E48\u0E2B\u0E19\u0E49\u0E32\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E02\u0E2D\u0E07\u0E27\u0E31\u0E19',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { className: 'pull-right', bsStyle: 'warning' },
+                '\u0E41\u0E19\u0E30\u0E19\u0E33\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
+              )
+            )
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Table,
@@ -64519,7 +64620,12 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A'
+          '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            null,
+            '?'
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Row,
@@ -64634,7 +64740,12 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
+          '\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19 ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            null,
+            '?'
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Row,
@@ -64646,7 +64757,12 @@ var JarSetup = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E40\u0E01\u0E47\u0E1A'
+          '\u0E40\u0E01\u0E47\u0E1A ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            null,
+            '?'
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Row,
@@ -64666,7 +64782,13 @@ var JarSetup = function (_React$Component) {
                 'b',
                 null,
                 '\u0E41\u0E1A\u0E48\u0E07\u0E40\u0E07\u0E34\u0E19\u0E40\u0E02\u0E49\u0E32\u0E08\u0E32\u0E01 ',
-                this.state.paid.description
+                this.state.paid.description,
+                ' ',
+                _react2.default.createElement(
+                  _reactBootstrap.Badge,
+                  null,
+                  '?'
+                )
               ),
               _react2.default.createElement(
                 _reactBootstrap.Button,
@@ -72835,6 +72957,126 @@ function sendMessage(_name, _email, _type, _message, cb) {
     });
   };
 }
+
+/***/ }),
+/* 631 */,
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */,
+/* 636 */,
+/* 637 */,
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */,
+/* 646 */,
+/* 647 */,
+/* 648 */,
+/* 649 */,
+/* 650 */,
+/* 651 */,
+/* 652 */,
+/* 653 */,
+/* 654 */,
+/* 655 */,
+/* 656 */,
+/* 657 */,
+/* 658 */,
+/* 659 */,
+/* 660 */,
+/* 661 */,
+/* 662 */,
+/* 663 */,
+/* 664 */,
+/* 665 */,
+/* 666 */,
+/* 667 */,
+/* 668 */,
+/* 669 */,
+/* 670 */,
+/* 671 */,
+/* 672 */,
+/* 673 */,
+/* 674 */,
+/* 675 */,
+/* 676 */,
+/* 677 */,
+/* 678 */,
+/* 679 */,
+/* 680 */,
+/* 681 */,
+/* 682 */,
+/* 683 */,
+/* 684 */,
+/* 685 */,
+/* 686 */,
+/* 687 */,
+/* 688 */,
+/* 689 */,
+/* 690 */,
+/* 691 */,
+/* 692 */,
+/* 693 */,
+/* 694 */,
+/* 695 */,
+/* 696 */,
+/* 697 */,
+/* 698 */,
+/* 699 */,
+/* 700 */,
+/* 701 */,
+/* 702 */,
+/* 703 */,
+/* 704 */,
+/* 705 */,
+/* 706 */,
+/* 707 */,
+/* 708 */,
+/* 709 */,
+/* 710 */,
+/* 711 */,
+/* 712 */,
+/* 713 */,
+/* 714 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+// Thanks to:
+// http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+// http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
+// http://stackoverflow.com/questions/201323/what-is-the-best-regular-expression-for-validating-email-addresses/201378#201378
+exports.validate = function(email)
+{
+	if (!email)
+		return false;
+		
+	if(email.length>254)
+		return false;
+
+	var valid = tester.test(email);
+	if(!valid)
+		return false;
+
+	// Further checking of some things regex can't handle
+	var parts = email.split("@");
+	if(parts[0].length>64)
+		return false;
+
+	var domainParts = parts[1].split(".");
+	if(domainParts.some(function(part) { return part.length>63; }))
+		return false;
+
+	return true;
+}
+
 
 /***/ })
 /******/ ]);

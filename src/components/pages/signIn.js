@@ -23,7 +23,8 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSigningIn: false
+      isSigningIn: false,
+      correction: null
     }
   }
 
@@ -50,6 +51,13 @@ class SignIn extends React.Component {
     };
     this.props.signIn(member.email, member.password, function() {
       contex.setState({isSigningIn: false})
+      let myMemberMessage = contex.props.member.mymember.message;
+      if (myMemberMessage != 'session success' && myMemberMessage != 'signin success') {
+        contex.setState({correction: false})
+        // this.props.getSelectedJar();
+        // this.props.getTodayTransaction();
+        // this.props.getMyJar();
+      }
     });
   }
 
@@ -76,6 +84,13 @@ class SignIn extends React.Component {
             <h4>
               <b>เข้าใช้ระบบ</b>
             </h4>
+            {(this.state.correction == false)
+              ? (
+                <p style={{
+                  'color': 'red'
+                }}>username or password is incorrect</p>
+              )
+              : ('')}
             <br></br>
             <FormGroup controlId="email" validationState={null}>
               <ControlLabel>อีเมล์</ControlLabel>

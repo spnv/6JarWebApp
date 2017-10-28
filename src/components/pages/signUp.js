@@ -10,8 +10,11 @@ import {
   FormControl,
   FormGroup,
   ControlLabel,
-  Button
+  Button,
+  HelpBlock
 } from 'react-bootstrap';
+
+import * as EmailValidator from 'email-validator';
 
 import {createMember, getMemberSession} from '../../actions/memberAction';
 
@@ -20,7 +23,11 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isCreating: false
+      isCreating: false,
+      email: '',
+      password: '',
+      confirm_password: '',
+      isFulFil: null
     }
   }
 
@@ -37,6 +44,13 @@ class SignUp extends React.Component {
 
   handleSubmit() {
     let contex = this;
+
+    /* Check form fulfill */
+    if (findDOMNode(this.refs.rePassword).value == null || findDOMNode(this.refs.rePassword).value == '' || findDOMNode(this.refs.rePassword).value == undefined || findDOMNode(this.refs.password).value == null || findDOMNode(this.refs.password).value == '' || findDOMNode(this.refs.password).value == undefined || findDOMNode(this.refs.name).value == null || findDOMNode(this.refs.name).value == '' || findDOMNode(this.refs.name).value == undefined || findDOMNode(this.refs.email).value == null || findDOMNode(this.refs.email).value == '' || findDOMNode(this.refs.email).value == undefined) {
+      contex.setState({isFulFil: false})
+      return;
+    }
+
     contex.setState({isCreating: true})
     if (findDOMNode(this.refs.password).value != findDOMNode(this.refs.rePassword).value) {
       contex.setState({isCreating: false})
@@ -48,6 +62,7 @@ class SignUp extends React.Component {
       name: findDOMNode(this.refs.name).value
     };
     this.props.createMember(newMember.email, newMember.password, newMember.name, function() {
+      contex.setState({isFulFil: null})
       contex.setState({isCreating: false})
     })
   }
@@ -64,6 +79,38 @@ class SignUp extends React.Component {
     }
   }
 
+  getEmailValidationState() {
+    if (this.state.email.length > 0) {
+      if (EmailValidator.validate(this.state.email) == true)
+        return 'success'
+      else
+        return 'error'
+    } else
+      return null
+  }
+
+  getPasswordValidationState() {
+    if (this.state.confirm_password.length > 0) {
+      if (this.state.confirm_password == this.state.password)
+        return 'success'
+      else
+        return 'error'
+    } else
+      return null
+  }
+
+  handleChange(e) {
+    this.setState({email: e.target.value});
+  }
+
+  handleChangePass(e) {
+    this.setState({password: e.target.value});
+  }
+
+  handleChangeConPass(e) {
+    this.setState({confirm_password: e.target.value});
+  }
+
   render() {
     return (
 
@@ -73,24 +120,33 @@ class SignUp extends React.Component {
             <h4>
               <b>การเข้าใช้ระบบ</b>
             </h4>
+            {(this.state.isFulFil == false)
+              ? (
+                <p style={{
+                  'color': 'red'
+                }}>Please complete the form</p>
+              )
+              : ('')}
             <br></br>
-            <FormGroup controlId="email" validationState={null}>
+            <FormGroup controlId="email" validationState={this.getEmailValidationState()}>
               <ControlLabel>อีเมล์</ControlLabel>
-              <FormControl type="text" placeholder="กรอกอีเมล์" ref="email"/>
-              <FormControl.Feedback/> {(this.props.member.mymember.message == 'email already exist')
+              <FormControl onChange={this.handleChange.bind(this)} value={this.state.email} type="email" placeholder="กรอกอีเมล์" ref="email"/>
+              <FormControl.Feedback/>{(this.props.member.mymember.message == 'email already exist')
                 ? (
-                  <p>*email already exist</p>
+                  <p style={{
+                    'color': 'red'
+                  }}>email already exist</p>
                 )
                 : ('')}
             </FormGroup>
             <FormGroup controlId="password" validationState={null}>
               <ControlLabel>รหัสผ่าน</ControlLabel>
-              <FormControl type="password" placeholder="กรอกรหัสผ่าน" ref="password"/>
+              <FormControl onChange={this.handleChangePass.bind(this)} value={this.state.password} type="password" placeholder="กรอกรหัสผ่าน" ref="password"/>
               <FormControl.Feedback/>
             </FormGroup>
-            <FormGroup controlId="re-password" validationState={null}>
+            <FormGroup controlId="re-password" validationState={this.getPasswordValidationState()}>
               <ControlLabel>ยืนยันรหัสผ่าน</ControlLabel>
-              <FormControl type="password" placeholder="กรอกยืนยันรหัสผ่าน" ref="rePassword"/>
+              <FormControl onChange={this.handleChangeConPass.bind(this)} value={this.state.confirm_password} type="password" placeholder="กรอกยืนยันรหัสผ่าน" ref="rePassword"/>
               <FormControl.Feedback/>
             </FormGroup>
             <br></br>
@@ -109,7 +165,7 @@ class SignUp extends React.Component {
                 ? ('กำลังสร้างบัญชี...')
                 : ('สร้างบัญชี')}
             </Button>
-            <Button onClick={this.handlerRedirect.bind(this,'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
+            <Button onClick={this.handlerRedirect.bind(this, 'signin')} className="pull-right" bsStyle="warning">ย้อนกลับ</Button>
           </Col>
         </Row>
       </Grid>
