@@ -65,7 +65,6 @@ class JarSetup extends React.Component {
           description: null
         }
       },
-      open:false,
       paiding: 'none'
     }
   }
@@ -392,14 +391,14 @@ class JarSetup extends React.Component {
     return (
       <Grid>
         <h3>รายรับ - จ่ายคงที่ <Badge onClick={() => this.setState({
-            open: !this.state.open
+            open1: !this.state.open1
           })}>?</Badge>
         </h3>
-        <Collapse in={this.state.open}>
+        <Collapse in={this.state.open1}>
           <div>
             <Well>
               ใช้จัดการ รายรับ-รายจ่าย ที่แน่นอนและมีการวนซ้ำ เช่น เงินเดือน, ค่าขนม, ค่าหอพัก โดยช่วยจัดการด้วยการบันทึกรายการนั้นไว้และสามารถกดบันทึกอัตโนมัติ
-              ไม่ต้องทำการกรอกเองที่หน้าบันทึกของวัน
+              ไม่ต้องทำการกรอกเองที่หน้าบันทึกของวัน โดยอ้างอิงจากส่วนจัดการรายรับ
               <br></br>
               <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
             </Well>
@@ -456,8 +455,19 @@ class JarSetup extends React.Component {
           </div>
         </a>
         <br/>
-        <h3>จัดการรายรับ <Badge>?</Badge>
+        <h3>จัดการรายรับ <Badge onClick={() => this.setState({
+            open2: !this.state.open2
+          })}>?</Badge>
         </h3>
+        <Collapse in={this.state.open2}>
+          <div>
+            <Well>
+              ใช้จัดการแบ่งสัดส่วนรายรับโดยกระจายไปตามเหยือกต่าง ๆ ตามที่ตั้งค่าไว้ ซึ่งสัมพันธ์กับส่วนรายรับ-รายจ่าย และเหยือกที่เลือกใช้งาน
+              <br></br>
+              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+            </Well>
+          </div>
+        </Collapse>
         <Row>
           <Col lg={8}>
             <Table style={{
@@ -517,15 +527,37 @@ class JarSetup extends React.Component {
           </div>
         </a>
         <br></br>
-        <h3>ใช้งาน <Badge>?</Badge>
+        <h3>ใช้งาน <Badge onClick={() => this.setState({
+            open3: !this.state.open3
+          })}>?</Badge>
         </h3>
+        <Collapse in={this.state.open3}>
+          <div>
+            <Well>
+              ใช้แสดงเหยือกที่มีการใช้งาน โดยเหยือกที่ใช้งานหมายถึงมีการแบ่งเงินไว้สำรองสำหรับทำตามจุดประสงค์ของเหยือกนั้น ๆ
+              <br></br>
+              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+            </Well>
+          </div>
+        </Collapse>
         <Row>
           {selectedJars}
         </Row>
         <hr/>
         <br/>
-        <h3>เก็บ <Badge>?</Badge>
+        <h3>เก็บ <Badge onClick={() => this.setState({
+            open4: !this.state.open4
+          })}>?</Badge>
         </h3>
+        <Collapse in={this.state.open4}>
+          <div>
+            <Well>
+              ใช้แสดงเหยือกที่ไม่ได้ใช้งาน โดยเหยือกที่ไม่ได้ใช้งานหมายถึงไม่คำนึงถึงการแบ่งเงินไว้สำรองสำหรับทำตามจุดประสงค์ของเหยือกนั้น ๆ
+              <br></br>
+              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+            </Well>
+          </div>
+        </Collapse>
         <Row>
           {nonSelectedJars}
         </Row>
