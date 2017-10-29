@@ -63107,6 +63107,8 @@ var _memberAction = __webpack_require__(44);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63134,7 +63136,8 @@ var Today = function (_React$Component) {
           amount: 0,
           description: null
         }
-      }
+      },
+      today_memo: false
     };
     return _this;
   }
@@ -63250,6 +63253,16 @@ var Today = function (_React$Component) {
       var newJar = currentJarsToUpdate[jarIndex];
       newJar.remain = (currentJarsToUpdate[jarIndex].remain - _transaction.amount).toFixed(2);
       this.props.updateAJar(newJar, function () {});
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle(flag) {
+      this.setState(_defineProperty({}, flag, !this.state[flag]));
+    }
+  }, {
+    key: 'domNodeBy',
+    value: function domNodeBy(flag) {
+      return (0, _reactDom.findDOMNode)(this.refs[flag]);
     }
   }, {
     key: 'render',
@@ -63369,7 +63382,8 @@ var Today = function (_React$Component) {
             _reactBootstrap.Badge,
             { onClick: function onClick() {
                 return _this2.setState({
-                  open2: !_this2.state.open2
+                  open2: !_this2.state.open2,
+                  today_memo: false
                 });
               } },
             '?'
@@ -63388,7 +63402,7 @@ var Today = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { className: 'pull-right', bsStyle: 'warning' },
+                { onClick: this.toggle.bind(this, 'today_memo'), className: 'pull-right', bsStyle: 'warning' },
                 '\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
               )
             )
@@ -63442,15 +63456,39 @@ var Today = function (_React$Component) {
                   null,
                   _react2.default.createElement(
                     _reactBootstrap.DropdownButton,
-                    { componentClass: _reactBootstrap.InputGroup.Button, id: 'input-dropdown-addon', title: this.state.today.newRecord.display, bsStyle: 'default' },
+                    { componentClass: _reactBootstrap.InputGroup.Button, id: 'input-dropdown-addon', title: this.state.today.newRecord.display, bsStyle: 'default', ref: 'displayJar' },
                     jarList
+                  )
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.Overlay,
+                  { show: this.state.today_memo,
+                    target: this.domNodeBy.bind(this, 'displayJar'), placement: 'bottom' },
+                  _react2.default.createElement(
+                    _reactBootstrap.Tooltip,
+                    { id: 'tooltip-displayJar' },
+                    '1. \u0E40\u0E25\u0E37\u0E2D\u0E01\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01',
+                    _react2.default.createElement('br', null),
+                    '\u0E17\u0E35\u0E48\u0E08\u0E30\u0E17\u0E33\u0E01\u0E32\u0E23\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E08\u0E48\u0E32\u0E22'
                   )
                 )
               ),
               _react2.default.createElement(
                 'td',
                 null,
-                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14', ref: 'newDescription' })
+                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14', ref: 'newDescription' }),
+                _react2.default.createElement(
+                  _reactBootstrap.Overlay,
+                  { show: this.state.today_memo,
+                    target: this.domNodeBy.bind(this, 'newDescription'), placement: 'bottom' },
+                  _react2.default.createElement(
+                    _reactBootstrap.Tooltip,
+                    { id: 'tooltip-newDescription' },
+                    '2. \u0E43\u0E2A\u0E48\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E08\u0E48\u0E32\u0E22',
+                    _react2.default.createElement('br', null),
+                    '\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E1E\u0E34\u0E48\u0E21 \u0E40\u0E0A\u0E48\u0E19 \u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07'
+                  )
+                )
               ),
               _react2.default.createElement(
                 'td',
@@ -63467,6 +63505,18 @@ var Today = function (_React$Component) {
                       '\u0E3F'
                     ),
                     _react2.default.createElement(_reactBootstrap.FormControl, { min: '0', type: 'number', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E08\u0E33\u0E19\u0E27\u0E19', ref: 'newAmount' })
+                  ),
+                  _react2.default.createElement(
+                    _reactBootstrap.Overlay,
+                    { show: this.state.today_memo,
+                      target: this.domNodeBy.bind(this, 'newAmount'), placement: 'bottom' },
+                    _react2.default.createElement(
+                      _reactBootstrap.Tooltip,
+                      { id: 'tooltip-newAmount' },
+                      '3. \u0E43\u0E2A\u0E48\u0E08\u0E33\u0E19\u0E27\u0E19\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 \u0E40\u0E0A\u0E48\u0E19',
+                      _react2.default.createElement('br', null),
+                      '\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07 20 \u0E1A\u0E32\u0E17 \u0E43\u0E2B\u0E49\u0E43\u0E2A\u0E48 20 \u0E25\u0E07\u0E44\u0E1B'
+                    )
                   )
                 )
               ),
@@ -63478,13 +63528,37 @@ var Today = function (_React$Component) {
                   { vertical: true, block: true },
                   _react2.default.createElement(
                     _reactBootstrap.Button,
-                    { onClick: this.handlerCreateTransaction.bind(this, 1), bsStyle: 'success' },
+                    { ref: 'inceaseBtn', onClick: this.handlerCreateTransaction.bind(this, 1), bsStyle: 'success' },
                     '\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E02\u0E49\u0E32'
                   ),
                   _react2.default.createElement(
                     _reactBootstrap.Button,
-                    { onClick: this.handlerCreateTransaction.bind(this, -1), bsStyle: 'danger' },
+                    { ref: 'deceaseBtn', onClick: this.handlerCreateTransaction.bind(this, -1), bsStyle: 'danger' },
                     '\u0E16\u0E2D\u0E19\u0E2D\u0E2D\u0E01'
+                  )
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.Overlay,
+                  { show: this.state.today_memo,
+                    target: this.domNodeBy.bind(this, 'inceaseBtn'), placement: 'top' },
+                  _react2.default.createElement(
+                    _reactBootstrap.Tooltip,
+                    { id: 'tooltip-inceaseBtn' },
+                    '4.1 \u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A \u0E40\u0E0A\u0E48\u0E19',
+                    _react2.default.createElement('br', null),
+                    '\u0E44\u0E14\u0E49\u0E40\u0E07\u0E34\u0E19 20 \u0E1A\u0E32\u0E17 \u0E43\u0E2B\u0E49\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E02\u0E49\u0E32'
+                  )
+                ),
+                _react2.default.createElement(
+                  _reactBootstrap.Overlay,
+                  { show: this.state.today_memo,
+                    target: this.domNodeBy.bind(this, 'deceaseBtn'), placement: 'bottom' },
+                  _react2.default.createElement(
+                    _reactBootstrap.Tooltip,
+                    { id: 'tooltip-deceaseBtn' },
+                    '4.2 \u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E08\u0E48\u0E32\u0E22 \u0E40\u0E0A\u0E48\u0E19',
+                    _react2.default.createElement('br', null),
+                    '\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07 20 \u0E1A\u0E32\u0E17 \u0E43\u0E2B\u0E49\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21\u0E16\u0E2D\u0E19\u0E2D\u0E2D\u0E01'
                   )
                 )
               )

@@ -21,7 +21,9 @@ import {
   Row,
   Col,
   Badge,
-  Collapse
+  Collapse,
+  Overlay,
+  Tooltip
 } from 'react-bootstrap';
 
 import {selectedJar, updateAJar} from '../../actions/jarAction';
@@ -43,7 +45,8 @@ class Today extends React.Component {
           amount: 0,
           description: null
         }
-      }
+      },
+      today_memo:false
     }
   }
 
@@ -154,6 +157,15 @@ class Today extends React.Component {
     this.props.updateAJar(newJar, function() {});
   }
 
+  toggle(flag) {
+    this.setState({ [flag]: !this.state[flag] });
+  }
+
+  domNodeBy(flag){
+    return  findDOMNode(this.refs[flag])
+  }
+
+
   render() {
     const jars = this.props.selectedjar.map(function(jar, i) {
       return (
@@ -223,7 +235,8 @@ class Today extends React.Component {
         </Row>
         <hr/>
         <h3>บันทึกวันนี <Badge onClick={() => this.setState({
-            open2: !this.state.open2
+            open2: !this.state.open2,
+            today_memo:false
           })}>?</Badge>
         </h3>
         <Collapse in={this.state.open2}>
@@ -231,7 +244,7 @@ class Today extends React.Component {
             <Well>
               ใช้บันทึกรายรับ-จ่าย ของวันนั้น ๆ เช่น ค่าข้าวเที่ยง, ค่าเดินทาง ซึ่งรายการที่แสดงจะมีของวันนี้เท่านั้นและส่งผลต่อปริมาณเงินในเหยือกด้านบนด้วย
               <br></br>
-              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this,'today_memo')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -251,25 +264,47 @@ class Today extends React.Component {
             <tr>
               <td>
                 <InputGroup >
-                  <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.today.newRecord.display} bsStyle="default">
+                  <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.today.newRecord.display} bsStyle="default" ref='displayJar'>
                     {jarList}
                   </DropdownButton>
                 </InputGroup>
+                <Overlay show={this.state.today_memo}
+                target={this.domNodeBy.bind(this,'displayJar')} placement="bottom">
+                  <Tooltip id="tooltip-displayJar" >1. เลือกเหยือก<br></br>ที่จะทำการบันทึกรายรับ-จ่าย</Tooltip>
+                </Overlay>
               </td>
-              <td><FormControl type="text" placeholder="กรอกรายละเอียด" ref="newDescription"/></td>
+              <td>
+                <FormControl type="text" placeholder="กรอกรายละเอียด" ref="newDescription"/>
+                  <Overlay show={this.state.today_memo}
+                  target={this.domNodeBy.bind(this,'newDescription')} placement="bottom">
+                    <Tooltip id="tooltip-newDescription" >2. ใส่รายละเอียดเกี่ยวกับรายรับ-จ่าย<br></br>ที่ต้องการเพิ่ม เช่น กินข้าวเที่ยง</Tooltip>
+                  </Overlay>
+              </td>
               <td>
                 <FormGroup>
                   <InputGroup>
                     <InputGroup.Addon>฿</InputGroup.Addon>
                     <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/>
                   </InputGroup>
+                  <Overlay show={this.state.today_memo}
+                  target={this.domNodeBy.bind(this,'newAmount')} placement="bottom">
+                    <Tooltip id="tooltip-newAmount" >3. ใส่จำนวนของรายการ เช่น<br></br>กินข้าวเที่ยง 20 บาท ให้ใส่ 20 ลงไป</Tooltip>
+                  </Overlay>
                 </FormGroup>
               </td>
               <td>
                 <ButtonGroup vertical block>
-                  <Button onClick={this.handlerCreateTransaction.bind(this, 1)} bsStyle="success">เพิ่มเข้า</Button>
-                  <Button onClick={this.handlerCreateTransaction.bind(this, -1)} bsStyle="danger">ถอนออก</Button>
+                  <Button ref='inceaseBtn' onClick={this.handlerCreateTransaction.bind(this, 1)} bsStyle="success">เพิ่มเข้า</Button>
+                  <Button ref='deceaseBtn' onClick={this.handlerCreateTransaction.bind(this, -1)} bsStyle="danger">ถอนออก</Button>
                 </ButtonGroup>
+                <Overlay show={this.state.today_memo}
+                target={this.domNodeBy.bind(this,'inceaseBtn')} placement="top">
+                  <Tooltip id="tooltip-inceaseBtn" >4.1 หากเป็นรายรับ เช่น<br></br>ได้เงิน 20 บาท ให้กดปุ่มเพิ่มเข้า</Tooltip>
+                </Overlay>
+                <Overlay show={this.state.today_memo}
+                target={this.domNodeBy.bind(this,'deceaseBtn')} placement="bottom">
+                  <Tooltip id="tooltip-deceaseBtn" >4.2 หากเป็นรายจ่าย เช่น<br></br>กินข้าวเที่ยง 20 บาท ให้กดปุ่มถอนออก</Tooltip>
+                </Overlay>
               </td>
             </tr>
           </tbody>

@@ -34,8 +34,7 @@ import {
   Badge,
   Collapse,
   Overlay,
-  Tooltip,
-  OverlayTrigger
+  Tooltip
 } from 'react-bootstrap';
 
 import {activeMyJar, updateAJar, myJar} from '../../actions/jarAction';
