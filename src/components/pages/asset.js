@@ -19,7 +19,9 @@ import {
   Col,
   Badge,
   Collapse,
-  Well
+  Well,
+  Overlay,
+  Tooltip
 } from 'react-bootstrap';
 
 import {getAsset, createAsset, removeAsset} from '../../actions/assetAction';
@@ -41,7 +43,8 @@ class Asset extends React.Component {
           invest_amount: 0,
           description: null
         }
-      }
+      },
+      asset_helping:false
     }
   }
 
@@ -140,6 +143,14 @@ class Asset extends React.Component {
         }
       }
     })
+  }
+
+  toggle(flag) {
+    this.setState({ [flag]: !this.state[flag] });
+  }
+
+  domNodeBy(flag){
+    return  findDOMNode(this.refs[flag])
   }
 
   render() {
@@ -243,15 +254,16 @@ class Asset extends React.Component {
     return (
       <Grid>
         <h3>ทรัพย์สิน <Badge onClick={() => this.setState({
-            open2: !this.state.open2
+            open1: !this.state.open1,
+            asset_helping:false
           })}>?</Badge>
         </h3>
-        <Collapse in={this.state.open2}>
+        <Collapse in={this.state.open1}>
           <div>
             <Well>
               ใช้บันทึกข้อมูลสินทรัพย์ และต้นทุนที่ลงทุนในสินทรัพย์นั้น ๆ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this,'asset_helping')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -272,29 +284,51 @@ class Asset extends React.Component {
             <tr>
               <td>
                 <InputGroup >
-                  <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.myasset.newRecord.catagory_display} bsStyle="default">
+                  <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.myasset.newRecord.catagory_display} bsStyle="default"  ref='newCatagory'>
                     {assetCatagory}
                   </DropdownButton>
                 </InputGroup>
+                <Overlay show={this.state.asset_helping}
+                target={this.domNodeBy.bind(this,'newCatagory')} placement="bottom">
+                  <Tooltip id="tooltip-newCatagory" >1. เลือกประเภท<br></br>ของสินทรัพย์</Tooltip>
+                </Overlay>
               </td>
               <td>
                 <InputGroup >
-                  <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.myasset.newRecord.risk_display} bsStyle="default">
+                  <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.myasset.newRecord.risk_display} bsStyle="default" ref='newRisk'>
                     {assetRiskLevel}
                   </DropdownButton>
                 </InputGroup>
+                <Overlay show={this.state.asset_helping}
+                target={this.domNodeBy.bind(this,'newRisk')} placement="bottom">
+                  <Tooltip id="tooltip-newRisk" >2. เลือกความเสี่ยง<br></br>ของสินทรัพย์</Tooltip>
+                </Overlay>
               </td>
-              <td><FormControl type="text" placeholder="ชื่อสินทรัพย์" ref="newDescription"/></td>
+              <td>
+                <FormControl type="text" placeholder="ชื่อสินทรัพย์" ref="newDescription"/>
+                  <Overlay show={this.state.asset_helping}
+                  target={this.domNodeBy.bind(this,'newDescription')} placement="bottom">
+                    <Tooltip id="tooltip-newDescription" >3. ใส่ชื่อของสินทรัพย์เพื่อใช้อ้างอิง<br></br>เช่น บ้าน, ทองคำ 1 บาท</Tooltip>
+                  </Overlay>
+              </td>
               <td>
                 <FormGroup>
                   <InputGroup>
                     <InputGroup.Addon>฿</InputGroup.Addon>
                     <FormControl min="0" type="number" placeholder="จำนวนทุน" ref="newAmount"/>
                   </InputGroup>
+                  <Overlay show={this.state.asset_helping}
+                  target={this.domNodeBy.bind(this,'newAmount')} placement="bottom">
+                    <Tooltip id="tooltip-newAmount" >4. ใส่จำนวนต้นทุน<br></br>ที่ใช้ซื้อสินทรัพย์นั้น</Tooltip>
+                  </Overlay>
                 </FormGroup>
               </td>
               <td>
-                <Button onClick={this.handlerCreateAsset.bind(this)} block bsStyle="success">เพิ่ม</Button>
+                <Button onClick={this.handlerCreateAsset.bind(this)} block bsStyle="success" ref="addRecord">เพิ่ม</Button>
+                  <Overlay show={this.state.asset_helping}
+                  target={this.domNodeBy.bind(this,'addRecord')} placement="bottom">
+                    <Tooltip id="tooltip-addRecord" >5. กดเพิ่ม<br></br>เพื่อบันทึกรายการสินทรัพย์</Tooltip>
+                  </Overlay>
               </td>
             </tr>
           </tbody>
