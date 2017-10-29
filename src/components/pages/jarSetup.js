@@ -564,9 +564,18 @@ class JarSetup extends React.Component {
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header>
             <Modal.Title>
-              <b>แบ่งเงินเข้าจาก {this.state.paid.description} <Badge>?</Badge>
-              </b>
-              <Button bsSize="xsmall" onClick={this.close.bind(this)} bsStyle="danger" className="pull-right">ปิด</Button >
+              <b>แบ่งเงินเข้าจาก {this.state.paid.description} </b>
+              <Button bsSize="xsmall" onClick={this.close.bind(this)} bsStyle="danger" className="pull-right">ปิด</Button>
+                <Badge onClick={() => this.setState({
+                  open5: !this.state.open5
+                })}>?</Badge>
+              <Collapse in={this.state.open5}>
+                <div>
+                  <Well>
+                    ใช้แบ่งจ่ายรายรับเข้าตามเหยือกที่ใช้งาน ตามสัดส่วนที่กำหนดไว้
+                  </Well>
+                </div>
+              </Collapse>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
