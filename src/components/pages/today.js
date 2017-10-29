@@ -231,7 +231,7 @@ class Today extends React.Component {
             <Well>
               ใช้บันทึกรายรับ-จ่าย ของวันนั้น ๆ เช่น ค่าข้าวเที่ยง, ค่าเดินทาง ซึ่งรายการที่แสดงจะมีของวันนี้เท่านั้นและส่งผลต่อปริมาณเงินในเหยือกด้านบนด้วย
               <br></br>
-              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>

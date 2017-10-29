@@ -34,7 +34,8 @@ import {
   Badge,
   Collapse,
   Overlay,
-  Tooltip
+  Tooltip,
+  OverlayTrigger
 } from 'react-bootstrap';
 
 import {activeMyJar, updateAJar, myJar} from '../../actions/jarAction';
@@ -65,6 +66,7 @@ class JarSetup extends React.Component {
           description: null
         }
       },
+      in_out_helping: false,
       paiding: 'none'
     }
   }
@@ -238,6 +240,14 @@ class JarSetup extends React.Component {
     });
   }
 
+  toggle() {
+    this.setState({ in_out_helping: !this.state.in_out_helping });
+  }
+
+  domNodeBy(flag){
+    return  findDOMNode(this.refs[flag])
+  }
+
   render() {
     let contex = this;
 
@@ -391,7 +401,8 @@ class JarSetup extends React.Component {
     return (
       <Grid>
         <h3>รายรับ - จ่ายคงที่ <Badge onClick={() => this.setState({
-            open1: !this.state.open1
+            open1: !this.state.open1,
+            in_out_helping:false
           })}>?</Badge>
         </h3>
         <Collapse in={this.state.open1}>
@@ -400,7 +411,7 @@ class JarSetup extends React.Component {
               ใช้จัดการ รายรับ-รายจ่าย ที่แน่นอนและมีการวนซ้ำ เช่น เงินเดือน, ค่าขนม, ค่าหอพัก โดยช่วยจัดการด้วยการบันทึกรายการนั้นไว้และสามารถกดบันทึกอัตโนมัติ
               ไม่ต้องทำการกรอกเองที่หน้าบันทึกของวัน โดยอ้างอิงจากส่วนจัดการรายรับ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this)} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -420,7 +431,7 @@ class JarSetup extends React.Component {
             <tr>
               <td>
                 <InputGroup >
-                  <DropdownButton componentClass={InputGroup.Button} title='เลือกรูปแบบ' bsStyle="default" id="input-dropdown-addon" title={this.state.myflow.newRecord.sub_type}>
+                  <DropdownButton componentClass={InputGroup.Button} title='เลือกรูปแบบ' bsStyle="default" id="input-dropdown-addon" title={this.state.myflow.newRecord.sub_type} ref='newType'>
                     <MenuItem style={{
                       backgroundColor: '#222222'
                     }} onClick={this.handlerUpdateMoneyFlowSubtype.bind(this, 'Active')}>Active</MenuItem>
@@ -429,8 +440,18 @@ class JarSetup extends React.Component {
                     }} onClick={this.handlerUpdateMoneyFlowSubtype.bind(this, 'Passive')}>Passive</MenuItem>
                   </DropdownButton>
                 </InputGroup>
+                <Overlay show={this.state.in_out_helping}
+                target={this.domNodeBy.bind(this,'newType')} placement="bottom">
+                  <Tooltip id="overload-bottom" >1. เลือกชนิดรายรับ</Tooltip>
+                </Overlay>
               </td>
-              <td><FormControl type="text" placeholder="กรอกช่องทาง" ref="newDescription"/></td>
+              <td>
+                <FormControl type="text" placeholder="กรอกช่องทาง" ref="newDescription"/>
+                <Overlay show={this.state.in_out_helping}
+                target={this.domNodeBy.bind(this,'newDescription')} placement="bottom">
+                  <Tooltip id="overload-bottom" >2. กรอกช่องทางรายรับ<br></br>เช่น เงินเดือน</Tooltip>
+                </Overlay>
+              </td>
               <td>
                 <FormGroup>
                   <InputGroup>
@@ -438,9 +459,17 @@ class JarSetup extends React.Component {
                     <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/>
                   </InputGroup>
                 </FormGroup>
+                <Overlay show={this.state.in_out_helping}
+                target={this.domNodeBy.bind(this,'newAmount')} placement="bottom">
+                  <Tooltip id="overload-bottom" >3. จำนวนของรายรับนั้น<br></br>เช่น เงินเดือน 10,000<br></br>ให้กรอก 10000</Tooltip>
+                </Overlay>
               </td>
               <td>
-                <Button onClick={this.handlerCreateMoneyFlow.bind(this, 1)} block bsStyle="success">เพิ่ม</Button>
+                <Button onClick={this.handlerCreateMoneyFlow.bind(this, 1)} block bsStyle="success" ref='addInOut'>เพิ่ม</Button>
+                  <Overlay show={this.state.in_out_helping}
+                  target={this.domNodeBy.bind(this,'addInOut')} placement="bottom">
+                    <Tooltip id="overload-bottom" >4. กดเพื่อเพิ่มรายการ</Tooltip>
+                  </Overlay>
               </td>
               <td></td>
             </tr>
@@ -464,7 +493,7 @@ class JarSetup extends React.Component {
             <Well>
               ใช้จัดการแบ่งสัดส่วนรายรับโดยกระจายไปตามเหยือกต่าง ๆ ตามที่ตั้งค่าไว้ ซึ่งสัมพันธ์กับส่วนรายรับ-รายจ่าย และเหยือกที่เลือกใช้งาน
               <br></br>
-              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -536,7 +565,7 @@ class JarSetup extends React.Component {
             <Well>
               ใช้แสดงเหยือกที่มีการใช้งาน โดยเหยือกที่ใช้งานหมายถึงมีการแบ่งเงินไว้สำรองสำหรับทำตามจุดประสงค์ของเหยือกนั้น ๆ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -554,7 +583,7 @@ class JarSetup extends React.Component {
             <Well>
               ใช้แสดงเหยือกที่ไม่ได้ใช้งาน โดยเหยือกที่ไม่ได้ใช้งานหมายถึงไม่คำนึงถึงการแบ่งเงินไว้สำรองสำหรับทำตามจุดประสงค์ของเหยือกนั้น ๆ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>

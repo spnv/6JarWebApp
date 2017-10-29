@@ -251,7 +251,7 @@ class Asset extends React.Component {
             <Well>
               ใช้บันทึกข้อมูลสินทรัพย์ และต้นทุนที่ลงทุนในสินทรัพย์นั้น ๆ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
