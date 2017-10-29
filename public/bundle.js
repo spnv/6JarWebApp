@@ -64194,6 +64194,9 @@ var JarSetup = function (_React$Component) {
         }
       },
       in_out_helping: false,
+      income_manage: false,
+      use_jar: false,
+      unuse_jar: false,
       paiding: 'none'
     };
     return _this;
@@ -64377,8 +64380,8 @@ var JarSetup = function (_React$Component) {
     }
   }, {
     key: 'toggle',
-    value: function toggle() {
-      this.setState({ in_out_helping: !this.state.in_out_helping });
+    value: function toggle(flag) {
+      this.setState(_defineProperty({}, flag, !this.state[flag]));
     }
   }, {
     key: 'domNodeBy',
@@ -64625,7 +64628,7 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { onClick: this.toggle.bind(this), className: 'pull-right', bsStyle: 'warning' },
+                { onClick: this.toggle.bind(this, 'in_out_helping'), className: 'pull-right', bsStyle: 'warning' },
                 '\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
               )
             )
@@ -64801,7 +64804,8 @@ var JarSetup = function (_React$Component) {
             _reactBootstrap.Badge,
             { onClick: function onClick() {
                 return _this2.setState({
-                  open2: !_this2.state.open2
+                  open2: !_this2.state.open2,
+                  income_manage: false
                 });
               } },
             '?'
@@ -64820,7 +64824,7 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { className: 'pull-right', bsStyle: 'warning' },
+                { onClick: this.toggle.bind(this, 'income_manage'), className: 'pull-right', bsStyle: 'warning' },
                 '\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
               )
             )
@@ -64860,13 +64864,33 @@ var JarSetup = function (_React$Component) {
                   ),
                   _react2.default.createElement(
                     'th',
-                    null,
+                    { ref: 'configAmountMange' },
                     '\u0E41\u0E01\u0E49\u0E44\u0E02\u0E08\u0E33\u0E19\u0E27\u0E19'
                   ),
                   _react2.default.createElement(
+                    _reactBootstrap.Overlay,
+                    { show: this.state.income_manage,
+                      target: this.domNodeBy.bind(this, 'configAmountMange'), placement: 'top' },
+                    _react2.default.createElement(
+                      _reactBootstrap.Tooltip,
+                      { id: 'tooltip-configAmountMange' },
+                      '1. \u0E43\u0E2A\u0E48\u0E08\u0E33\u0E19\u0E27\u0E19\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E41\u0E1A\u0E48\u0E07\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A\u0E25\u0E07\u0E43\u0E19\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01\u0E19\u0E31\u0E49\u0E19 \u0E46 \u0E40\u0E0A\u0E48\u0E19 \u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E01\u0E47\u0E1A\u0E22\u0E32\u0E27\u0E08\u0E33\u0E19\u0E27\u0E19 300 \u0E1A\u0E32\u0E17\u0E17\u0E38\u0E01\u0E40\u0E14\u0E37\u0E2D\u0E19 \u0E43\u0E2B\u0E49\u0E01\u0E23\u0E2D\u0E01 300 \u0E25\u0E07\u0E44\u0E1B'
+                    )
+                  ),
+                  _react2.default.createElement(
                     'th',
-                    null,
+                    { ref: 'submitAmountMange' },
                     '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
+                  ),
+                  _react2.default.createElement(
+                    _reactBootstrap.Overlay,
+                    { show: this.state.income_manage,
+                      target: this.domNodeBy.bind(this, 'submitAmountMange'), placement: 'top' },
+                    _react2.default.createElement(
+                      _reactBootstrap.Tooltip,
+                      { id: 'tooltip-submitAmountMange' },
+                      '2. \u0E01\u0E14\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01'
+                    )
                   )
                 )
               ),
@@ -64944,7 +64968,8 @@ var JarSetup = function (_React$Component) {
             _reactBootstrap.Badge,
             { onClick: function onClick() {
                 return _this2.setState({
-                  open3: !_this2.state.open3
+                  open3: !_this2.state.open3,
+                  use_jar: false
                 });
               } },
             '?'
@@ -64963,15 +64988,25 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { className: 'pull-right', bsStyle: 'warning' },
+                { onClick: this.toggle.bind(this, 'use_jar'), className: 'pull-right', bsStyle: 'warning' },
                 '\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
               )
             )
           )
         ),
         _react2.default.createElement(
+          _reactBootstrap.Overlay,
+          { show: this.state.use_jar,
+            target: this.domNodeBy.bind(this, 'useJar'), placement: 'top' },
+          _react2.default.createElement(
+            _reactBootstrap.Tooltip,
+            { id: 'tooltip-useJar' },
+            '\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21 \u0E40\u0E01\u0E47\u0E1A \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E22\u0E01\u0E40\u0E25\u0E34\u0E01\u0E01\u0E32\u0E23\u0E19\u0E33\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01\u0E19\u0E31\u0E49\u0E19 \u0E46 \u0E40\u0E02\u0E49\u0E32\u0E21\u0E32\u0E04\u0E33\u0E19\u0E27\u0E19 \u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E37\u0E2D\u0E44\u0E21\u0E48\u0E43\u0E0A\u0E48\u0E07\u0E32\u0E19\u0E19\u0E31\u0E49\u0E19\u0E40\u0E2D\u0E07'
+          )
+        ),
+        _react2.default.createElement(
           _reactBootstrap.Row,
-          null,
+          { ref: 'useJar' },
           selectedJars
         ),
         _react2.default.createElement('hr', null),
@@ -64984,7 +65019,8 @@ var JarSetup = function (_React$Component) {
             _reactBootstrap.Badge,
             { onClick: function onClick() {
                 return _this2.setState({
-                  open4: !_this2.state.open4
+                  open4: !_this2.state.open4,
+                  unuse_jar: false
                 });
               } },
             '?'
@@ -65003,15 +65039,25 @@ var JarSetup = function (_React$Component) {
               _react2.default.createElement('br', null),
               _react2.default.createElement(
                 _reactBootstrap.Button,
-                { className: 'pull-right', bsStyle: 'warning' },
+                { onClick: this.toggle.bind(this, 'unuse_jar'), className: 'pull-right', bsStyle: 'warning' },
                 '\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
               )
             )
           )
         ),
         _react2.default.createElement(
+          _reactBootstrap.Overlay,
+          { show: this.state.unuse_jar,
+            target: this.domNodeBy.bind(this, 'unUseJar'), placement: 'top' },
+          _react2.default.createElement(
+            _reactBootstrap.Tooltip,
+            { id: 'tooltip-unUseJar' },
+            '\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21 \u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19 \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E19\u0E33\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01\u0E19\u0E31\u0E49\u0E19 \u0E46 \u0E40\u0E02\u0E49\u0E32\u0E21\u0E32\u0E04\u0E33\u0E19\u0E27\u0E19 \u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E37\u0E2D\u0E43\u0E0A\u0E48\u0E07\u0E32\u0E19\u0E19\u0E31\u0E49\u0E19\u0E40\u0E2D\u0E07'
+          )
+        ),
+        _react2.default.createElement(
           _reactBootstrap.Row,
-          null,
+          { ref: 'unUseJar' },
           nonSelectedJars
         ),
         _react2.default.createElement(

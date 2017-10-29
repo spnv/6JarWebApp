@@ -67,6 +67,9 @@ class JarSetup extends React.Component {
         }
       },
       in_out_helping: false,
+      income_manage:false,
+      use_jar:false,
+      unuse_jar:false,
       paiding: 'none'
     }
   }
@@ -240,8 +243,8 @@ class JarSetup extends React.Component {
     });
   }
 
-  toggle() {
-    this.setState({ in_out_helping: !this.state.in_out_helping });
+  toggle(flag) {
+    this.setState({ [flag]: !this.state[flag] });
   }
 
   domNodeBy(flag){
@@ -411,7 +414,7 @@ class JarSetup extends React.Component {
               ใช้จัดการ รายรับ-รายจ่าย ที่แน่นอนและมีการวนซ้ำ เช่น เงินเดือน, ค่าขนม, ค่าหอพัก โดยช่วยจัดการด้วยการบันทึกรายการนั้นไว้และสามารถกดบันทึกอัตโนมัติ
               ไม่ต้องทำการกรอกเองที่หน้าบันทึกของวัน โดยอ้างอิงจากส่วนจัดการรายรับ
               <br></br>
-              <Button onClick={this.toggle.bind(this)} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this,'in_out_helping')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -485,7 +488,8 @@ class JarSetup extends React.Component {
         </a>
         <br/>
         <h3>จัดการรายรับ <Badge onClick={() => this.setState({
-            open2: !this.state.open2
+            open2: !this.state.open2,
+            income_manage:false
           })}>?</Badge>
         </h3>
         <Collapse in={this.state.open2}>
@@ -493,7 +497,7 @@ class JarSetup extends React.Component {
             <Well>
               ใช้จัดการแบ่งสัดส่วนรายรับโดยกระจายไปตามเหยือกต่าง ๆ ตามที่ตั้งค่าไว้ ซึ่งสัมพันธ์กับส่วนรายรับ-รายจ่าย และเหยือกที่เลือกใช้งาน
               <br></br>
-              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this,'income_manage')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -507,8 +511,16 @@ class JarSetup extends React.Component {
                   <th>#เหยือก</th>
                   <th>สัดส่วนต่อรายได้</th>
                   <th>จำนวนแบ่ง</th>
-                  <th>แก้ไขจำนวน</th>
-                  <th>จัดการ</th>
+                  <th ref="configAmountMange">แก้ไขจำนวน</th>
+                    <Overlay show={this.state.income_manage}
+                    target={this.domNodeBy.bind(this,'configAmountMange')} placement="top">
+                      <Tooltip id='tooltip-configAmountMange'>1. ใส่จำนวนที่ต้องการแบ่งรายรับลงในเหยือกนั้น ๆ เช่น ต้องการเก็บยาวจำนวน 300 บาททุกเดือน ให้กรอก 300 ลงไป</Tooltip>
+                    </Overlay>
+                  <th ref="submitAmountMange">จัดการ</th>
+                    <Overlay show={this.state.income_manage}
+                    target={this.domNodeBy.bind(this,'submitAmountMange')} placement="top">
+                      <Tooltip id='tooltip-submitAmountMange'>2. กดยืนยันเพื่อบันทึก</Tooltip>
+                    </Overlay>
                 </tr>
               </thead>
               <tbody>
@@ -557,7 +569,8 @@ class JarSetup extends React.Component {
         </a>
         <br></br>
         <h3>ใช้งาน <Badge onClick={() => this.setState({
-            open3: !this.state.open3
+            open3: !this.state.open3,
+            use_jar:false
           })}>?</Badge>
         </h3>
         <Collapse in={this.state.open3}>
@@ -565,17 +578,22 @@ class JarSetup extends React.Component {
             <Well>
               ใช้แสดงเหยือกที่มีการใช้งาน โดยเหยือกที่ใช้งานหมายถึงมีการแบ่งเงินไว้สำรองสำหรับทำตามจุดประสงค์ของเหยือกนั้น ๆ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this,'use_jar')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
-        <Row>
+        <Overlay show={this.state.use_jar}
+        target={this.domNodeBy.bind(this,'useJar')} placement="top">
+          <Tooltip id='tooltip-useJar'>กดปุ่ม เก็บ เพื่อยกเลิกการนำเหยือกนั้น ๆ เข้ามาคำนวน หรือคือไม่ใช่งานนั้นเอง</Tooltip>
+        </Overlay>
+        <Row ref='useJar'>
           {selectedJars}
         </Row>
         <hr/>
         <br/>
         <h3>เก็บ <Badge onClick={() => this.setState({
-            open4: !this.state.open4
+            open4: !this.state.open4,
+            unuse_jar:false
           })}>?</Badge>
         </h3>
         <Collapse in={this.state.open4}>
@@ -583,11 +601,15 @@ class JarSetup extends React.Component {
             <Well>
               ใช้แสดงเหยือกที่ไม่ได้ใช้งาน โดยเหยือกที่ไม่ได้ใช้งานหมายถึงไม่คำนึงถึงการแบ่งเงินไว้สำรองสำหรับทำตามจุดประสงค์ของเหยือกนั้น ๆ
               <br></br>
-              <Button className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this,'unuse_jar')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
-        <Row>
+        <Overlay show={this.state.unuse_jar}
+        target={this.domNodeBy.bind(this,'unUseJar')} placement="top">
+          <Tooltip id='tooltip-unUseJar'>กดปุ่ม ใช้งาน เพื่อนำเหยือกนั้น ๆ เข้ามาคำนวน หรือคือใช่งานนั้นเอง</Tooltip>
+        </Overlay>
+        <Row  ref='unUseJar'>
           {nonSelectedJars}
         </Row>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
