@@ -46,7 +46,8 @@ class SignUp extends React.Component {
     let contex = this;
 
     /* Check form fulfill */
-    if (findDOMNode(this.refs.rePassword).value == null || findDOMNode(this.refs.rePassword).value == '' || findDOMNode(this.refs.rePassword).value == undefined || findDOMNode(this.refs.password).value == null || findDOMNode(this.refs.password).value == '' || findDOMNode(this.refs.password).value == undefined || findDOMNode(this.refs.name).value == null || findDOMNode(this.refs.name).value == '' || findDOMNode(this.refs.name).value == undefined || findDOMNode(this.refs.email).value == null || findDOMNode(this.refs.email).value == '' || findDOMNode(this.refs.email).value == undefined) {
+    if (findDOMNode(this.refs.rePassword).value == null || findDOMNode(this.refs.rePassword).value == '' || findDOMNode(this.refs.rePassword).value == undefined || findDOMNode(this.refs.password).value == null || findDOMNode(this.refs.password).value == '' || findDOMNode(this.refs.password).value == undefined || findDOMNode(this.refs.name).value == null || findDOMNode(this.refs.name).value == '' || findDOMNode(this.refs.name).value == undefined || findDOMNode(this.refs.email).value == null || findDOMNode(this.refs.email).value == '' || findDOMNode(this.refs.email).value == undefined ||
+    (contex.getEmailValidationState() != 'success' || contex.getPasswordValidationState() != 'success') ) {
       contex.setState({isFulFil: false})
       return;
     }
@@ -124,7 +125,7 @@ class SignUp extends React.Component {
               ? (
                 <p style={{
                   'color': 'red'
-                }}>Please complete the form</p>
+                }}>กรุณากรอกแบบฟอร์มให้ถูกต้อง และครบถ้วน</p>
               )
               : ('')}
             <br></br>
@@ -135,7 +136,7 @@ class SignUp extends React.Component {
                 ? (
                   <p style={{
                     'color': 'red'
-                  }}>email already exist</p>
+                  }}>อีเมล์นี้ถูกใช้งานแล้ว</p>
                 )
                 : ('')}
             </FormGroup>

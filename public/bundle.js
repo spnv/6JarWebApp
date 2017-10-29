@@ -35406,7 +35406,7 @@ exports.default = (0, _reactRedux.connect)(StateToProps, DispatchToProps)(JarIte
 
 // Lower level API to animate any kind of svg path
 
-var Tweenable = __webpack_require__(609);
+var Tweenable = __webpack_require__(610);
 var utils = __webpack_require__(67);
 
 var EASING_ALIASES = {
@@ -50777,23 +50777,23 @@ var _signUp = __webpack_require__(599);
 
 var _signUp2 = _interopRequireDefault(_signUp);
 
-var _today = __webpack_require__(600);
+var _today = __webpack_require__(601);
 
 var _today2 = _interopRequireDefault(_today);
 
-var _asset = __webpack_require__(601);
+var _asset = __webpack_require__(602);
 
 var _asset2 = _interopRequireDefault(_asset);
 
-var _jarSetup = __webpack_require__(603);
+var _jarSetup = __webpack_require__(604);
 
 var _jarSetup2 = _interopRequireDefault(_jarSetup);
 
-var _supportus = __webpack_require__(619);
+var _supportus = __webpack_require__(620);
 
 var _supportus2 = _interopRequireDefault(_supportus);
 
-var _contactus = __webpack_require__(629);
+var _contactus = __webpack_require__(630);
 
 var _contactus2 = _interopRequireDefault(_contactus);
 
@@ -62794,7 +62794,7 @@ var _reactDom = __webpack_require__(15);
 
 var _reactBootstrap = __webpack_require__(36);
 
-var _emailValidator = __webpack_require__(714);
+var _emailValidator = __webpack_require__(600);
 
 var EmailValidator = _interopRequireWildcard(_emailValidator);
 
@@ -62847,7 +62847,7 @@ var SignUp = function (_React$Component) {
       var contex = this;
 
       /* Check form fulfill */
-      if ((0, _reactDom.findDOMNode)(this.refs.rePassword).value == null || (0, _reactDom.findDOMNode)(this.refs.rePassword).value == '' || (0, _reactDom.findDOMNode)(this.refs.rePassword).value == undefined || (0, _reactDom.findDOMNode)(this.refs.password).value == null || (0, _reactDom.findDOMNode)(this.refs.password).value == '' || (0, _reactDom.findDOMNode)(this.refs.password).value == undefined || (0, _reactDom.findDOMNode)(this.refs.name).value == null || (0, _reactDom.findDOMNode)(this.refs.name).value == '' || (0, _reactDom.findDOMNode)(this.refs.name).value == undefined || (0, _reactDom.findDOMNode)(this.refs.email).value == null || (0, _reactDom.findDOMNode)(this.refs.email).value == '' || (0, _reactDom.findDOMNode)(this.refs.email).value == undefined) {
+      if ((0, _reactDom.findDOMNode)(this.refs.rePassword).value == null || (0, _reactDom.findDOMNode)(this.refs.rePassword).value == '' || (0, _reactDom.findDOMNode)(this.refs.rePassword).value == undefined || (0, _reactDom.findDOMNode)(this.refs.password).value == null || (0, _reactDom.findDOMNode)(this.refs.password).value == '' || (0, _reactDom.findDOMNode)(this.refs.password).value == undefined || (0, _reactDom.findDOMNode)(this.refs.name).value == null || (0, _reactDom.findDOMNode)(this.refs.name).value == '' || (0, _reactDom.findDOMNode)(this.refs.name).value == undefined || (0, _reactDom.findDOMNode)(this.refs.email).value == null || (0, _reactDom.findDOMNode)(this.refs.email).value == '' || (0, _reactDom.findDOMNode)(this.refs.email).value == undefined || contex.getEmailValidationState() != 'success' || contex.getPasswordValidationState() != 'success') {
         contex.setState({ isFulFil: false });
         return;
       }
@@ -62935,7 +62935,7 @@ var SignUp = function (_React$Component) {
               { style: {
                   'color': 'red'
                 } },
-              'Please complete the form'
+              '\u0E01\u0E23\u0E38\u0E13\u0E32\u0E01\u0E23\u0E2D\u0E01\u0E41\u0E1A\u0E1A\u0E1F\u0E2D\u0E23\u0E4C\u0E21\u0E43\u0E2B\u0E49\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07 \u0E41\u0E25\u0E30\u0E04\u0E23\u0E1A\u0E16\u0E49\u0E27\u0E19'
             ) : '',
             _react2.default.createElement('br', null),
             _react2.default.createElement(
@@ -62953,7 +62953,7 @@ var SignUp = function (_React$Component) {
                 { style: {
                     'color': 'red'
                   } },
-                'email already exist'
+                '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C\u0E19\u0E35\u0E49\u0E16\u0E39\u0E01\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19\u0E41\u0E25\u0E49\u0E27'
               ) : ''
             ),
             _react2.default.createElement(
@@ -63035,6 +63035,43 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 /* 600 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+// Thanks to:
+// http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+// http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
+// http://stackoverflow.com/questions/201323/what-is-the-best-regular-expression-for-validating-email-addresses/201378#201378
+exports.validate = function(email)
+{
+	if (!email)
+		return false;
+		
+	if(email.length>254)
+		return false;
+
+	var valid = tester.test(email);
+	if(!valid)
+		return false;
+
+	// Further checking of some things regex can't handle
+	var parts = email.split("@");
+	if(parts[0].length>64)
+		return false;
+
+	var domainParts = parts[1].split(".");
+	if(domainParts.some(function(part) { return part.length>63; }))
+		return false;
+
+	return true;
+}
+
+
+/***/ }),
+/* 601 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63217,6 +63254,8 @@ var Today = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var jars = this.props.selectedjar.map(function (jar, i) {
         return _react2.default.createElement(
           _reactBootstrap.Col,
@@ -63292,7 +63331,29 @@ var Today = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E22\u0E2D\u0E14\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D (\u0E15\u0E48\u0E2D\u0E40\u0E14\u0E37\u0E2D\u0E19)'
+          '\u0E22\u0E2D\u0E14\u0E04\u0E07\u0E40\u0E2B\u0E25\u0E37\u0E2D (\u0E15\u0E48\u0E2D\u0E40\u0E14\u0E37\u0E2D\u0E19) ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            { onClick: function onClick() {
+                return _this2.setState({
+                  open1: !_this2.state.open1
+                });
+              } },
+            '?'
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Collapse,
+          { 'in': this.state.open1 },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Well,
+              null,
+              '\u0E43\u0E0A\u0E49\u0E41\u0E2A\u0E14\u0E07\u0E16\u0E36\u0E07\u0E40\u0E07\u0E34\u0E19\u0E17\u0E35\u0E48\u0E40\u0E2B\u0E25\u0E37\u0E2D\u0E43\u0E19\u0E41\u0E15\u0E48\u0E25\u0E30\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01 \u0E0B\u0E36\u0E48\u0E07\u0E08\u0E30\u0E40\u0E1B\u0E25\u0E35\u0E48\u0E22\u0E19\u0E41\u0E1B\u0E25\u0E07\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E02\u0E36\u0E49\u0E19-\u0E25\u0E14\u0E25\u0E07\u0E15\u0E32\u0E21\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E17\u0E35\u0E48\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E02\u0E49\u0E32\u0E21\u0E32 \u0E41\u0E25\u0E30\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01\u0E17\u0E35\u0E48\u0E41\u0E2A\u0E14\u0E07\u0E08\u0E30\u0E2A\u0E31\u0E21\u0E1E\u0E31\u0E19\u0E18\u0E4C\u0E01\u0E31\u0E19\u0E01\u0E31\u0E1A\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01\u0E17\u0E35\u0E48\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E2B\u0E19\u0E49\u0E32\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
+            )
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Row,
@@ -63303,7 +63364,35 @@ var Today = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49'
+          '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E27\u0E31\u0E19\u0E19\u0E35 ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            { onClick: function onClick() {
+                return _this2.setState({
+                  open2: !_this2.state.open2
+                });
+              } },
+            '?'
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Collapse,
+          { 'in': this.state.open2 },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Well,
+              null,
+              '\u0E43\u0E0A\u0E49\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E08\u0E48\u0E32\u0E22 \u0E02\u0E2D\u0E07\u0E27\u0E31\u0E19\u0E19\u0E31\u0E49\u0E19 \u0E46 \u0E40\u0E0A\u0E48\u0E19 \u0E04\u0E48\u0E32\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07, \u0E04\u0E48\u0E32\u0E40\u0E14\u0E34\u0E19\u0E17\u0E32\u0E07 \u0E0B\u0E36\u0E48\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E17\u0E35\u0E48\u0E41\u0E2A\u0E14\u0E07\u0E08\u0E30\u0E21\u0E35\u0E02\u0E2D\u0E07\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19\u0E41\u0E25\u0E30\u0E2A\u0E48\u0E07\u0E1C\u0E25\u0E15\u0E48\u0E2D\u0E1B\u0E23\u0E34\u0E21\u0E32\u0E13\u0E40\u0E07\u0E34\u0E19\u0E43\u0E19\u0E40\u0E2B\u0E22\u0E37\u0E2D\u0E01\u0E14\u0E49\u0E32\u0E19\u0E1A\u0E19\u0E14\u0E49\u0E27\u0E22',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { className: 'pull-right', bsStyle: 'warning' },
+                '\u0E41\u0E19\u0E30\u0E19\u0E33\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
+              )
+            )
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Table,
@@ -63454,7 +63543,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Today);
 
 /***/ }),
-/* 601 */
+/* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63478,7 +63567,7 @@ var _reactDom = __webpack_require__(15);
 
 var _reactBootstrap = __webpack_require__(36);
 
-var _assetAction = __webpack_require__(602);
+var _assetAction = __webpack_require__(603);
 
 var _memberAction = __webpack_require__(44);
 
@@ -63622,6 +63711,7 @@ var Asset = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
 
       var assetItems = this.props.myasset.map(function (item, i) {
 
@@ -63747,7 +63837,35 @@ var Asset = function (_React$Component) {
         _react2.default.createElement(
           'h3',
           null,
-          '\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C\u0E2A\u0E34\u0E19'
+          '\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C\u0E2A\u0E34\u0E19 ',
+          _react2.default.createElement(
+            _reactBootstrap.Badge,
+            { onClick: function onClick() {
+                return _this2.setState({
+                  open2: !_this2.state.open2
+                });
+              } },
+            '?'
+          )
+        ),
+        _react2.default.createElement(
+          _reactBootstrap.Collapse,
+          { 'in': this.state.open2 },
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              _reactBootstrap.Well,
+              null,
+              '\u0E43\u0E0A\u0E49\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E39\u0E25\u0E2A\u0E34\u0E19\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C \u0E41\u0E25\u0E30\u0E15\u0E49\u0E19\u0E17\u0E38\u0E19\u0E17\u0E35\u0E48\u0E25\u0E07\u0E17\u0E38\u0E19\u0E43\u0E19\u0E2A\u0E34\u0E19\u0E17\u0E23\u0E31\u0E1E\u0E22\u0E4C\u0E19\u0E31\u0E49\u0E19 \u0E46',
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                _reactBootstrap.Button,
+                { className: 'pull-right', bsStyle: 'warning' },
+                '\u0E41\u0E19\u0E30\u0E19\u0E33\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E07\u0E32\u0E19'
+              )
+            )
+          )
         ),
         _react2.default.createElement(
           _reactBootstrap.Table,
@@ -63905,7 +64023,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Asset);
 
 /***/ }),
-/* 602 */
+/* 603 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63991,7 +64109,7 @@ function removeAsset(_assetItem, cb) {
 }
 
 /***/ }),
-/* 603 */
+/* 604 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64023,7 +64141,7 @@ var _jarAction = __webpack_require__(168);
 
 var _memberAction = __webpack_require__(44);
 
-var _moneyFlowAction = __webpack_require__(604);
+var _moneyFlowAction = __webpack_require__(605);
 
 var _transactionAction = __webpack_require__(167);
 
@@ -64040,12 +64158,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 // import {HorizontalBar, Pie} from 'react-chartjs-2';
-var ProgressBar = __webpack_require__(605);
+var ProgressBar = __webpack_require__(606);
 var Line = ProgressBar.Line;
 // var Bars = require("react-chartjs").Bars;
 // var LineChart = require("react-chartjs").Line;
 
-var PieChart = __webpack_require__(611).PieChart;
+var PieChart = __webpack_require__(612).PieChart;
 // var HorizontalBar = require("react-chartjs-2").HorizontalBar;
 
 var NumberFormat = __webpack_require__(107);
@@ -64977,7 +65095,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(JarSetup);
 
 /***/ }),
-/* 604 */
+/* 605 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65063,12 +65181,12 @@ function removeMoneyFlow(_flowItem, cb) {
 }
 
 /***/ }),
-/* 605 */
+/* 606 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module, __webpack_require__(0), __webpack_require__(15), __webpack_require__(606), __webpack_require__(607)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module, __webpack_require__(0), __webpack_require__(15), __webpack_require__(607), __webpack_require__(608)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -65220,7 +65338,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 606 */
+/* 607 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -67075,14 +67193,14 @@ module.exports = isEqual;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(94), __webpack_require__(211)(module)))
 
 /***/ }),
-/* 607 */
+/* 608 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
     // Higher level API, different shaped progress bars
-    Line: __webpack_require__(608),
+    Line: __webpack_require__(609),
     Circle: __webpack_require__(283),
-    SemiCircle: __webpack_require__(610),
+    SemiCircle: __webpack_require__(611),
 
     // Lower level API to use any SVG path
     Path: __webpack_require__(282),
@@ -67098,7 +67216,7 @@ module.exports = {
 
 
 /***/ }),
-/* 608 */
+/* 609 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Line shaped progress bar
@@ -67133,7 +67251,7 @@ module.exports = Line;
 
 
 /***/ }),
-/* 609 */
+/* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* shifty - v1.5.3 - 2016-11-29 - http://jeremyckahn.github.io/shifty */
@@ -68790,7 +68908,7 @@ var Tweenable = (function () {
 
 
 /***/ }),
-/* 610 */
+/* 611 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Semi-SemiCircle shaped progress bar
@@ -68844,7 +68962,7 @@ module.exports = SemiCircle;
 
 
 /***/ }),
-/* 611 */
+/* 612 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68855,7 +68973,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.d3 = exports.Brush = exports.AreaChart = exports.LineChart = exports.ScatterPlot = exports.PieChart = exports.Waveform = exports.BarChart = undefined;
 
-var _BarChart = __webpack_require__(612);
+var _BarChart = __webpack_require__(613);
 
 Object.defineProperty(exports, 'BarChart', {
   enumerable: true,
@@ -68864,7 +68982,7 @@ Object.defineProperty(exports, 'BarChart', {
   }
 });
 
-var _Waveform = __webpack_require__(613);
+var _Waveform = __webpack_require__(614);
 
 Object.defineProperty(exports, 'Waveform', {
   enumerable: true,
@@ -68873,7 +68991,7 @@ Object.defineProperty(exports, 'Waveform', {
   }
 });
 
-var _PieChart = __webpack_require__(614);
+var _PieChart = __webpack_require__(615);
 
 Object.defineProperty(exports, 'PieChart', {
   enumerable: true,
@@ -68882,7 +69000,7 @@ Object.defineProperty(exports, 'PieChart', {
   }
 });
 
-var _ScatterPlot = __webpack_require__(615);
+var _ScatterPlot = __webpack_require__(616);
 
 Object.defineProperty(exports, 'ScatterPlot', {
   enumerable: true,
@@ -68891,7 +69009,7 @@ Object.defineProperty(exports, 'ScatterPlot', {
   }
 });
 
-var _LineChart = __webpack_require__(616);
+var _LineChart = __webpack_require__(617);
 
 Object.defineProperty(exports, 'LineChart', {
   enumerable: true,
@@ -68900,7 +69018,7 @@ Object.defineProperty(exports, 'LineChart', {
   }
 });
 
-var _AreaChart = __webpack_require__(617);
+var _AreaChart = __webpack_require__(618);
 
 Object.defineProperty(exports, 'AreaChart', {
   enumerable: true,
@@ -68909,7 +69027,7 @@ Object.defineProperty(exports, 'AreaChart', {
   }
 });
 
-var _Brush = __webpack_require__(618);
+var _Brush = __webpack_require__(619);
 
 Object.defineProperty(exports, 'Brush', {
   enumerable: true,
@@ -68927,7 +69045,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.d3 = _d3.default;
 
 /***/ }),
-/* 612 */
+/* 613 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69178,7 +69296,7 @@ var BarChart = _react2.default.createClass({
 exports.default = BarChart;
 
 /***/ }),
-/* 613 */
+/* 614 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69414,7 +69532,7 @@ var Waveform = _react2.default.createClass({
 exports.default = Waveform;
 
 /***/ }),
-/* 614 */
+/* 615 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69722,7 +69840,7 @@ var PieChart = _react2.default.createClass({
 exports.default = PieChart;
 
 /***/ }),
-/* 615 */
+/* 616 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69939,7 +70057,7 @@ var ScatterPlot = _react2.default.createClass({
 exports.default = ScatterPlot;
 
 /***/ }),
-/* 616 */
+/* 617 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70307,7 +70425,7 @@ var LineChart = _react2.default.createClass({
 exports.default = LineChart;
 
 /***/ }),
-/* 617 */
+/* 618 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70564,7 +70682,7 @@ var AreaChart = _react2.default.createClass({
 exports.default = AreaChart;
 
 /***/ }),
-/* 618 */
+/* 619 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70911,7 +71029,7 @@ var Brush = _react2.default.createClass({
 exports.default = Brush;
 
 /***/ }),
-/* 619 */
+/* 620 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70933,7 +71051,7 @@ var _redux = __webpack_require__(23);
 
 var _reactDom = __webpack_require__(15);
 
-var _reactClipboard = __webpack_require__(620);
+var _reactClipboard = __webpack_require__(621);
 
 var _reactClipboard2 = _interopRequireDefault(_reactClipboard);
 
@@ -71116,12 +71234,12 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SupportUs);
 
 /***/ }),
-/* 620 */
+/* 621 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(621));
+		module.exports = factory(__webpack_require__(0), __webpack_require__(6), __webpack_require__(622));
 	else if(typeof define === 'function' && define.amd)
 		define(["react", "prop-types", "clipboard"], factory);
 	else if(typeof exports === 'object')
@@ -71912,12 +72030,12 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 621 */
+/* 622 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module, __webpack_require__(622), __webpack_require__(624), __webpack_require__(625)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module, __webpack_require__(623), __webpack_require__(625), __webpack_require__(626)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -72127,12 +72245,12 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 622 */
+/* 623 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
     if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module, __webpack_require__(623)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [module, __webpack_require__(624)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -72364,7 +72482,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 623 */
+/* 624 */
 /***/ (function(module, exports) {
 
 function select(element) {
@@ -72413,7 +72531,7 @@ module.exports = select;
 
 
 /***/ }),
-/* 624 */
+/* 625 */
 /***/ (function(module, exports) {
 
 function E () {
@@ -72485,11 +72603,11 @@ module.exports = E;
 
 
 /***/ }),
-/* 625 */
+/* 626 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var is = __webpack_require__(626);
-var delegate = __webpack_require__(627);
+var is = __webpack_require__(627);
+var delegate = __webpack_require__(628);
 
 /**
  * Validates all params and calls the right
@@ -72586,7 +72704,7 @@ module.exports = listen;
 
 
 /***/ }),
-/* 626 */
+/* 627 */
 /***/ (function(module, exports) {
 
 /**
@@ -72641,10 +72759,10 @@ exports.fn = function(value) {
 
 
 /***/ }),
-/* 627 */
+/* 628 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var closest = __webpack_require__(628);
+var closest = __webpack_require__(629);
 
 /**
  * Delegates event to a selector.
@@ -72691,7 +72809,7 @@ module.exports = delegate;
 
 
 /***/ }),
-/* 628 */
+/* 629 */
 /***/ (function(module, exports) {
 
 var DOCUMENT_NODE_TYPE = 9;
@@ -72730,7 +72848,7 @@ module.exports = closest;
 
 
 /***/ }),
-/* 629 */
+/* 630 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72754,9 +72872,15 @@ var _reactDom = __webpack_require__(15);
 
 var _reactBootstrap = __webpack_require__(36);
 
-var _messageAction = __webpack_require__(630);
+var _emailValidator = __webpack_require__(600);
+
+var EmailValidator = _interopRequireWildcard(_emailValidator);
+
+var _messageAction = __webpack_require__(631);
 
 var _memberAction = __webpack_require__(44);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72776,7 +72900,9 @@ var ContactUs = function (_React$Component) {
 
     _this.state = {
       showModal: false,
-      send_btn_state: 'none'
+      send_btn_state: 'none',
+      email: '',
+      isFulFil: null
     };
     return _this;
   }
@@ -72797,6 +72923,12 @@ var ContactUs = function (_React$Component) {
 
       var contex = this;
 
+      /* Check form fulfill */
+      if ((0, _reactDom.findDOMNode)(this.refs.message).value == null || (0, _reactDom.findDOMNode)(this.refs.message).value == '' || (0, _reactDom.findDOMNode)(this.refs.message).value == undefined || (0, _reactDom.findDOMNode)(this.refs.type).value == null || (0, _reactDom.findDOMNode)(this.refs.type).value == '' || (0, _reactDom.findDOMNode)(this.refs.type).value == undefined || (0, _reactDom.findDOMNode)(this.refs.name).value == null || (0, _reactDom.findDOMNode)(this.refs.name).value == '' || (0, _reactDom.findDOMNode)(this.refs.name).value == undefined || (0, _reactDom.findDOMNode)(this.refs.email).value == null || (0, _reactDom.findDOMNode)(this.refs.email).value == '' || (0, _reactDom.findDOMNode)(this.refs.email).value == undefined || contex.getEmailValidationState() != 'success') {
+        contex.setState({ isFulFil: false });
+        return;
+      }
+
       this.setState({ send_btn_state: 'sending' });
 
       var name = (0, _reactDom.findDOMNode)(this.refs.name).value;
@@ -72805,6 +72937,10 @@ var ContactUs = function (_React$Component) {
       var message = (0, _reactDom.findDOMNode)(this.refs.message).value;
 
       this.props.sendMessage(name, email, type, message, function () {
+        (0, _reactDom.findDOMNode)(contex.refs.message).value = '';
+        (0, _reactDom.findDOMNode)(contex.refs.name).value = '';
+        contex.setState({ email: '' });
+        contex.setState({ isFulFil: null });
         contex.setState({ send_btn_state: 'none' });
         contex.open();
       });
@@ -72826,6 +72962,18 @@ var ContactUs = function (_React$Component) {
           break;
         default:
       }
+    }
+  }, {
+    key: 'getEmailValidationState',
+    value: function getEmailValidationState() {
+      if (this.state.email.length > 0) {
+        if (EmailValidator.validate(this.state.email) == true) return 'success';else return 'error';
+      } else return null;
+    }
+  }, {
+    key: 'handleEmailChange',
+    value: function handleEmailChange(e) {
+      this.setState({ email: e.target.value });
     }
   }, {
     key: 'render',
@@ -72869,6 +73017,13 @@ var ContactUs = function (_React$Component) {
           _react2.default.createElement(
             _reactBootstrap.Col,
             { xs: 12, sm: 12, md: 12, lg: 12 },
+            this.state.isFulFil == false ? _react2.default.createElement(
+              'p',
+              { style: {
+                  'color': 'red'
+                } },
+              '\u0E01\u0E23\u0E38\u0E13\u0E32\u0E01\u0E23\u0E2D\u0E01\u0E41\u0E1A\u0E1A\u0E1F\u0E2D\u0E23\u0E4C\u0E21\u0E43\u0E2B\u0E49\u0E16\u0E39\u0E01\u0E15\u0E49\u0E2D\u0E07 \u0E41\u0E25\u0E30\u0E04\u0E23\u0E1A\u0E16\u0E49\u0E27\u0E19'
+            ) : '',
             _react2.default.createElement(
               'form',
               null,
@@ -72890,7 +73045,7 @@ var ContactUs = function (_React$Component) {
               ),
               _react2.default.createElement(
                 _reactBootstrap.FormGroup,
-                { bsSize: 'large' },
+                { bsSize: 'large', validationState: this.getEmailValidationState() },
                 _react2.default.createElement(
                   _reactBootstrap.InputGroup,
                   { style: {
@@ -72901,7 +73056,8 @@ var ContactUs = function (_React$Component) {
                     null,
                     '\u0E2D\u0E35\u0E40\u0E21\u0E25\u0E4C'
                   ),
-                  _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', ref: 'email' })
+                  _react2.default.createElement(_reactBootstrap.FormControl, { onChange: this.handleEmailChange.bind(this), value: this.state.email, type: 'email', ref: 'email' }),
+                  _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null)
                 )
               ),
               _react2.default.createElement(
@@ -72985,7 +73141,7 @@ function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ContactUs);
 
 /***/ }),
-/* 630 */
+/* 631 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73025,126 +73181,6 @@ function sendMessage(_name, _email, _type, _message, cb) {
     });
   };
 }
-
-/***/ }),
-/* 631 */,
-/* 632 */,
-/* 633 */,
-/* 634 */,
-/* 635 */,
-/* 636 */,
-/* 637 */,
-/* 638 */,
-/* 639 */,
-/* 640 */,
-/* 641 */,
-/* 642 */,
-/* 643 */,
-/* 644 */,
-/* 645 */,
-/* 646 */,
-/* 647 */,
-/* 648 */,
-/* 649 */,
-/* 650 */,
-/* 651 */,
-/* 652 */,
-/* 653 */,
-/* 654 */,
-/* 655 */,
-/* 656 */,
-/* 657 */,
-/* 658 */,
-/* 659 */,
-/* 660 */,
-/* 661 */,
-/* 662 */,
-/* 663 */,
-/* 664 */,
-/* 665 */,
-/* 666 */,
-/* 667 */,
-/* 668 */,
-/* 669 */,
-/* 670 */,
-/* 671 */,
-/* 672 */,
-/* 673 */,
-/* 674 */,
-/* 675 */,
-/* 676 */,
-/* 677 */,
-/* 678 */,
-/* 679 */,
-/* 680 */,
-/* 681 */,
-/* 682 */,
-/* 683 */,
-/* 684 */,
-/* 685 */,
-/* 686 */,
-/* 687 */,
-/* 688 */,
-/* 689 */,
-/* 690 */,
-/* 691 */,
-/* 692 */,
-/* 693 */,
-/* 694 */,
-/* 695 */,
-/* 696 */,
-/* 697 */,
-/* 698 */,
-/* 699 */,
-/* 700 */,
-/* 701 */,
-/* 702 */,
-/* 703 */,
-/* 704 */,
-/* 705 */,
-/* 706 */,
-/* 707 */,
-/* 708 */,
-/* 709 */,
-/* 710 */,
-/* 711 */,
-/* 712 */,
-/* 713 */,
-/* 714 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
-// Thanks to:
-// http://fightingforalostcause.net/misc/2006/compare-email-regex.php
-// http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
-// http://stackoverflow.com/questions/201323/what-is-the-best-regular-expression-for-validating-email-addresses/201378#201378
-exports.validate = function(email)
-{
-	if (!email)
-		return false;
-		
-	if(email.length>254)
-		return false;
-
-	var valid = tester.test(email);
-	if(!valid)
-		return false;
-
-	// Further checking of some things regex can't handle
-	var parts = email.split("@");
-	if(parts[0].length>64)
-		return false;
-
-	var domainParts = parts[1].split(".");
-	if(domainParts.some(function(part) { return part.length>63; }))
-		return false;
-
-	return true;
-}
-
 
 /***/ })
 /******/ ]);

@@ -22,6 +22,8 @@ import {
   Modal
 } from 'react-bootstrap';
 
+import * as EmailValidator from 'email-validator';
+
 import {sendMessage} from '../../actions/messageAction';
 import {getMemberSession} from '../../actions/memberAction';
 
@@ -31,7 +33,9 @@ class ContactUs extends React.Component {
     super(props);
     this.state = {
       showModal: false,
-      send_btn_state: 'none'
+      send_btn_state: 'none',
+      email:'',
+      isFulFil:null
     }
   }
 
@@ -46,6 +50,17 @@ class ContactUs extends React.Component {
 
     let contex = this;
 
+    /* Check form fulfill */
+    if (findDOMNode(this.refs.message).value == null || findDOMNode(this.refs.message).value == '' || findDOMNode(this.refs.message).value == undefined ||
+    findDOMNode(this.refs.type).value == null || findDOMNode(this.refs.type).value == '' || findDOMNode(this.refs.type).value == undefined ||
+    findDOMNode(this.refs.name).value == null || findDOMNode(this.refs.name).value == '' || findDOMNode(this.refs.name).value == undefined ||
+    findDOMNode(this.refs.email).value == null || findDOMNode(this.refs.email).value == '' || findDOMNode(this.refs.email).value == undefined ||
+    contex.getEmailValidationState() != 'success') {
+      contex.setState({isFulFil: false})
+      return;
+    }
+
+
     this.setState({send_btn_state: 'sending'});
 
     let name = findDOMNode(this.refs.name).value;
@@ -54,6 +69,10 @@ class ContactUs extends React.Component {
     let message = findDOMNode(this.refs.message).value;
 
     this.props.sendMessage(name, email, type, message, function() {
+      findDOMNode(contex.refs.message).value = ''
+      findDOMNode(contex.refs.name).value = ''
+      contex.setState({email:''});
+      contex.setState({isFulFil: null})
       contex.setState({send_btn_state: 'none'})
       contex.open();
     });
@@ -76,6 +95,20 @@ class ContactUs extends React.Component {
     }
   }
 
+  getEmailValidationState() {
+    if (this.state.email.length > 0) {
+      if (EmailValidator.validate(this.state.email) == true)
+        return 'success'
+      else
+        return 'error'
+    } else
+      return null
+  }
+
+  handleEmailChange(e) {
+    this.setState({email: e.target.value});
+  }
+
   render() {
     return (
       <Grid>
@@ -92,6 +125,13 @@ class ContactUs extends React.Component {
         <hr/>
         <Row>
           <Col xs={12} sm={12} md={12} lg={12}>
+            {(this.state.isFulFil == false)
+              ? (
+                <p style={{
+                  'color': 'red'
+                }}>กรุณากรอกแบบฟอร์มให้ถูกต้อง และครบถ้วน</p>
+              )
+              : ('')}
             <form>
               <FormGroup bsSize="large">
                 <InputGroup style={{
@@ -102,12 +142,13 @@ class ContactUs extends React.Component {
                 </InputGroup>
               </FormGroup>
 
-              <FormGroup bsSize="large">
+              <FormGroup bsSize="large" validationState={this.getEmailValidationState()}>
                 <InputGroup style={{
                   'width': '100%'
                 }}>
                   <ControlLabel>อีเมล์</ControlLabel>
-                  <FormControl type="text" ref="email"/>
+                  <FormControl onChange={this.handleEmailChange.bind(this)} value={this.state.email} type="email" ref="email"/>
+                  <FormControl.Feedback/>
                 </InputGroup>
               </FormGroup>
 

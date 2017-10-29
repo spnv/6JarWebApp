@@ -16,7 +16,10 @@ import {
   Image,
   Grid,
   Row,
-  Col
+  Col,
+  Badge,
+  Collapse,
+  Well
 } from 'react-bootstrap';
 
 import {getAsset, createAsset, removeAsset} from '../../actions/assetAction';
@@ -239,7 +242,19 @@ class Asset extends React.Component {
 
     return (
       <Grid>
-        <h3>ทรัพย์สิน</h3>
+        <h3>ทรัพย์สิน <Badge onClick={() => this.setState({
+            open2: !this.state.open2
+          })}>?</Badge>
+        </h3>
+        <Collapse in={this.state.open2}>
+          <div>
+            <Well>
+              ใช้บันทึกข้อมูลสินทรัพย์ และต้นทุนที่ลงทุนในสินทรัพย์นั้น ๆ
+              <br></br>
+              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+            </Well>
+          </div>
+        </Collapse>
         <Table striped bordered condensed hover style={{
           color: 'black'
         }}>

@@ -19,7 +19,9 @@ import {
   FormControl,
   Image,
   Row,
-  Col
+  Col,
+  Badge,
+  Collapse
 } from 'react-bootstrap';
 
 import {selectedJar, updateAJar} from '../../actions/jarAction';
@@ -205,12 +207,34 @@ class Today extends React.Component {
 
     return (
       <Grid>
-        <h3>ยอดคงเหลือ (ต่อเดือน)</h3>
+        <h3>ยอดคงเหลือ (ต่อเดือน) <Badge onClick={() => this.setState({
+            open1: !this.state.open1
+          })}>?</Badge>
+        </h3>
+        <Collapse in={this.state.open1}>
+          <div>
+            <Well>
+              ใช้แสดงถึงเงินที่เหลือในแต่ละเหยือก ซึ่งจะเปลี่ยนแปลงเพิ่มขึ้น-ลดลงตามรายการที่เพิ่มเข้ามา และเหยือกที่แสดงจะสัมพันธ์กันกับเหยือกที่เลือกหน้าจัดการ
+            </Well>
+          </div>
+        </Collapse>
         <Row>
           {jars}
         </Row>
         <hr/>
-        <h3>บันทึกวันนี้</h3>
+        <h3>บันทึกวันนี <Badge onClick={() => this.setState({
+            open2: !this.state.open2
+          })}>?</Badge>
+        </h3>
+        <Collapse in={this.state.open2}>
+          <div>
+            <Well>
+              ใช้บันทึกรายรับ-จ่าย ของวันนั้น ๆ เช่น ค่าข้าวเที่ยง, ค่าเดินทาง ซึ่งรายการที่แสดงจะมีของวันนี้เท่านั้นและส่งผลต่อปริมาณเงินในเหยือกด้านบนด้วย
+              <br></br>
+              <Button className="pull-right" bsStyle="warning">แนะนำการใช้งาน</Button>
+            </Well>
+          </div>
+        </Collapse>
         <Table striped bordered condensed hover style={{
           color: 'black'
         }}>
