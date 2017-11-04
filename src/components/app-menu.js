@@ -41,8 +41,11 @@ class AppMenu extends React.Component {
         this.props.router.push('/contact-us');
         break;
       case 'signin':
-        this.props.router.push('/signin');
-        break;
+          this.props.router.push('/signin');
+          break;
+      case 'article':
+            this.props.router.push('/article');
+          break;
       default:
     }
   }
@@ -62,6 +65,7 @@ class AppMenu extends React.Component {
             {(this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success')
               ? (
                 <Nav>
+                  <NavItem eventKey={0} onClick={this.handlerRedirect.bind(this, 'article')}>บทความ</NavItem>
                   <NavItem eventKey={1} onClick={this.handlerRedirect.bind(this, 'today')}>รายการวันนี้</NavItem>
                   <NavItem eventKey={2}>สรุปการใช้จ่าย (กำลังพัฒนา)</NavItem>
                   <NavItem eventKey={3} onClick={this.handlerRedirect.bind(this, 'asset')}>ทรัพย์สิน</NavItem>
@@ -69,7 +73,9 @@ class AppMenu extends React.Component {
                 </Nav>
               )
               : (
-                <Nav></Nav>
+                <Nav>
+                  <NavItem eventKey={0} onClick={this.handlerRedirect.bind(this, 'article')}>บทความ</NavItem>
+                </Nav>
               )}
 
             {(this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success')

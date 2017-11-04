@@ -15,6 +15,7 @@ import Asset from './components/pages/asset';
 import JarSetup from './components/pages/jarSetup';
 import SupportUs from './components/pages/supportus';
 import ContactUs from './components/pages/contactus';
+import Article from './components/pages/article';
 import AppMenu from './components/app-menu';
 
 const routes = (
@@ -22,6 +23,7 @@ const routes = (
     <Route path="/" component={AppMenu}>
       <Route path="signin" component={SignIn}/>
       <Route path="signup" component={SignUp}/>
+      <Route path="article" component={Article}/>
       <Route path="today" component={Today}/>
       <Route path="support-us" component={SupportUs}/>
       <Route path="asset" component={Asset}/>
