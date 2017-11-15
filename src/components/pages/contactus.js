@@ -22,6 +22,8 @@ import {
   Modal
 } from 'react-bootstrap';
 
+import * as EmailValidator from 'email-validator';
+
 import {sendMessage} from '../../actions/messageAction';
 import {getMemberSession} from '../../actions/memberAction';
 

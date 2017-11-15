@@ -73048,9 +73048,15 @@ var _reactDom = __webpack_require__(14);
 
 var _reactBootstrap = __webpack_require__(31);
 
+var _emailValidator = __webpack_require__(281);
+
+var EmailValidator = _interopRequireWildcard(_emailValidator);
+
 var _messageAction = __webpack_require__(631);
 
 var _memberAction = __webpack_require__(44);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
