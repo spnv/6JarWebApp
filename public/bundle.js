@@ -31030,11 +31030,6 @@ var AppMenu = function (_React$Component) {
               null,
               _react2.default.createElement(
                 _reactBootstrap.NavItem,
-                { eventKey: 0, onClick: this.handlerRedirect.bind(this, 'article') },
-                '\u0E1A\u0E17\u0E04\u0E27\u0E32\u0E21'
-              ),
-              _react2.default.createElement(
-                _reactBootstrap.NavItem,
                 { eventKey: 1, onClick: this.handlerRedirect.bind(this, 'today') },
                 '\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49'
               ),
@@ -31053,15 +31048,7 @@ var AppMenu = function (_React$Component) {
                 { eventKey: 4, onClick: this.handlerRedirect.bind(this, 'jar-setup') },
                 '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23'
               )
-            ) : _react2.default.createElement(
-              _reactBootstrap.Nav,
-              null,
-              _react2.default.createElement(
-                _reactBootstrap.NavItem,
-                { eventKey: 0, onClick: this.handlerRedirect.bind(this, 'article') },
-                '\u0E1A\u0E17\u0E04\u0E27\u0E32\u0E21'
-              )
-            ),
+            ) : _react2.default.createElement(_reactBootstrap.Nav, null),
             this.props.member.mymember.message == 'session success' || this.props.member.mymember.message == 'signin success' ? _react2.default.createElement(
               _reactBootstrap.Nav,
               { pullRight: true },
@@ -63585,31 +63572,6 @@ var Today = function (_React$Component) {
               )
             )
           )
-        ),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bx.in.th/ref/sgrNrC/' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': '#144498'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bitconnect.co/?ref=supanat' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': 'black'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
-          )
         )
       );
     }
@@ -64140,31 +64102,6 @@ var Asset = function (_React$Component) {
                 )
               )
             )
-          )
-        ),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bx.in.th/ref/sgrNrC/' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': '#144498'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bitconnect.co/?ref=supanat' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': 'black'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
           )
         )
       );
@@ -64953,19 +64890,6 @@ var JarSetup = function (_React$Component) {
         ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
-          'a',
-          { href: 'https://bx.in.th/ref/sgrNrC/' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': '#144498'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
           'h3',
           null,
           '\u0E08\u0E31\u0E14\u0E01\u0E32\u0E23\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A ',
@@ -65115,19 +65039,6 @@ var JarSetup = function (_React$Component) {
           )
         ),
         _react2.default.createElement('hr', null),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bitconnect.co/?ref=supanat' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': 'black'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
-          )
-        ),
         _react2.default.createElement('br', null),
         _react2.default.createElement(
           'h3',
@@ -71473,32 +71384,6 @@ var SupportUs = function (_React$Component) {
               { 'data-clipboard-text': '009-3-79637-3' },
               'copy to clipboard'
             )
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bx.in.th/ref/sgrNrC/' },
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': '#144498'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, src: 'https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif', alt: 'BX.in.th Bitcoin Exchange Thailand' })
-          )
-        ),
-        _react2.default.createElement(
-          'a',
-          { href: 'https://bitconnect.co/?ref=supanat' },
-          _react2.default.createElement('br', null),
-          _react2.default.createElement(
-            'div',
-            { style: {
-                'textAlign': 'center',
-                'background': 'black'
-              } },
-            _react2.default.createElement(_reactBootstrap.Image, { responsive: true, bsClass: 'img-responsive center-block', src: 'https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif' })
           )
         )
       );

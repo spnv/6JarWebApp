@@ -478,14 +478,6 @@ class JarSetup extends React.Component {
           </tbody>
         </Table>
         <br/>
-        <a href="https://bx.in.th/ref/sgrNrC/">
-          <div style={{
-            'textAlign': 'center',
-            'background': '#144498'
-          }}><Image responsive src="https://d2v7vc3vnopnyy.cloudfront.net/img/resource/bx1_en.gif" alt="BX.in.th Bitcoin Exchange Thailand"/>
-          </div>
-        </a>
-        <br/>
         <h3>จัดการรายรับ <Badge onClick={() => this.setState({
             open2: !this.state.open2,
             income_manage:false
@@ -558,15 +550,6 @@ class JarSetup extends React.Component {
         </Row>
         <hr/>
         <br/>
-        <a href="https://bitconnect.co/?ref=supanat">
-          <div style={{
-            'textAlign': 'center',
-            'background': 'black'
-          }}>
-            <Image responsive bsClass='img-responsive center-block' src="https://bitconnect.co/upload/image/banner/lending/BitConnect-lending-728X90.gif"/>
-          </div>
-        </a>
-        <br></br>
         <h3>ใช้งาน <Badge onClick={() => this.setState({
             open3: !this.state.open3,
             use_jar:false
