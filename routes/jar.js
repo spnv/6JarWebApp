@@ -11,48 +11,48 @@ var MyJar = require('../models/myJar.js');
 router.route('/my-jar')
   // GET SELECTED JARS LIST
   .get(
-    function(req, res, next) {
-      var member = req.session.member.email;
-      MyJar.find({
-        owner: member
-      }, function(err, jars) {
-        res.json(jars);
-      });
-    }
+  function (req, res, next) {
+    var member = req.session.member.email;
+    MyJar.find({
+      owner: member
+    }, function (err, jars) {
+      res.json(jars);
+    });
+  }
   )
   .patch(
-    function(req, res, next) {
-      console.log(req.body)
-      MyJar.findOneAndUpdate({
-        _id: req.body._id
-      }, req.body, {
+  function (req, res, next) {
+    // console.log(req.body)
+    MyJar.findOneAndUpdate({
+      _id: req.body._id
+    }, req.body, {
         new: true
-      }, function(err, updated) {
-        console.log(updated)
+      }, function (err, updated) {
+        // console.log(updated)
         res.json(updated);
       });
-    }
+  }
   );;
 
 router.route('/my-selected')
   // GET SELECTED JARS LIST
   .get(
-    function(req, res, next) {
-      var member = req.session.member.email;
-      MyJar.find({
-        selected: true,
-        owner: member
-      }, function(err, jars) {
-        res.json(jars);
-      });
-    }
+  function (req, res, next) {
+    var member = req.session.member.email;
+    MyJar.find({
+      selected: true,
+      owner: member
+    }, function (err, jars) {
+      res.json(jars);
+    });
+  }
   )
   // CREATE JAR
-  .post(function(req, res, next) {
+  .post(function (req, res, next) {
     var myNewJar = req.body;
     myNewJar.owner = req.params.username;
     MyJar.create(myNewJar,
-      function(err, newJar) {
+      function (err, newJar) {
         if (err) {
           throw err;
         }
@@ -63,15 +63,15 @@ router.route('/my-selected')
 router.route('/my-non-selected')
   // GET NON SELECTED JARS LIST
   .get(
-    function(req, res, next) {
-      var member = req.session.member.email;
-      MyJar.find({
-        selected: false,
-        owner: member
-      }, function(err, jars) {
-        res.json(jars);
-      });
-    }
+  function (req, res, next) {
+    var member = req.session.member.email;
+    MyJar.find({
+      selected: false,
+      owner: member
+    }, function (err, jars) {
+      res.json(jars);
+    });
+  }
   );
 
 // router.route('/my-jar/code/:code')

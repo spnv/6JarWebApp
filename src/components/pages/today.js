@@ -27,8 +27,9 @@ import {
 } from 'react-bootstrap';
 
 import { selectedJar, updateAJar } from '../../actions/jarAction';
-import { getTodayTransaction, createTransaction, removeTodayTransaction } from '../../actions/transactionAction';
+import { getDistinctTransGroup, getTodayTransaction, createTransaction, removeTodayTransaction } from '../../actions/transactionAction';
 import { getMemberSession } from '../../actions/memberAction';
+import Autosuggest from 'react-autosuggest';
 
 var NumberFormat = require('react-number-format');
 
@@ -37,6 +38,8 @@ class Today extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: '',
+      suggestions: [],
       today: {
         newRecord: {
           name: null,
@@ -55,6 +58,7 @@ class Today extends React.Component {
     this.props.getSelectedJar(); //
     this.props.getTodayTransaction(); //
     this.props.getMemberSession();
+    this.props.getDistinctTransGroup();
   }
 
   componentDidUpdate() {
@@ -138,7 +142,7 @@ class Today extends React.Component {
         newRecord: {
           name: null,
           code: null,
-          group:null,
+          group: null,
           display: 'เลือกเหยือก',
           amount: 0,
           description: null
@@ -170,8 +174,56 @@ class Today extends React.Component {
     return findDOMNode(this.refs[flag])
   }
 
+  /**
+   * Auto-suggestion
+   */
+
+  getSuggestions = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0 ? ['s'] : this.props.transaction_group.filter(lang => 
+      lang.toLowerCase().slice(0, inputLength) === inputValue
+    );
+  };
+
+  getSuggestionValue = suggestion => suggestion;
+
+  renderSuggestion = suggestion => (
+    <div>
+      {suggestion}
+    </div>
+  );
+
+  onChange = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions(value)
+    });
+  };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
 
   render() {
+
+    const { value, suggestions } = this.state;
+
+    const inputProps = {
+      placeholder: 'Type a programming language',
+      value,
+      onChange: this.onChange
+    };
+
     const jars = this.props.selectedjar.map(function (jar, i) {
       return (
         <Col key={i} xs={6} sm={6} md={4} lg={2}>
@@ -280,6 +332,14 @@ class Today extends React.Component {
                 </Overlay>
               </td>
               <td>
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                />
                 <FormControl type="text" placeholder="กรอกกลุ่มของรายการ" ref="newGroup" />
                 <Overlay show={this.state.today_memo}
                   target={this.domNodeBy.bind(this, 'newGroup')} placement="bottom">
@@ -328,7 +388,12 @@ class Today extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { selectedjar: state.myJar.selected, transaction: state.transaction.today, member: state.member }
+  return {
+    selectedjar: state.myJar.selected,
+    transaction: state.transaction.today,
+    member: state.member,
+    transaction_group: state.transaction.group
+  }
   // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
 }
 function mapDispatchToProps(dispatch) {
@@ -340,7 +405,8 @@ function mapDispatchToProps(dispatch) {
     updateAJar: updateAJar,
     getTodayTransaction: getTodayTransaction,
     createTransaction: createTransaction,
-    deleteTransaction: removeTodayTransaction
+    deleteTransaction: removeTodayTransaction,
+    getDistinctTransGroup: getDistinctTransGroup
   }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Today);

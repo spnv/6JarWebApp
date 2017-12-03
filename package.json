@@ -29,6 +29,7 @@
     "morgan": "~1.8.1",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",
+    "react-autosuggest": "^9.3.2",
     "react-bootstrap": "^0.31.1",
     "react-chartjs": "^0.8.0",
     "react-chartjs-2": "^2.6.2",

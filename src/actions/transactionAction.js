@@ -60,3 +60,20 @@ export function removeTodayTransaction(_transaction) {
       })
   }
 }
+
+export function getDistinctTransGroup() {
+  return function (dispatch) {
+    axios.get('/api/transaction/group')
+      .then(function (response) {
+        dispatch({
+          type: "GET_DISTINCT_GROUP",
+          payload: response.data
+        })
+      }).catch(function (err) {
+        dispatch({
+          type: "GET_DISTINCT_GROUP_REJECTED",
+          payload: err
+        })
+      })
+  }
+}

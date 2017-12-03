@@ -1,11 +1,19 @@
 "use strict"
 //MEMBER REDUCERS
 export function transactionReducers(state = {
-  today: []
+  today: [],
+  group: []
 }, action) {
   switch (action.type) {
+    case "GET_DISTINCT_GROUP":
+      return {
+        ...state,
+        group: action.payload.groups
+      }
+      break;
     case "GET_TRANSACTION_TODAY":
-      return { ...state,
+      return {
+        ...state,
         today: action.payload
       }
       break;
@@ -18,7 +26,8 @@ export function transactionReducers(state = {
         ...[newTransaction]
       ];
 
-      return { ...state,
+      return {
+        ...state,
         today: newTodayTransaction
       }
       break;
@@ -27,7 +36,7 @@ export function transactionReducers(state = {
       let deletedTransaction = action.payload;
       // remove
       let currentTodayTransactionToDelete = [...state.today];
-      const indexToDelete = currentTodayTransactionToDelete.findIndex(function(transaction) {
+      const indexToDelete = currentTodayTransactionToDelete.findIndex(function (transaction) {
         return transaction._id === deletedTransaction._id;
       })
 
