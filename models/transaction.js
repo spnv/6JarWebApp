@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema({
   code: String,
   display: String,
+  group: String,
   description: String,
   amount: Number,
   type: String,

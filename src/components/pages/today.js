@@ -1,8 +1,8 @@
 "use strict"
 import React from 'react'
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {findDOMNode} from 'react-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { findDOMNode } from 'react-dom';
 
 import JarItem from '../items/jarItem';
 
@@ -26,9 +26,9 @@ import {
   Tooltip
 } from 'react-bootstrap';
 
-import {selectedJar, updateAJar} from '../../actions/jarAction';
-import {getTodayTransaction, createTransaction, removeTodayTransaction} from '../../actions/transactionAction';
-import {getMemberSession} from '../../actions/memberAction';
+import { selectedJar, updateAJar } from '../../actions/jarAction';
+import { getTodayTransaction, createTransaction, removeTodayTransaction } from '../../actions/transactionAction';
+import { getMemberSession } from '../../actions/memberAction';
 
 var NumberFormat = require('react-number-format');
 
@@ -41,12 +41,13 @@ class Today extends React.Component {
         newRecord: {
           name: null,
           code: null,
+          group: null,
           display: 'เลือกเหยือก',
           amount: 0,
           description: null
         }
       },
-      today_memo:false
+      today_memo: false
     }
   }
 
@@ -78,6 +79,7 @@ class Today extends React.Component {
         newRecord: {
           code: _code,
           name: this.state.today.newRecord.name,
+          group: this.state.today.newRecord.group,
           display: _display,
           amount: this.state.today.newRecord.amount,
           description: this.state.today.newRecord.description
@@ -90,6 +92,7 @@ class Today extends React.Component {
 
     // filter display doesn't match jar
     let newCode = this.state.today.newRecord.code;
+    let newGroup = this.state.today.newRecord.group;
     let newDisplay = this.state.today.newRecord.display;
     let newDescription = findDOMNode(this.refs.newDescription).value;
     let newAmount = parseInt(findDOMNode(this.refs.newAmount).value);
@@ -100,6 +103,7 @@ class Today extends React.Component {
     const newRecord = {
       display: newDisplay,
       code: newCode,
+      group: newGroup,
       description: newDescription,
       amount: newAmount,
       type: null
@@ -117,17 +121,17 @@ class Today extends React.Component {
     }
 
     /* UPDATE TRANSACTION*/
-    this.props.createTransaction(newRecord.code, newRecord.display, newRecord.description, newRecord.amount, newRecord.type)
+    this.props.createTransaction(newRecord.code, newRecord.display, newRecord.group, newRecord.description, newRecord.amount, newRecord.type)
 
     /* UPDATE JAR */
     const currentJarsToUpdate = [...this.props.selectedjar];
-    let jarIndex = this.props.selectedjar.findIndex(function(jar) {
+    let jarIndex = this.props.selectedjar.findIndex(function (jar) {
       return jar.display === newDisplay;
     })
 
     let newJar = currentJarsToUpdate[jarIndex];
     newJar.remain = (currentJarsToUpdate[jarIndex].remain + newRecord.amount).toFixed(2);
-    this.props.updateAJar(newJar, function() {})
+    this.props.updateAJar(newJar, function () { })
 
     this.setState({
       today: {
@@ -148,34 +152,34 @@ class Today extends React.Component {
 
     /* UPDATE JAR */
     const currentJarsToUpdate = [...this.props.selectedjar];
-    let jarIndex = this.props.selectedjar.findIndex(function(jar) {
+    let jarIndex = this.props.selectedjar.findIndex(function (jar) {
       return jar.display === _transaction.display;
     })
 
     let newJar = currentJarsToUpdate[jarIndex];
     newJar.remain = (currentJarsToUpdate[jarIndex].remain - _transaction.amount).toFixed(2);
-    this.props.updateAJar(newJar, function() {});
+    this.props.updateAJar(newJar, function () { });
   }
 
   toggle(flag) {
     this.setState({ [flag]: !this.state[flag] });
   }
 
-  domNodeBy(flag){
-    return  findDOMNode(this.refs[flag])
+  domNodeBy(flag) {
+    return findDOMNode(this.refs[flag])
   }
 
 
   render() {
-    const jars = this.props.selectedjar.map(function(jar, i) {
+    const jars = this.props.selectedjar.map(function (jar, i) {
       return (
         <Col key={i} xs={6} sm={6} md={4} lg={2}>
-          <JarItem code={jar.code} remain={jar.remain} full={jar.full}/>
+          <JarItem code={jar.code} remain={jar.remain} full={jar.full} />
         </Col>
       )
     })
 
-    const jarList = this.props.selectedjar.map(function(jar, i) {
+    const jarList = this.props.selectedjar.map(function (jar, i) {
       return (
         <MenuItem key={i} eventKey={jar.name} style={{
           backgroundColor: '#222222'
@@ -183,7 +187,7 @@ class Today extends React.Component {
       )
     }, this)
 
-    const records = this.props.transaction.map(function(transaction, i) {
+    const records = this.props.transaction.map(function (transaction, i) {
       let style = null;
       i = i * i
       switch (transaction.type) {
@@ -203,12 +207,12 @@ class Today extends React.Component {
       return (
         <tr key={i}>
           <td>{transaction.display}</td>
+          <td>{transaction.group}</td>
           <td>{transaction.description}</td>
           <td style={style}>
             <b>
-              <NumberFormat thousandSeparator={true} prefix={'฿ '} value={transaction.amount} displayType={'text'}/>
+              <NumberFormat thousandSeparator={true} prefix={'฿ '} value={transaction.amount} displayType={'text'} />
             </b>
-
           </td>
           <td>
             <Button onClick={this.handlerRemoveTodayTransaction.bind(this, transaction)} block>ลบ</Button>
@@ -220,8 +224,8 @@ class Today extends React.Component {
     return (
       <Grid>
         <h3>ยอดคงเหลือ (ต่อเดือน) <Badge onClick={() => this.setState({
-            open1: !this.state.open1
-          })}>?</Badge>
+          open1: !this.state.open1
+        })}>?</Badge>
         </h3>
         <Collapse in={this.state.open1}>
           <div>
@@ -233,18 +237,18 @@ class Today extends React.Component {
         <Row>
           {jars}
         </Row>
-        <hr/>
+        <hr />
         <h3>บันทึกวันนี <Badge onClick={() => this.setState({
-            open2: !this.state.open2,
-            today_memo:false
-          })}>?</Badge>
+          open2: !this.state.open2,
+          today_memo: false
+        })}>?</Badge>
         </h3>
         <Collapse in={this.state.open2}>
           <div>
             <Well>
               ใช้บันทึกรายรับ-จ่าย ของวันนั้น ๆ เช่น ค่าข้าวเที่ยง, ค่าเดินทาง ซึ่งรายการที่แสดงจะมีของวันนี้เท่านั้นและส่งผลต่อปริมาณเงินในเหยือกด้านบนด้วย
               <br></br>
-              <Button onClick={this.toggle.bind(this,'today_memo')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
+              <Button onClick={this.toggle.bind(this, 'today_memo')} className="pull-right" bsStyle="warning">วิธีการใช้งาน</Button>
             </Well>
           </div>
         </Collapse>
@@ -254,6 +258,7 @@ class Today extends React.Component {
           <thead>
             <tr>
               <th>#เหยือก</th>
+              <th>#กลุ่ม</th>
               <th>รายการ</th>
               <th>จำนวน</th>
               <th>จัดการ</th>
@@ -263,32 +268,39 @@ class Today extends React.Component {
             {records}
             <tr>
               <td>
-                <InputGroup >
+                <InputGroup>
                   <DropdownButton componentClass={InputGroup.Button} id="input-dropdown-addon" title={this.state.today.newRecord.display} bsStyle="default" ref='displayJar'>
                     {jarList}
                   </DropdownButton>
                 </InputGroup>
                 <Overlay show={this.state.today_memo}
-                target={this.domNodeBy.bind(this,'displayJar')} placement="bottom">
+                  target={this.domNodeBy.bind(this, 'displayJar')} placement="bottom">
                   <Tooltip id="tooltip-displayJar" >1. เลือกเหยือก<br></br>ที่จะทำการบันทึกรายรับ-จ่าย</Tooltip>
                 </Overlay>
               </td>
               <td>
-                <FormControl type="text" placeholder="กรอกรายละเอียด" ref="newDescription"/>
-                  <Overlay show={this.state.today_memo}
-                  target={this.domNodeBy.bind(this,'newDescription')} placement="bottom">
-                    <Tooltip id="tooltip-newDescription" >2. ใส่รายละเอียดเกี่ยวกับรายรับ-จ่าย<br></br>ที่ต้องการเพิ่ม เช่น กินข้าวเที่ยง</Tooltip>
-                  </Overlay>
+                <FormControl type="text" placeholder="กรอกกลุ่มของรายการ" ref="newGroup" />
+                <Overlay show={this.state.today_memo}
+                  target={this.domNodeBy.bind(this, 'newGroup')} placement="bottom">
+                  <Tooltip id="tooltip-newGroup" >2. ใส่กลุ่มของรายรับ-จ่าย<br></br>ที่ต้องการเพิ่ม เช่น อาหาร เดินทาง</Tooltip>
+                </Overlay>
+              </td>
+              <td>
+                <FormControl type="text" placeholder="กรอกรายละเอียด" ref="newDescription" />
+                <Overlay show={this.state.today_memo}
+                  target={this.domNodeBy.bind(this, 'newDescription')} placement="bottom">
+                  <Tooltip id="tooltip-newDescription" >3. ใส่รายละเอียดเกี่ยวกับรายรับ-จ่าย<br></br>ที่ต้องการเพิ่ม เช่น กินข้าวเที่ยง</Tooltip>
+                </Overlay>
               </td>
               <td>
                 <FormGroup>
                   <InputGroup>
                     <InputGroup.Addon>฿</InputGroup.Addon>
-                    <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount"/>
+                    <FormControl min="0" type="number" placeholder="กรอกจำนวน" ref="newAmount" />
                   </InputGroup>
                   <Overlay show={this.state.today_memo}
-                  target={this.domNodeBy.bind(this,'newAmount')} placement="bottom">
-                    <Tooltip id="tooltip-newAmount" >3. ใส่จำนวนของรายการ เช่น<br></br>กินข้าวเที่ยง 20 บาท ให้ใส่ 20 ลงไป</Tooltip>
+                    target={this.domNodeBy.bind(this, 'newAmount')} placement="bottom">
+                    <Tooltip id="tooltip-newAmount" >4. ใส่จำนวนของรายการ เช่น<br></br>กินข้าวเที่ยง 20 บาท ให้ใส่ 20 ลงไป</Tooltip>
                   </Overlay>
                 </FormGroup>
               </td>
@@ -298,12 +310,12 @@ class Today extends React.Component {
                   <Button ref='deceaseBtn' onClick={this.handlerCreateTransaction.bind(this, -1)} bsStyle="danger">ถอนออก</Button>
                 </ButtonGroup>
                 <Overlay show={this.state.today_memo}
-                target={this.domNodeBy.bind(this,'inceaseBtn')} placement="top">
-                  <Tooltip id="tooltip-inceaseBtn" >4.1 หากเป็นรายรับ เช่น<br></br>ได้เงิน 20 บาท ให้กดปุ่มเพิ่มเข้า</Tooltip>
+                  target={this.domNodeBy.bind(this, 'inceaseBtn')} placement="top">
+                  <Tooltip id="tooltip-inceaseBtn" >5.1 หากเป็นรายรับ เช่น<br></br>ได้เงิน 20 บาท ให้กดปุ่มเพิ่มเข้า</Tooltip>
                 </Overlay>
                 <Overlay show={this.state.today_memo}
-                target={this.domNodeBy.bind(this,'deceaseBtn')} placement="bottom">
-                  <Tooltip id="tooltip-deceaseBtn" >4.2 หากเป็นรายจ่าย เช่น<br></br>กินข้าวเที่ยง 20 บาท ให้กดปุ่มถอนออก</Tooltip>
+                  target={this.domNodeBy.bind(this, 'deceaseBtn')} placement="bottom">
+                  <Tooltip id="tooltip-deceaseBtn" >5.2 หากเป็นรายจ่าย เช่น<br></br>กินข้าวเที่ยง 20 บาท ให้กดปุ่มถอนออก</Tooltip>
                 </Overlay>
               </td>
             </tr>
@@ -315,7 +327,7 @@ class Today extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {selectedjar: state.myJar.selected, transaction: state.transaction.today, member: state.member}
+  return { selectedjar: state.myJar.selected, transaction: state.transaction.today, member: state.member }
   // / * TODO : Template Active - map state to prop totalQty : state.cart.totalQty * /
 }
 function mapDispatchToProps(dispatch) {

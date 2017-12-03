@@ -9,7 +9,7 @@ mongoose.connect(define.DATABASE_URL);
 var Transaction = require('../models/transaction.js');
 
 router.route('/today')
-  .get(function(req, res, next) {
+  .get(function (req, res, next) {
     let now = new Date();
     now.setHours(0, 0, 0, 0);
     var member = req.session.member.email;
@@ -18,16 +18,16 @@ router.route('/today')
       timestamp: {
         $gte: now
       }
-    }, function(err, jars) {
+    }, function (err, jars) {
       res.json(jars);
     });
   })
   // create
-  .post(function(req, res, next) {
+  .post(function (req, res, next) {
     let newTransaction = req.body;
     newTransaction.owner = req.session.member.email;
     Transaction.create(newTransaction,
-      function(err, createdNewTransaction) {
+      function (err, createdNewTransaction) {
         if (err) {
           throw err;
         }
@@ -36,10 +36,10 @@ router.route('/today')
   });
 
 router.route('/today/:tranid')
-  .delete(function(req, res, next) {
+  .delete(function (req, res, next) {
     Transaction.remove({
       _id: req.params.tranid
-    }, function(err, result) {
+    }, function (err, result) {
       if (err) {
         throw err;
       }

@@ -24176,12 +24176,13 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function createTransaction(_code, _display, _des, _amount, _type) {
+function createTransaction(_code, _display, _group, _des, _amount, _type) {
   return function (dispatch) {
     // TODO : Add duplicate detector
     _axios2.default.post('/api/transaction/today', {
       code: _code,
       display: _display,
+      group: _group,
       description: _des,
       amount: _amount,
       type: _type
@@ -63221,6 +63222,7 @@ var Today = function (_React$Component) {
         newRecord: {
           name: null,
           code: null,
+          group: null,
           display: 'เลือกเหยือก',
           amount: 0,
           description: null
@@ -63264,6 +63266,7 @@ var Today = function (_React$Component) {
           newRecord: {
             code: _code,
             name: this.state.today.newRecord.name,
+            group: this.state.today.newRecord.group,
             display: _display,
             amount: this.state.today.newRecord.amount,
             description: this.state.today.newRecord.description
@@ -63277,6 +63280,7 @@ var Today = function (_React$Component) {
 
       // filter display doesn't match jar
       var newCode = this.state.today.newRecord.code;
+      var newGroup = this.state.today.newRecord.group;
       var newDisplay = this.state.today.newRecord.display;
       var newDescription = (0, _reactDom.findDOMNode)(this.refs.newDescription).value;
       var newAmount = parseInt((0, _reactDom.findDOMNode)(this.refs.newAmount).value);
@@ -63287,6 +63291,7 @@ var Today = function (_React$Component) {
       var newRecord = {
         display: newDisplay,
         code: newCode,
+        group: newGroup,
         description: newDescription,
         amount: newAmount,
         type: null
@@ -63303,7 +63308,7 @@ var Today = function (_React$Component) {
       }
 
       /* UPDATE TRANSACTION*/
-      this.props.createTransaction(newRecord.code, newRecord.display, newRecord.description, newRecord.amount, newRecord.type);
+      this.props.createTransaction(newRecord.code, newRecord.display, newRecord.group, newRecord.description, newRecord.amount, newRecord.type);
 
       /* UPDATE JAR */
       var currentJarsToUpdate = [].concat(_toConsumableArray(this.props.selectedjar));
@@ -63400,6 +63405,11 @@ var Today = function (_React$Component) {
             'td',
             null,
             transaction.display
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            transaction.group
           ),
           _react2.default.createElement(
             'td',
@@ -63516,6 +63526,11 @@ var Today = function (_React$Component) {
               _react2.default.createElement(
                 'th',
                 null,
+                '#\u0E01\u0E25\u0E38\u0E48\u0E21'
+              ),
+              _react2.default.createElement(
+                'th',
+                null,
                 '\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23'
               ),
               _react2.default.createElement(
@@ -63565,6 +63580,23 @@ var Today = function (_React$Component) {
               _react2.default.createElement(
                 'td',
                 null,
+                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E01\u0E25\u0E38\u0E48\u0E21\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23', ref: 'newGroup' }),
+                _react2.default.createElement(
+                  _reactBootstrap.Overlay,
+                  { show: this.state.today_memo,
+                    target: this.domNodeBy.bind(this, 'newGroup'), placement: 'bottom' },
+                  _react2.default.createElement(
+                    _reactBootstrap.Tooltip,
+                    { id: 'tooltip-newGroup' },
+                    '2. \u0E43\u0E2A\u0E48\u0E01\u0E25\u0E38\u0E48\u0E21\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E08\u0E48\u0E32\u0E22',
+                    _react2.default.createElement('br', null),
+                    '\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E1E\u0E34\u0E48\u0E21 \u0E40\u0E0A\u0E48\u0E19 \u0E2D\u0E32\u0E2B\u0E32\u0E23 \u0E40\u0E14\u0E34\u0E19\u0E17\u0E32\u0E07'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
                 _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14', ref: 'newDescription' }),
                 _react2.default.createElement(
                   _reactBootstrap.Overlay,
@@ -63573,7 +63605,7 @@ var Today = function (_React$Component) {
                   _react2.default.createElement(
                     _reactBootstrap.Tooltip,
                     { id: 'tooltip-newDescription' },
-                    '2. \u0E43\u0E2A\u0E48\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E08\u0E48\u0E32\u0E22',
+                    '3. \u0E43\u0E2A\u0E48\u0E23\u0E32\u0E22\u0E25\u0E30\u0E40\u0E2D\u0E35\u0E22\u0E14\u0E40\u0E01\u0E35\u0E48\u0E22\u0E27\u0E01\u0E31\u0E1A\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A-\u0E08\u0E48\u0E32\u0E22',
                     _react2.default.createElement('br', null),
                     '\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E1E\u0E34\u0E48\u0E21 \u0E40\u0E0A\u0E48\u0E19 \u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07'
                   )
@@ -63602,7 +63634,7 @@ var Today = function (_React$Component) {
                     _react2.default.createElement(
                       _reactBootstrap.Tooltip,
                       { id: 'tooltip-newAmount' },
-                      '3. \u0E43\u0E2A\u0E48\u0E08\u0E33\u0E19\u0E27\u0E19\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 \u0E40\u0E0A\u0E48\u0E19',
+                      '4. \u0E43\u0E2A\u0E48\u0E08\u0E33\u0E19\u0E27\u0E19\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23 \u0E40\u0E0A\u0E48\u0E19',
                       _react2.default.createElement('br', null),
                       '\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07 20 \u0E1A\u0E32\u0E17 \u0E43\u0E2B\u0E49\u0E43\u0E2A\u0E48 20 \u0E25\u0E07\u0E44\u0E1B'
                     )
@@ -63633,7 +63665,7 @@ var Today = function (_React$Component) {
                   _react2.default.createElement(
                     _reactBootstrap.Tooltip,
                     { id: 'tooltip-inceaseBtn' },
-                    '4.1 \u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A \u0E40\u0E0A\u0E48\u0E19',
+                    '5.1 \u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E23\u0E31\u0E1A \u0E40\u0E0A\u0E48\u0E19',
                     _react2.default.createElement('br', null),
                     '\u0E44\u0E14\u0E49\u0E40\u0E07\u0E34\u0E19 20 \u0E1A\u0E32\u0E17 \u0E43\u0E2B\u0E49\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E40\u0E02\u0E49\u0E32'
                   )
@@ -63645,7 +63677,7 @@ var Today = function (_React$Component) {
                   _react2.default.createElement(
                     _reactBootstrap.Tooltip,
                     { id: 'tooltip-deceaseBtn' },
-                    '4.2 \u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E08\u0E48\u0E32\u0E22 \u0E40\u0E0A\u0E48\u0E19',
+                    '5.2 \u0E2B\u0E32\u0E01\u0E40\u0E1B\u0E47\u0E19\u0E23\u0E32\u0E22\u0E08\u0E48\u0E32\u0E22 \u0E40\u0E0A\u0E48\u0E19',
                     _react2.default.createElement('br', null),
                     '\u0E01\u0E34\u0E19\u0E02\u0E49\u0E32\u0E27\u0E40\u0E17\u0E35\u0E48\u0E22\u0E07 20 \u0E1A\u0E32\u0E17 \u0E43\u0E2B\u0E49\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21\u0E16\u0E2D\u0E19\u0E2D\u0E2D\u0E01'
                   )
