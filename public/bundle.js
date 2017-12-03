@@ -63259,8 +63259,10 @@ var Today = function (_React$Component) {
 
     _this.renderSuggestion = function (suggestion) {
       return _react2.default.createElement(
-        'span',
-        null,
+        'div',
+        { style: {
+            backgroundColor: 'white'
+          } },
         suggestion
       );
     };

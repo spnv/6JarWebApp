@@ -189,9 +189,11 @@ class Today extends React.Component {
   getSuggestionValue = suggestion => suggestion;
 
   renderSuggestion = suggestion => (
-    <span>
+    <div style={{
+      backgroundColor: 'white'
+    }} >
       {suggestion}
-    </span>
+    </div>
   );
 
   onChange = (event, { newValue }) => {
