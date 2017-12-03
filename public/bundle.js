@@ -63350,10 +63350,9 @@ var Today = function (_React$Component) {
   }, {
     key: 'handlerCreateTransaction',
     value: function handlerCreateTransaction(position) {
-
       // filter display doesn't match jar
       var newCode = this.state.today.newRecord.code;
-      var newGroup = (0, _reactDom.findDOMNode)(this.refs.newGroup).value;
+      var newGroup = (0, _reactDom.findDOMNode)(this.refs.newGroup).firstChild.value;
       var newDisplay = this.state.today.newRecord.display;
       var newDescription = (0, _reactDom.findDOMNode)(this.refs.newDescription).value;
       var newAmount = parseInt((0, _reactDom.findDOMNode)(this.refs.newAmount).value);
@@ -63448,7 +63447,8 @@ var Today = function (_React$Component) {
 
 
       var inputProps = {
-        placeholder: 'Type a programming language',
+        placeholder: 'กรอกกลุ่มของรายการ',
+        type: "text",
         value: value,
         onChange: this.onChange
       };
@@ -63676,9 +63676,9 @@ var Today = function (_React$Component) {
                   onSuggestionsClearRequested: this.onSuggestionsClearRequested,
                   getSuggestionValue: this.getSuggestionValue,
                   renderSuggestion: this.renderSuggestion,
-                  inputProps: inputProps
+                  inputProps: inputProps,
+                  ref: 'newGroup'
                 }),
-                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: '\u0E01\u0E23\u0E2D\u0E01\u0E01\u0E25\u0E38\u0E48\u0E21\u0E02\u0E2D\u0E07\u0E23\u0E32\u0E22\u0E01\u0E32\u0E23', ref: 'newGroup' }),
                 _react2.default.createElement(
                   _reactBootstrap.Overlay,
                   { show: this.state.today_memo,

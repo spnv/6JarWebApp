@@ -93,10 +93,9 @@ class Today extends React.Component {
   }
 
   handlerCreateTransaction(position) {
-
     // filter display doesn't match jar
     let newCode = this.state.today.newRecord.code;
-    let newGroup = findDOMNode(this.refs.newGroup).value;
+    let newGroup = findDOMNode(this.refs.newGroup).firstChild.value;
     let newDisplay = this.state.today.newRecord.display;
     let newDescription = findDOMNode(this.refs.newDescription).value;
     let newAmount = parseInt(findDOMNode(this.refs.newAmount).value);
@@ -219,7 +218,8 @@ class Today extends React.Component {
     const { value, suggestions } = this.state;
 
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: 'กรอกกลุ่มของรายการ',
+      type:"text",
       value,
       onChange: this.onChange
     };
@@ -339,8 +339,9 @@ class Today extends React.Component {
                   getSuggestionValue={this.getSuggestionValue}
                   renderSuggestion={this.renderSuggestion}
                   inputProps={inputProps}
+                  ref="newGroup"
                 />
-                <FormControl type="text" placeholder="กรอกกลุ่มของรายการ" ref="newGroup" />
+                {/* <FormControl type="text" placeholder="กรอกกลุ่มของรายการ" ref="newGroup" /> */}
                 <Overlay show={this.state.today_memo}
                   target={this.domNodeBy.bind(this, 'newGroup')} placement="bottom">
                   <Tooltip id="tooltip-newGroup" >2. ใส่กลุ่มของรายรับ-จ่าย<br></br>ที่ต้องการเพิ่ม เช่น อาหาร เดินทาง</Tooltip>
