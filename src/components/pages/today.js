@@ -92,11 +92,11 @@ class Today extends React.Component {
 
     // filter display doesn't match jar
     let newCode = this.state.today.newRecord.code;
-    let newGroup = this.state.today.newRecord.group;
+    let newGroup = findDOMNode(this.refs.newGroup).value;
     let newDisplay = this.state.today.newRecord.display;
     let newDescription = findDOMNode(this.refs.newDescription).value;
     let newAmount = parseInt(findDOMNode(this.refs.newAmount).value);
-    if (newDisplay == 'เลือกเหยือก' | newDescription == '' | isNaN(newAmount)) {
+    if (newDisplay == 'เลือกเหยือก' | newDescription == '' | newGroup == '' | isNaN(newAmount)) {
       return 0;
     }
     // build new record
@@ -138,6 +138,7 @@ class Today extends React.Component {
         newRecord: {
           name: null,
           code: null,
+          group:null,
           display: 'เลือกเหยือก',
           amount: 0,
           description: null

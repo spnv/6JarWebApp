@@ -63280,11 +63280,11 @@ var Today = function (_React$Component) {
 
       // filter display doesn't match jar
       var newCode = this.state.today.newRecord.code;
-      var newGroup = this.state.today.newRecord.group;
+      var newGroup = (0, _reactDom.findDOMNode)(this.refs.newGroup).value;
       var newDisplay = this.state.today.newRecord.display;
       var newDescription = (0, _reactDom.findDOMNode)(this.refs.newDescription).value;
       var newAmount = parseInt((0, _reactDom.findDOMNode)(this.refs.newAmount).value);
-      if (newDisplay == 'เลือกเหยือก' | newDescription == '' | isNaN(newAmount)) {
+      if (newDisplay == 'เลือกเหยือก' | newDescription == '' | newGroup == '' | isNaN(newAmount)) {
         return 0;
       }
       // build new record
@@ -63325,6 +63325,7 @@ var Today = function (_React$Component) {
           newRecord: {
             name: null,
             code: null,
+            group: null,
             display: 'เลือกเหยือก',
             amount: 0,
             description: null
