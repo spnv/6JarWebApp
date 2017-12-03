@@ -63259,7 +63259,7 @@ var Today = function (_React$Component) {
 
     _this.renderSuggestion = function (suggestion) {
       return _react2.default.createElement(
-        'div',
+        'span',
         null,
         suggestion
       );
@@ -63447,6 +63447,7 @@ var Today = function (_React$Component) {
 
 
       var inputProps = {
+        className: "form-control",
         placeholder: 'กรอกกลุ่มของรายการ',
         type: "text",
         value: value,

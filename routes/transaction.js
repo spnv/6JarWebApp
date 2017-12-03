@@ -51,7 +51,7 @@ router.route('/today/:tranid')
 
 router.route('/group')
   .get(function (req, res, next) {
-    Transaction.find().distinct('group',function (err,groups) {
+    Transaction.find().distinct('group', function (err, groups) {
       if (err) {
         throw err;
       }

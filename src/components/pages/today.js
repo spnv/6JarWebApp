@@ -181,7 +181,7 @@ class Today extends React.Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? ['s'] : this.props.transaction_group.filter(lang => 
+    return inputLength === 0 ? ['s'] : this.props.transaction_group.filter(lang =>
       lang.toLowerCase().slice(0, inputLength) === inputValue
     );
   };
@@ -189,9 +189,9 @@ class Today extends React.Component {
   getSuggestionValue = suggestion => suggestion;
 
   renderSuggestion = suggestion => (
-    <div>
+    <span>
       {suggestion}
-    </div>
+    </span>
   );
 
   onChange = (event, { newValue }) => {
@@ -218,8 +218,9 @@ class Today extends React.Component {
     const { value, suggestions } = this.state;
 
     const inputProps = {
+      className: "form-control",
       placeholder: 'กรอกกลุ่มของรายการ',
-      type:"text",
+      type: "text",
       value,
       onChange: this.onChange
     };
