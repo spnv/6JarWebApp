@@ -219,7 +219,7 @@ class JarSetup extends React.Component {
       return new Promise((resolve) => {
         let percent = ((jar.full / contex.props.totalAmount) * 100);
         let paid = parseFloat((percent / 100 * contex.state.paid.amount).toFixed(2));
-        contex.props.createTransaction(jar.code, jar.display, contex.state.paid.description, paid, 'increase');
+        contex.props.createTransaction(jar.code, jar.display,contex.state.paid.sub_type, contex.state.paid.description, paid, 'increase');
 
         /* UPDATE JAR */
         const currentJarsToUpdate = [...contex.props.selectedjar];
